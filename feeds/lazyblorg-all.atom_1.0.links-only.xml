@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns='http://www.w3.org/2005/Atom'
+      xmlns:thr='http://purl.org/syndication/thread/1.0'
+      xml:lang='en-us'>
+  <title>Testblogname</title>
+  <id>http://Karl-Voit.at</id>
+  <link href='http://Karl-Voit.at' />
+  <icon>/favicon.ico</icon>
+  <updated>2015-09-05T21:12:58+01:00</updated>
+  <author>
+    <name>Karl Voit</name>
+  </author>
+  <subtitle>lazyblorg test blog</subtitle>
+  <rights>All content written by Karl Voit</rights>
+  <generator uri='https://github.com/novoid/lazyblorg'>Generated from Org-mode source code using lazyblorg which is written in Python. Industrial-strength technology, baby.</generator>
+
+        <entry>
+    <title>About</title>
+    <link href='http://Karl-Voit.at/about' />
+    <published>2014-03-09T14:57:00+01:00</published>
+    <updated>2014-03-09T14:57:00+01:00</updated>
+    <category scheme='http://Karl-Voit.at/tags/lazyblorg' term='lazyblorg' />
+    <summary type='xhtml'>
+<div xmlns='http://www.w3.org/1999/xhtml'>
+<p>
+
+This is a placeholder entry in order to be able to test internal links.
+
+</p>
+</div>
+    </summary>
+    <id>http://Karl-Voit.at/about-from-feed-with-links</id>
+  </entry>
+
+<entry>
+    <title>Mini blog entry</title>
+    <link href='http://Karl-Voit.at/2013/08/22/testid' />
+    <published>2013-08-22T21:06:00+01:00</published>
+    <updated>2013-08-22T21:06:00+01:00</updated>
+    <summary type='xhtml'>
+<div xmlns='http://www.w3.org/1999/xhtml'>
+<p>
+
+Just for testing.
+
+</p>
+</div>
+    </summary>
+    <id>http://Karl-Voit.at/2013/08/22/testid-from-feed-with-links</id>
+  </entry>
+
+<entry>
+    <title>This is an example blog entry</title>
+    <link href='http://Karl-Voit.at/2013/02/14/lazyblorg-example-entry' />
+    <published>2013-02-14T19:02:00+01:00</published>
+    <updated>2013-02-14T19:02:00+01:00</updated>
+    <category scheme='http://Karl-Voit.at/tags/mytest' term='mytest' />
+    <category scheme='http://Karl-Voit.at/tags/programming' term='programming' />
+    <summary type='xhtml'>
+<div xmlns='http://www.w3.org/1999/xhtml'>
+<p>
+
+This is an introduction text which describes the blog entry with some catchy information. Readers should be convinced to read this interesting text. <a href="https://github.com/novoid/Memacs">Memacs</a> is an external link to Memacs.
+
+</p>
+</div>
+    </summary>
+    <id>http://Karl-Voit.at/2013/02/14/lazyblorg-example-entry-from-feed-with-links</id>
+  </entry>
+
+</feed>
