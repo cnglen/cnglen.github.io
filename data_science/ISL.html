@@ -1,0 +1,1010 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2015-09-07 Mon 01:48 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>ISL summary</title>
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Jacky Wang" />
+<link rel="stylesheet" title="Standard" href="/style/worg.css" type="text/css" />
+<link rel="alternate stylesheet" title="Zenburn" href="/style/worg-zenburn.css" type="text/css" />
+<link rel="alternate stylesheet" title="Classic" href="/style/worg-classic.css" type="text/css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded',function() {
+      document.getElementById("table-of-contents").onclick = function() {
+          var elem = document.getElementById("text-table-of-contents");
+          elem.style.display = elem.style.display == "block" ? "none" : "block";
+      }
+  });
+</script>
+</div>
+<div id="content">
+<h1 class="title">ISL summary</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">Todo</a></li>
+<li><a href="#orgheadline2">Introduction</a>
+<ul>
+<li><a href="#orgheadline5">data set</a>
+<ul>
+<li><a href="#orgheadline3">Wage</a></li>
+<li><a href="#orgheadline4">Boston</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgheadline7">Statistical learning</a>
+<ul>
+<li><a href="#orgheadline6">Lab: Introduction to R</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline8">Linear regression</a>
+<ul>
+<li><a href="#orgheadline15">Lab: linear regression</a>
+<ul>
+<li><a href="#orgheadline9">Explore data</a></li>
+<li><a href="#orgheadline10">Simple linear regression</a></li>
+<li><a href="#orgheadline11">Multiple linear regression</a></li>
+<li><a href="#orgheadline12">Interacton terms</a></li>
+<li><a href="#orgheadline13">Non-linear transformations of the predictors</a></li>
+<li><a href="#orgheadline14">Qualitative Predictors (Categracial Variable)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgheadline16">Resampling method</a></li>
+<li><a href="#orgheadline17">others</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1">Todo</h2>
+<div class="outline-text-2" id="text-orgheadline1">
+<p>
+org-confirm-babel-evaluate
+org-babel-default-header-args:&lt;lang&gt;
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2">Introduction</h2>
+<div class="outline-text-2" id="text-orgheadline2">
+<div class="org-src-container">
+
+<pre class="src src-R" id="orgsrcblock1"><span style="color: #7aa6da;">library</span>(ggplot2)
+history_of_statiscal_learning <span style="color: #7aa6da;">&lt;-</span> data.frame(method = c(<span style="color: #70c0b1;">"linear regression"</span>,
+                                           <span style="color: #70c0b1;">"LDA"</span>, <span style="color: #70c0b1;">"logistic regression"</span>,
+                                           <span style="color: #70c0b1;">"generalized linear models"</span>,
+                                           <span style="color: #70c0b1;">"tree"</span>, <span style="color: #70c0b1;">"generalized addtive models"</span>
+                                                      ),
+                                           year = c(1900, 1936, 1940, 1970, 1980, 1986), is_linear <span style="color: #7aa6da;">&lt;-</span> c(<span style="color: #7aa6da;">TRUE</span>, <span style="color: #7aa6da;">TRUE</span>, <span style="color: #7aa6da;">TRUE</span>, <span style="color: #7aa6da;">TRUE</span>, <span style="color: #7aa6da;">FALSE</span>, <span style="color: #7aa6da;">FALSE</span>))
+ggplot(data = history_of_statiscal_learning, aes(x = year, y = is_linear)) + geom_point() +
+    geom_text(label = as.character(history_of_statiscal_learning$method), angle = -80)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/history_of_statiscal_learning.png" alt="history_of_statiscal_learning.png" />
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5">data set</h3>
+<div class="outline-text-3" id="text-orgheadline5">
+</div><div id="outline-container-orgheadline3" class="outline-4">
+<h4 id="orgheadline3">Wage</h4>
+<div class="outline-text-4" id="text-orgheadline3">
+<table id="orgtable1" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">year</td>
+<td class="org-left">Year that wage information was recorded</td>
+</tr>
+
+<tr>
+<td class="org-left">age</td>
+<td class="org-left">Age of worker</td>
+</tr>
+
+<tr>
+<td class="org-left">sex</td>
+<td class="org-left">Gender</td>
+</tr>
+
+<tr>
+<td class="org-left">maritl</td>
+<td class="org-left">A factor with levels '1. Never Married' '2. Married' '3. Widowed' '4. Divorced' and '5. Separated' indicating marital status</td>
+</tr>
+
+<tr>
+<td class="org-left">race</td>
+<td class="org-left">A factor with levels '1. White' '2. Black' '3. Asian' and '4. Other' indicating race</td>
+</tr>
+
+<tr>
+<td class="org-left">education</td>
+<td class="org-left">A factor with levels '1. &lt; HS Grad' '2. HS Grad' '3. Some College' '4. College Grad' and '5. Advanced Degree' indicating education level</td>
+</tr>
+
+<tr>
+<td class="org-left">region</td>
+<td class="org-left">Region of the country (mid-atlantic only)</td>
+</tr>
+
+<tr>
+<td class="org-left">jobclass</td>
+<td class="org-left">A factor with levels '1. Industrial' and '2. Information' indicating type of job</td>
+</tr>
+
+<tr>
+<td class="org-left">health</td>
+<td class="org-left">A factor with levels '1. &lt;=Good' and '2. &gt;=Very Good' indicating health level of worker</td>
+</tr>
+
+<tr>
+<td class="org-left">health_ins</td>
+<td class="org-left">A factor with levels '1. Yes' and '2. No' indicating whether worker has health insurance</td>
+</tr>
+
+<tr>
+<td class="org-left">logwage</td>
+<td class="org-left">Log of workers wage</td>
+</tr>
+
+<tr>
+<td class="org-left">wage</td>
+<td class="org-left">Workers raw wage</td>
+</tr>
+</tbody>
+</table>
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="color: #7aa6da;">library</span>(ISLR)
+str(Wage)
+</pre>
+</div>
+
+<pre class="example">
+'data.frame':	3000 obs. of  12 variables:
+ $ year      : int  2006 2004 2003 2003 2005 2008 2009 2008 2006 2004 ...
+ $ age       : int  18 24 45 43 50 54 44 30 41 52 ...
+ $ sex       : Factor w/ 2 levels "1. Male","2. Female": 1 1 1 1 1 1 1 1 1 1 ...
+ $ maritl    : Factor w/ 5 levels "1. Never Married",..: 1 1 2 2 4 2 2 1 1 2 ...
+ $ race      : Factor w/ 4 levels "1. White","2. Black",..: 1 1 1 3 1 1 4 3 2 1 ...
+ $ education : Factor w/ 5 levels "1. &lt; HS Grad",..: 1 4 3 4 2 4 3 3 3 2 ...
+ $ region    : Factor w/ 9 levels "1. New England",..: 2 2 2 2 2 2 2 2 2 2 ...
+ $ jobclass  : Factor w/ 2 levels "1. Industrial",..: 1 2 1 2 2 2 1 2 2 2 ...
+ $ health    : Factor w/ 2 levels "1. &lt;=Good","2. &gt;=Very Good": 1 2 1 2 1 2 2 1 2 2 ...
+ $ health_ins: Factor w/ 2 levels "1. Yes","2. No": 2 2 1 1 1 1 1 1 1 1 ...
+ $ logwage   : num  4.32 4.26 4.88 5.04 4.32 ...
+ $ wage      : num  75 70.5 131 154.7 75 ...
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-4">
+<h4 id="orgheadline4">Boston</h4>
+<div class="outline-text-4" id="text-orgheadline4">
+<table id="orgtable2" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">crim</td>
+<td class="org-left">per capita crime rate by town.</td>
+</tr>
+
+<tr>
+<td class="org-left">zn</td>
+<td class="org-left">proportion of residential land zoned for lots over 25,000 sq.ft.</td>
+</tr>
+
+<tr>
+<td class="org-left">indus</td>
+<td class="org-left">proportion of non-retail business acres per town.</td>
+</tr>
+
+<tr>
+<td class="org-left">chas</td>
+<td class="org-left">Charles River dummy variable (= 1 if tract bounds river; 0 otherwise).</td>
+</tr>
+
+<tr>
+<td class="org-left">nox</td>
+<td class="org-left">nitrogen oxides concentration (parts per 10 million).</td>
+</tr>
+
+<tr>
+<td class="org-left">rm</td>
+<td class="org-left">average number of rooms per dwelling(e.g, house).</td>
+</tr>
+
+<tr>
+<td class="org-left">age</td>
+<td class="org-left">proportion of owner-occupied units built prior to 1940.</td>
+</tr>
+
+<tr>
+<td class="org-left">dis</td>
+<td class="org-left">weighted mean of distances to five Boston employment centres.</td>
+</tr>
+
+<tr>
+<td class="org-left">rad</td>
+<td class="org-left">index of accessibility to radial highways.</td>
+</tr>
+
+<tr>
+<td class="org-left">tax</td>
+<td class="org-left">full-value property-tax rate per $10,000.</td>
+</tr>
+
+<tr>
+<td class="org-left">ptratio</td>
+<td class="org-left">pupil-teacher ratio by town.</td>
+</tr>
+
+<tr>
+<td class="org-left">black</td>
+<td class="org-left">1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town.</td>
+</tr>
+
+<tr>
+<td class="org-left">lstat</td>
+<td class="org-left">lower status of the population (percent), percent of households with low locioeconomic status(低社会经济阶层家挺百分比)</td>
+</tr>
+
+<tr>
+<td class="org-left">medv</td>
+<td class="org-left">median value of owner-occupied homes in $1000s, median house value</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="color: #7aa6da;">library</span>(ISLR)
+str(Boston)
+</pre>
+</div>
+
+<pre class="example">
+'data.frame':	506 obs. of  14 variables:
+ $ crim   : num  0.00632 0.02731 0.02729 0.03237 0.06905 ...
+ $ zn     : num  18 0 0 0 0 0 12.5 12.5 12.5 12.5 ...
+ $ indus  : num  2.31 7.07 7.07 2.18 2.18 2.18 7.87 7.87 7.87 7.87 ...
+ $ chas   : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ nox    : num  0.538 0.469 0.469 0.458 0.458 0.458 0.524 0.524 0.524 0.524 ...
+ $ rm     : num  6.58 6.42 7.18 7 7.15 ...
+ $ age    : num  65.2 78.9 61.1 45.8 54.2 58.7 66.6 96.1 100 85.9 ...
+ $ dis    : num  4.09 4.97 4.97 6.06 6.06 ...
+ $ rad    : int  1 2 2 3 3 3 5 5 5 5 ...
+ $ tax    : num  296 242 242 222 222 222 311 311 311 311 ...
+ $ ptratio: num  15.3 17.8 17.8 18.7 18.7 18.7 15.2 15.2 15.2 15.2 ...
+ $ black  : num  397 397 393 395 397 ...
+ $ lstat  : num  4.98 9.14 4.03 2.94 5.33 ...
+ $ medv   : num  24 21.6 34.7 33.4 36.2 28.7 22.9 27.1 16.5 18.9 ...
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline7" class="outline-2">
+<h2 id="orgheadline7">Statistical learning</h2>
+<div class="outline-text-2" id="text-orgheadline7">
+</div><div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6">Lab: Introduction to R</h3>
+<div class="outline-text-3" id="text-orgheadline6">
+<div class="org-src-container">
+
+<pre class="src src-R" id="orgsrcblock2"><span style="color: #7aa6da;">library</span>(ggplot2)
+<span style="color: #7aa6da;">library</span>(dplyr)
+<span style="color: #7aa6da;">library</span>(GGally)
+<span style="color: #7aa6da;">library</span>(ISLR)
+
+x <span style="color: #7aa6da;">&lt;-</span> rnorm(50)
+y <span style="color: #7aa6da;">&lt;-</span> x + rnorm(50, mean = 50, sd = .1)
+
+<span style="color: #969896; font-style: italic;">## </span><span style="color: #969896; font-style: italic;">&#30456;&#20851;&#31995;&#25968;&#65292;&#20004;&#20010;&#21521;&#37327;&#30340;&#30456;&#20851;&#31995;&#25968;</span>
+sum( (x - mean(x)) * (y - mean(y)) ) / (length(x) - 1) / sd(x) / sd(y) <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">E[(X - EX) (Y - EY)] / sd(X) / sd(Y) &lt;- sum[(X - X_bar) (Y - Y_bar)] / (n - 1) / sd(X) / sd(Y)</span>
+cor(x, y)
+
+<span style="color: #969896; font-style: italic;">## </span><span style="color: #969896; font-style: italic;">&#21327;&#26041;&#24046;&#65292;&#33509;&#22823;&#20110;0&#65292;&#34920;&#26126;&#20004;&#20010;&#21521;&#37327;&#21464;&#21270;&#19968;&#33268;&#65288;&#21516;&#22686;&#65292;&#21516;&#20943;&#65289;</span>
+sum( (x - mean(x)) * (y - mean(y)) ) / (length(x) - 1) <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">E[(X - EX) (Y - EY)] &lt;- sum[(X - X_bar) (Y - Y_bar)] / (n - 1)</span>
+cov(x, y)
+
+<span style="color: #969896; font-style: italic;">## </span><span style="color: #969896; font-style: italic;">3d plot</span>
+x <span style="color: #7aa6da;">&lt;-</span> seq( -pi, pi, length = 50)
+y <span style="color: #7aa6da;">&lt;-</span> x
+z <span style="color: #7aa6da;">&lt;-</span> outer(x, y, <span style="color: #b9ca4a;">function</span>(x, y) cos(y) / (1 + x^2)) <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">outer product</span>
+<span style="color: #969896; font-style: italic;">## </span><span style="color: #969896; font-style: italic;">contour(x, y, z, nlevels = 20) # use geom_contour()</span>
+<span style="color: #969896; font-style: italic;">## </span><span style="color: #969896; font-style: italic;">image(x, y, z)</span>
+<span style="color: #969896; font-style: italic;">## </span><span style="color: #969896; font-style: italic;">persp(x, y, z)</span>
+df <span style="color: #7aa6da;">&lt;-</span> expand.grid(x = x, y = y) %&gt;% mutate(z = cos(y) / (1 + x^2))
+ggplot(data = df, aes(x = x, y = y, z = z, fill = z)) + geom_tile() + geom_contour(color = <span style="color: #70c0b1;">"white"</span>, alpha = .5) + scale_fill_gradient(low = <span style="color: #70c0b1;">"lightblue"</span>, high = <span style="color: #70c0b1;">"magenta"</span>)
+
+<span style="color: #969896; font-style: italic;">## </span><span style="color: #969896; font-style: italic;">paris</span>
+<span style="color: #969896; font-style: italic;">## </span><span style="color: #969896; font-style: italic;">fix(Auto)                               # &#20462;&#29702;&#25968;&#25454;</span>
+<span style="color: #969896; font-style: italic;">## </span><span style="color: #969896; font-style: italic;">pairs(Auto)                             # use ggparis()</span>
+ggpairs(Auto[, c(1:8)])                    <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">preferred</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="../images/hi_3d.svg" >
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-orgheadline8" class="outline-2">
+<h2 id="orgheadline8">Linear regression</h2>
+<div class="outline-text-2" id="text-orgheadline8">
+<ul class="org-ul">
+<li>confidence interval VS prediction interval</li>
+<li>R^2</li>
+<li>RSE</li>
+<li>F-statistic</li>
+<li>VIF</li>
+</ul>
+</div>
+
+<div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15">Lab: linear regression</h3>
+<div class="outline-text-3" id="text-orgheadline15">
+</div><div id="outline-container-orgheadline9" class="outline-4">
+<h4 id="orgheadline9">Explore data</h4>
+<div class="outline-text-4" id="text-orgheadline9">
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="color: #7aa6da;">library</span>(ISLR)
+<span style="color: #7aa6da;">library</span>(ggplot2)
+<span style="color: #7aa6da;">library</span>(GGally)
+ggpairs(Boston)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/Boston_paris.png" alt="Boston_paris.png" />
+</p>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgheadline10" class="outline-4">
+<h4 id="orgheadline10">Simple linear regression</h4>
+<div class="outline-text-4" id="text-orgheadline10">
+<p>
+Regressing medv(房价中位数) onto lstat(低社会经济阶层家庭百分比) using simple linear regression.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="color: #969896; font-style: italic;">### </span><span style="color: #969896; font-style: italic;">* Load library</span>
+<span style="color: #7aa6da;">library</span>(MASS)        <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">large collections of datasets and functions</span>
+<span style="color: #7aa6da;">library</span>(ISLR)        <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">functions and datasets assoicated with ISL book</span>
+
+<span style="color: #969896; font-style: italic;">### </span><span style="color: #969896; font-style: italic;">* Explore data</span>
+str(Boston)
+
+<span style="color: #969896; font-style: italic;">### </span><span style="color: #969896; font-style: italic;">* Fit</span>
+simple_linear_regression_model <span style="color: #7aa6da;">&lt;-</span> lm(medv ~ lstat, data = Boston)
+
+<span style="color: #969896; font-style: italic;">### </span><span style="color: #969896; font-style: italic;">** RSE, R^2, F-statistic</span>
+<span style="color: #969896; font-style: italic;">## </span><span style="color: #969896; font-style: italic;">RSE: residual standard error, estimate of sigma_epsilon</span>
+<span style="color: #969896; font-style: italic;">## </span><span style="color: #969896; font-style: italic;">R^2: [0, 1],  1 - RSS/TSS,  0 ~ denotes the same performance of mean(y), 1 denotes perfect</span>
+<span style="color: #969896; font-style: italic;">## </span><span style="color: #969896; font-style: italic;">F-statistic: H_0: beta_1 = beta_2 = beta_p = 0, if &gt; 1, reject H_0</span>
+summary(simple_linear_regression_model)
+coef(simple_linear_regression_model)
+<span style="color: #969896; font-style: italic;">## </span><span style="color: #969896; font-style: italic;">Confidence interval of beta, more understandabel than p-value</span>
+confint(simple_linear_regression_model) <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">beta_0 + c( -1, 1) * qt(.975, dof) * se(beta_0)</span>
+
+<span style="color: #969896; font-style: italic;">### </span><span style="color: #969896; font-style: italic;">* Predict</span>
+predict(simple_linear_regression_model, data.frame(lstat = c(5, 10, 15)))
+predict(simple_linear_regression_model, data.frame(lstat = c(5, 10, 15)), interval=<span style="color: #70c0b1;">"prediction"</span>)
+predict(simple_linear_regression_model, data.frame(lstat = c(5, 10, 15)), interval=<span style="color: #70c0b1;">"confidence"</span>)
+</pre>
+</div>
+
+<pre class="example">
+'data.frame':	506 obs. of  14 variables:
+ $ crim   : num  0.00632 0.02731 0.02729 0.03237 0.06905 ...
+ $ zn     : num  18 0 0 0 0 0 12.5 12.5 12.5 12.5 ...
+ $ indus  : num  2.31 7.07 7.07 2.18 2.18 2.18 7.87 7.87 7.87 7.87 ...
+ $ chas   : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ nox    : num  0.538 0.469 0.469 0.458 0.458 0.458 0.524 0.524 0.524 0.524 ...
+ $ rm     : num  6.58 6.42 7.18 7 7.15 ...
+ $ age    : num  65.2 78.9 61.1 45.8 54.2 58.7 66.6 96.1 100 85.9 ...
+ $ dis    : num  4.09 4.97 4.97 6.06 6.06 ...
+ $ rad    : int  1 2 2 3 3 3 5 5 5 5 ...
+ $ tax    : num  296 242 242 222 222 222 311 311 311 311 ...
+ $ ptratio: num  15.3 17.8 17.8 18.7 18.7 18.7 15.2 15.2 15.2 15.2 ...
+ $ black  : num  397 397 393 395 397 ...
+ $ lstat  : num  4.98 9.14 4.03 2.94 5.33 ...
+ $ medv   : num  24 21.6 34.7 33.4 36.2 28.7 22.9 27.1 16.5 18.9 ...
+
+Call:
+lm(formula = medv ~ lstat, data = Boston)
+
+Residuals:
+    Min      1Q  Median      3Q     Max
+-15.168  -3.990  -1.318   2.034  24.500
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) 34.55384    0.56263   61.41   &lt;2e-16 ***
+lstat       -0.95005    0.03873  -24.53   &lt;2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6.216 on 504 degrees of freedom
+Multiple R-squared:  0.5441,	Adjusted R-squared:  0.5432
+F-statistic: 601.6 on 1 and 504 DF,  p-value: &lt; 2.2e-16
+(Intercept)       lstat
+ 34.5538409  -0.9500494
+                2.5 %     97.5 %
+(Intercept) 33.448457 35.6592247
+lstat       -1.026148 -0.8739505
+       1        2        3
+29.80359 25.05335 20.30310
+       fit       lwr      upr
+1 29.80359 17.565675 42.04151
+2 25.05335 12.827626 37.27907
+3 20.30310  8.077742 32.52846
+       fit      lwr      upr
+1 29.80359 29.00741 30.59978
+2 25.05335 24.47413 25.63256
+3 20.30310 19.73159 20.87461
+</pre>
+
+<p>
+Training dataset and fitted line:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R" id="orgsrcblock3">plot(Boston$lstat, Boston$medv, main = <span style="color: #70c0b1;">"simple linear regression(Training data)"</span>)
+abline(simple_linear_regression_model, col = <span style="color: #70c0b1;">"red"</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="../images/olm_traing_data.svg" >
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+
+<p>
+Using plot(lm_model) to get the four diagnostic plots. To study( normal QQ plot )
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R" id="orgsrcblock4">par(mfrow = c(2, 2))
+plot(simple_linear_regression_model)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="../images/olm_plot.svg" >
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+
+
+<p>
+Plot the diagnostic plot mannually.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R" id="orgsrcblock5">par(mfrow = c(2, 2))
+plot(predict(simple_linear_regression_model), residuals(simple_linear_regression_model), main = <span style="color: #70c0b1;">"residual plot"</span>)
+plot(predict(simple_linear_regression_model), rstudent(simple_linear_regression_model), main = <span style="color: #70c0b1;">"studentized residuals"</span>)
+plot(hatvalues(simple_linear_regression_model), main = <span style="color: #70c0b1;">"leverage statistics"</span>)
+plot(hatvalues(simple_linear_regression_model), rstudent(simple_linear_regression_model),
+     xlab = <span style="color: #70c0b1;">"leverage statistics"</span>,
+     ylab = <span style="color: #70c0b1;">"studentlized residuals"</span>,
+     main = <span style="color: #70c0b1;">"levearge statistics VS studentlized residuals"</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="../images/olm_residual_leverage.svg" >
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline11" class="outline-4">
+<h4 id="orgheadline11">Multiple linear regression</h4>
+<div class="outline-text-4" id="text-orgheadline11">
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="color: #7aa6da;">library</span>(ISLR)
+lm_two_feature <span style="color: #7aa6da;">&lt;-</span> lm(medv ~ lstat +  age,  data = Boston)
+summary(lm_two_feature)
+
+lm_all_feature <span style="color: #7aa6da;">&lt;-</span> lm(medv ~ .,  data = Boston) <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">. denotes other variable except medv?</span>
+summary(lm_all_feature)        <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">Find the feature with largest p value</span>
+
+<span style="color: #7aa6da;">library</span>(car)
+vif(lm_all_feature)
+
+<span style="color: #969896; font-style: italic;">## </span><span style="color: #969896; font-style: italic;">Remove features that has large p value,  i.e, 0.95 confidence intervel has 0</span>
+confint(lm_all_feature)                 <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">See age and indus</span>
+lm_all_but_age <span style="color: #7aa6da;">&lt;-</span> lm(medv ~ . - age, data = Boston)
+summary(lm_all_but_age)
+
+lm_all_but_age_indus <span style="color: #7aa6da;">&lt;-</span> lm(medv ~ . - age - indus, data = Boston)
+summary(lm_all_but_age_indus)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline12" class="outline-4">
+<h4 id="orgheadline12">Interacton terms</h4>
+<div class="outline-text-4" id="text-orgheadline12">
+<div class="org-src-container">
+
+<pre class="src src-R">summary(lm(medv ~ lstat * age, data = Boston))
+summary(lm(medv ~ lstat + age + lstat:age, data = Boston))
+</pre>
+</div>
+
+<pre class="example">
+Call:
+lm(formula = medv ~ lstat * age, data = Boston)
+
+Residuals:
+    Min      1Q  Median      3Q     Max
+-15.806  -4.045  -1.333   2.085  27.552
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) 36.0885359  1.4698355  24.553  &lt; 2e-16 ***
+lstat       -1.3921168  0.1674555  -8.313 8.78e-16 ***
+age         -0.0007209  0.0198792  -0.036   0.9711
+lstat:age    0.0041560  0.0018518   2.244   0.0252 *
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6.149 on 502 degrees of freedom
+Multiple R-squared:  0.5557,	Adjusted R-squared:  0.5531
+F-statistic: 209.3 on 3 and 502 DF,  p-value: &lt; 2.2e-16
+
+Call:
+lm(formula = medv ~ lstat + age + lstat:age, data = Boston)
+
+Residuals:
+    Min      1Q  Median      3Q     Max
+-15.806  -4.045  -1.333   2.085  27.552
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) 36.0885359  1.4698355  24.553  &lt; 2e-16 ***
+lstat       -1.3921168  0.1674555  -8.313 8.78e-16 ***
+age         -0.0007209  0.0198792  -0.036   0.9711
+lstat:age    0.0041560  0.0018518   2.244   0.0252 *
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6.149 on 502 degrees of freedom
+Multiple R-squared:  0.5557,	Adjusted R-squared:  0.5531
+F-statistic: 209.3 on 3 and 502 DF,  p-value: &lt; 2.2e-16
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline13" class="outline-4">
+<h4 id="orgheadline13">Non-linear transformations of the predictors</h4>
+<div class="outline-text-4" id="text-orgheadline13">
+<div class="org-src-container">
+
+<pre class="src src-R">lm_quad_lstat <span style="color: #7aa6da;">&lt;-</span> lm(medv ~ lstat + I(lstat^2), data = Boston)
+summary(lm_quad_lstat)
+anova(simple_linear_regression_model, lm_quad_lstat)
+par(mfrow = c(2, 2))
+plot(lm_quad_lstat)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="../images/olm_quad_lsat.svg" >
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+
+<p>
+It's shown that order greater than 5 have big p values.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R">lm_poly_lstat_8 <span style="color: #7aa6da;">&lt;-</span> lm(medv ~ poly(lstat, 8), data = Boston)
+summary(lm_poly_lstat_8)
+</pre>
+</div>
+
+<pre class="example">
+Call:
+lm(formula = medv ~ poly(lstat, 8), data = Boston)
+
+Residuals:
+     Min       1Q   Median       3Q      Max
+-13.7394  -3.1475  -0.7329   2.0959  26.9915
+
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)       22.5328     0.2317  97.233  &lt; 2e-16 ***
+poly(lstat, 8)1 -152.4595     5.2129 -29.247  &lt; 2e-16 ***
+poly(lstat, 8)2   64.2272     5.2129  12.321  &lt; 2e-16 ***
+poly(lstat, 8)3  -27.0511     5.2129  -5.189 3.08e-07 ***
+poly(lstat, 8)4   25.4517     5.2129   4.882 1.41e-06 ***
+poly(lstat, 8)5  -19.2524     5.2129  -3.693 0.000246 ***
+poly(lstat, 8)6    6.5088     5.2129   1.249 0.212404
+poly(lstat, 8)7    1.9416     5.2129   0.372 0.709703
+poly(lstat, 8)8   -6.7299     5.2129  -1.291 0.197302
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 5.213 on 497 degrees of freedom
+Multiple R-squared:  0.6838,	Adjusted R-squared:  0.6787
+F-statistic: 134.4 on 8 and 497 DF,  p-value: &lt; 2.2e-16
+</pre>
+
+<div class="org-src-container">
+
+<pre class="src src-R">plot(Boston$lstat, predict(lm_poly_lstat_8, data = Boston))
+</pre>
+</div>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="../images/olm_poly_8_order.svg" >
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+
+
+<div class="org-src-container">
+
+<pre class="src src-R">lm_poly_lstat_5 <span style="color: #7aa6da;">&lt;-</span> lm(medv ~ poly(lstat, 5), data = Boston)
+summary(lm_poly_lstat_5)
+</pre>
+</div>
+
+<pre class="example">
+Call:
+lm(formula = medv ~ poly(lstat, 5), data = Boston)
+
+Residuals:
+     Min       1Q   Median       3Q      Max
+-13.5433  -3.1039  -0.7052   2.0844  27.1153
+
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)       22.5328     0.2318  97.197  &lt; 2e-16 ***
+poly(lstat, 5)1 -152.4595     5.2148 -29.236  &lt; 2e-16 ***
+poly(lstat, 5)2   64.2272     5.2148  12.316  &lt; 2e-16 ***
+poly(lstat, 5)3  -27.0511     5.2148  -5.187 3.10e-07 ***
+poly(lstat, 5)4   25.4517     5.2148   4.881 1.42e-06 ***
+poly(lstat, 5)5  -19.2524     5.2148  -3.692 0.000247 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 5.215 on 500 degrees of freedom
+Multiple R-squared:  0.6817,	Adjusted R-squared:  0.6785
+F-statistic: 214.2 on 5 and 500 DF,  p-value: &lt; 2.2e-16
+</pre>
+
+<div class="org-src-container">
+
+<pre class="src src-R">plot(Boston$lstat, predict(lm_poly_lstat_5, data = Boston))
+</pre>
+</div>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="../images/olm_poly_5_order.svg" >
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+
+
+<div class="org-src-container">
+
+<pre class="src src-R">summary(lm(medv ~ log(rm), data=Boston))
+</pre>
+</div>
+
+<pre class="example">
+Call:
+lm(formula = medv ~ log(rm), data = Boston)
+
+Residuals:
+    Min      1Q  Median      3Q     Max
+-19.487  -2.875  -0.104   2.837  39.816
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)  -76.488      5.028  -15.21   &lt;2e-16 ***
+log(rm)       54.055      2.739   19.73   &lt;2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6.915 on 504 degrees of freedom
+Multiple R-squared:  0.4358,	Adjusted R-squared:  0.4347
+F-statistic: 389.3 on 1 and 504 DF,  p-value: &lt; 2.2e-16
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline14" class="outline-4">
+<h4 id="orgheadline14">Qualitative Predictors (Categracial Variable)</h4>
+<div class="outline-text-4" id="text-orgheadline14">
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="color: #7aa6da;">library</span>(ISLR)
+str(Carseats)
+
+lm_model <span style="color: #7aa6da;">&lt;-</span> lm(Sales ~ . + Income:Advertising + Price:Age, data = Carseats)
+summary(lm_model)
+contrasts(Carseats$ShelveLoc)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline16" class="outline-2">
+<h2 id="orgheadline16">Resampling method</h2>
+<div class="outline-text-2" id="text-orgheadline16">
+<div class="org-src-container">
+
+<pre class="src src-R" id="orgsrcblock6"><span style="color: #7aa6da;">library</span>(ISLR)
+<span style="color: #7aa6da;">library</span>(ggplot2)
+
+<span style="color: #969896; font-style: italic;">## </span><span style="color: #969896; font-style: italic;">Validation Approach, each random split will get different test_MSE</span>
+<span style="color: #7aa6da;">attach</span>(Auto)
+seed_list <span style="color: #7aa6da;">&lt;-</span> c(1:10) + 20
+degree_list <span style="color: #7aa6da;">&lt;-</span> c(1:10)
+df_MSE <span style="color: #7aa6da;">&lt;-</span> data.frame()
+<span style="color: #b9ca4a;">for</span> (seed <span style="color: #b9ca4a;">in</span> seed_list) {
+    <span style="color: #969896; font-style: italic;">## </span><span style="color: #969896; font-style: italic;">Split data into traing and test set</span>
+    set.seed(seed)
+    train <span style="color: #7aa6da;">&lt;-</span> sample(392, 196)
+
+    <span style="color: #969896; font-style: italic;">## </span><span style="color: #969896; font-style: italic;">Fit for each degree</span>
+    <span style="color: #b9ca4a;">for</span> (degree <span style="color: #b9ca4a;">in</span> degree_list) {
+        poly_fit <span style="color: #7aa6da;">&lt;-</span> lm(mpg ~ poly(horsepower, degree), data = Auto, subset = train) <span style="color: #969896; font-style: italic;">## </span><span style="color: #969896; font-style: italic;">mpg: miles per gallon</span>
+        test_MSE <span style="color: #7aa6da;">&lt;-</span> mean((mpg - predict(poly_fit, Auto))[ -train]^2)
+        df_MSE <span style="color: #7aa6da;">&lt;-</span> rbind(df_MSE, data.frame(seed = seed, test_MSE = test_MSE, degree = degree))
+    }
+}
+
+ggplot(data = df_MSE, aes(x = degree, y = test_MSE, color = factor(seed))) + geom_line() + ggtitle(<span style="color: #70c0b1;">"Validation Set Approach"</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/validation_approach.png" alt="validation_approach.png" />
+</p>
+</div>
+
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="orgsrcblock7"><span style="color: #969896; font-style: italic;">## </span><span style="color: #969896; font-style: italic;">Leave - one - out Cross validation</span>
+glm_fit <span style="color: #7aa6da;">&lt;-</span> glm(mpg ~ horsepower,  data = Auto, family = gaussian)
+lm_fit <span style="color: #7aa6da;">&lt;-</span> lm(mpg ~ horsepower, data = Auto)
+coef(glm_fit)
+coef(lm_fit)
+
+<span style="color: #7aa6da;">library</span>(boot)
+df_MSE_loocv <span style="color: #7aa6da;">&lt;-</span> data.frame()
+<span style="color: #b9ca4a;">for</span> (degree <span style="color: #b9ca4a;">in</span> degree_list) {
+    glm_fit <span style="color: #7aa6da;">&lt;-</span> glm(mpg ~ poly(horsepower, degree), data = Auto)
+    test_MSE_loocv <span style="color: #7aa6da;">&lt;-</span> cv.glm(Auto, glm_fit)$delta[1]
+    df_MSE_loocv <span style="color: #7aa6da;">&lt;-</span> rbind(df_MSE_loocv, data.frame(degree = degree, MSE = test_MSE_loocv))
+}
+ggplot(data = df_MSE_loocv, aes(x = degree, y = MSE)) + geom_line() + ggtitle(<span style="color: #70c0b1;">"LOOCV"</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/leave_one_out_cross_validation.png" alt="leave_one_out_cross_validation.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="orgsrcblock8"><span style="color: #969896; font-style: italic;">## </span><span style="color: #969896; font-style: italic;">k - fold CV</span>
+k = 10
+df_MSE_kfold_cv <span style="color: #7aa6da;">&lt;-</span> data.frame()
+<span style="color: #b9ca4a;">for</span> (degree <span style="color: #b9ca4a;">in</span> degree_list) {
+    glm_fit <span style="color: #7aa6da;">&lt;-</span> glm(mpg ~ poly(horsepower, degree), data = Auto)
+    test_MSE_kfold_cv <span style="color: #7aa6da;">&lt;-</span> cv.glm(Auto, glm_fit, K = k)$delta[1]
+    df_MSE_kfold_cv <span style="color: #7aa6da;">&lt;-</span> rbind(df_MSE_kfold_cv, data.frame(degree = degree, MSE = test_MSE_kfold_cv))
+}
+ggplot(data = df_MSE_kfold_cv, aes(x = degree, y = MSE)) +  geom_line() + ggtitle(<span style="color: #70c0b1;">"10 - fold CV"</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/k_fold_cv.png" alt="k_fold_cv.png" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline17" class="outline-2">
+<h2 id="orgheadline17">others</h2>
+<div class="outline-text-2" id="text-orgheadline17">
+<p>
+Cov Matrix, correlation coeffecient matrix:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R">x1 <span style="color: #7aa6da;">&lt;-</span> rnorm(100, mean=0, sd=2)
+x2 <span style="color: #7aa6da;">&lt;-</span> rnorm(100, mean=2, sd=4)
+x3 <span style="color: #7aa6da;">&lt;-</span> rnorm(100, mean=10, sd=20)
+df <span style="color: #7aa6da;">&lt;-</span> data.frame(x1 = x1, x2=x2, x3=x3)
+
+cov_df <span style="color: #7aa6da;">&lt;-</span> cov(df) <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">coveariance matrix</span>
+cor_df <span style="color: #7aa6da;">&lt;-</span> cor(df) <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">correlation coefficient matrix</span>
+
+<span style="color: #7aa6da;">library</span>(corrplot)
+corrplot(cor_df, method=<span style="color: #70c0b1;">"number"</span>)
+
+
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">library(ggplot2)</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">pred.gbm &lt;- p</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">accuracy = recall = specificity = sensitivity =Num=accuracyNum= NULL</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">boost&lt;-0.01</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">cutoffPoint=seq(0,1,boost)</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">for (i in 1:length(cutoffPoint))</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">{</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">c1 &lt;- cutoffPoint[i]</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">pred &lt;- 1*(pred.gbm &gt;=c1)</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">#specificity[i] &lt;- sum((pred==1) &amp; (test$id == 1))/sum(pred == 1)</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">#sensitivity[i] &lt;- sum((pred==1) &amp; (test$id==1))/sum(test$id==1)</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">recall[i] &lt;- sum((pred==1) &amp; (test$id==1))/sum(test$id==1)</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">accuracy[i] &lt;- sum((pred==1) &amp; (test$id==1))/sum(pred==1)</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">accuracyNum[i]&lt;-sum((pred==1) &amp; (test$id==1))</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">Num[i]&lt;-sum(pred==1)</span>
+
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">}</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">roc.result &lt;- data.frame(cutoffPoint, accuracy, recall,accuracyNum,Num)</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">ggplot(data = roc.result)+geom_line(aes(x= cutoffPoint , y= accuracy))</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">View(roc.result)</span>
+
+
+
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">#&#23450;&#20041;&#19981;&#21516;&#20998;&#20540;&#27573;&#30340;&#28385;&#25151;&#29575;</span>
+
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">pred.gbm &lt;- p</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">accuracy = recall = specificity = sensitivity =Num=accuracyNum= NULL</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">boost&lt;-0.02</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">cutoffPoint=seq(0,1,boost)</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">for (i in 1:length(cutoffPoint))</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">{</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">c1 &lt;- cutoffPoint[i]</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">pred &lt;- 1*(pred.gbm &gt;=c1 &amp; pred.gbm &lt;c1+boost)</span>
+
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">recall[i] &lt;- sum((pred==1) &amp; (test$id==1))/sum(test$id==1)</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">accuracy[i] &lt;- sum((pred==1) &amp; (test$id==1))/sum(pred==1)</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">accuracyNum[i]&lt;-sum((pred==1) &amp; (test$id==1))</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">Num[i]&lt;-sum(pred==1)</span>
+
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">}</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">roc.result &lt;- data.frame(cutoffPoint, accuracy, recall,accuracyNum,Num)</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">ggplot(data = roc.result)+geom_line(aes(x= cutoffPoint , y= accuracy))</span>
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">View(roc.result)</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="../images/cor_cov_matrix.svg" >
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<div id="license"><p>Powered by Emacs Org</p></div>
+</div>
+</body>
+</html>
