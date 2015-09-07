@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2015-09-08 Tue 01:05 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>ISL summary</title>
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Jacky Wang" />
+<link rel="stylesheet" title="Standard" href="/style/worg.css" type="text/css" />
+<link rel="alternate stylesheet" title="Zenburn" href="/style/worg-zenburn.css" type="text/css" />
+<link rel="alternate stylesheet" title="Classic" href="/style/worg-classic.css" type="text/css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded',function() {
+      document.getElementById("table-of-contents").onclick = function() {
+          var elem = document.getElementById("text-table-of-contents");
+          elem.style.display = elem.style.display == "block" ? "none" : "block";
+      }
+  });
+</script>
+</div>
+<div id="content">
+<h1 class="title">ISL summary</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline5">Introduction</a>
+<ul>
+<li><a href="#orgheadline1">History of statistical learning</a></li>
+<li><a href="#orgheadline4">Data set using in ISL</a>
+<ul>
+<li><a href="#orgheadline2">Wage</a></li>
+<li><a href="#orgheadline3">Boston</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgheadline10">Statistical learning</a>
+<ul>
+<li><a href="#orgheadline9">Lab: Introduction to R</a>
+<ul>
+<li><a href="#orgheadline6"><i>cov</i> VS <i>cor</i></a></li>
+<li><a href="#orgheadline7">3d plot in R</a></li>
+<li><a href="#orgheadline8">Plot scatter matrix</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+<a href="index.html">Home</a>
+</p>
+
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5">Introduction</h2>
+<div class="outline-text-2" id="text-orgheadline5">
+</div><div id="outline-container-orgheadline1" class="outline-3">
+<h3 id="orgheadline1">History of statistical learning</h3>
+<div class="outline-text-3" id="text-orgheadline1">
+<ul class="org-ul">
+<li>linear -&gt; non-linear</li>
+<li>olm -&gt; glm</li>
+<li>tree -&gt; gam -&gt; boosting/bagging</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="../images/ISL_history_of_statiscal_learning.png" alt="ISL_history_of_statiscal_learning.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4">Data set using in ISL</h3>
+<div class="outline-text-3" id="text-orgheadline4">
+</div><div id="outline-container-orgheadline2" class="outline-4">
+<h4 id="orgheadline2">Wage</h4>
+<div class="outline-text-4" id="text-orgheadline2">
+<table id="orgtable1" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">year</td>
+<td class="org-left">Year that wage information was recorded</td>
+</tr>
+
+<tr>
+<td class="org-left">age</td>
+<td class="org-left">Age of worker</td>
+</tr>
+
+<tr>
+<td class="org-left">sex</td>
+<td class="org-left">Gender</td>
+</tr>
+
+<tr>
+<td class="org-left">maritl</td>
+<td class="org-left">A factor with levels '1. Never Married' '2. Married' '3. Widowed' '4. Divorced' and '5. Separated' indicating marital status</td>
+</tr>
+
+<tr>
+<td class="org-left">race</td>
+<td class="org-left">A factor with levels '1. White' '2. Black' '3. Asian' and '4. Other' indicating race</td>
+</tr>
+
+<tr>
+<td class="org-left">education</td>
+<td class="org-left">A factor with levels '1. &lt; HS Grad' '2. HS Grad' '3. Some College' '4. College Grad' and '5. Advanced Degree' indicating education level</td>
+</tr>
+
+<tr>
+<td class="org-left">region</td>
+<td class="org-left">Region of the country (mid-atlantic only)</td>
+</tr>
+
+<tr>
+<td class="org-left">jobclass</td>
+<td class="org-left">A factor with levels '1. Industrial' and '2. Information' indicating type of job</td>
+</tr>
+
+<tr>
+<td class="org-left">health</td>
+<td class="org-left">A factor with levels '1. &lt;=Good' and '2. &gt;=Very Good' indicating health level of worker</td>
+</tr>
+
+<tr>
+<td class="org-left">health_ins</td>
+<td class="org-left">A factor with levels '1. Yes' and '2. No' indicating whether worker has health insurance</td>
+</tr>
+
+<tr>
+<td class="org-left">logwage</td>
+<td class="org-left">Log of workers wage</td>
+</tr>
+
+<tr>
+<td class="org-left">wage</td>
+<td class="org-left">Workers raw wage</td>
+</tr>
+</tbody>
+</table>
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="font-weight: bold; text-decoration: underline;">library</span>(ISLR)
+str(Wage)
+</pre>
+</div>
+
+<pre class="example">
+'data.frame':	3000 obs. of  12 variables:
+ $ year      : int  2006 2004 2003 2003 2005 2008 2009 2008 2006 2004 ...
+ $ age       : int  18 24 45 43 50 54 44 30 41 52 ...
+ $ sex       : Factor w/ 2 levels "1. Male","2. Female": 1 1 1 1 1 1 1 1 1 1 ...
+ $ maritl    : Factor w/ 5 levels "1. Never Married",..: 1 1 2 2 4 2 2 1 1 2 ...
+ $ race      : Factor w/ 4 levels "1. White","2. Black",..: 1 1 1 3 1 1 4 3 2 1 ...
+ $ education : Factor w/ 5 levels "1. &lt; HS Grad",..: 1 4 3 4 2 4 3 3 3 2 ...
+ $ region    : Factor w/ 9 levels "1. New England",..: 2 2 2 2 2 2 2 2 2 2 ...
+ $ jobclass  : Factor w/ 2 levels "1. Industrial",..: 1 2 1 2 2 2 1 2 2 2 ...
+ $ health    : Factor w/ 2 levels "1. &lt;=Good","2. &gt;=Very Good": 1 2 1 2 1 2 2 1 2 2 ...
+ $ health_ins: Factor w/ 2 levels "1. Yes","2. No": 2 2 1 1 1 1 1 1 1 1 ...
+ $ logwage   : num  4.32 4.26 4.88 5.04 4.32 ...
+ $ wage      : num  75 70.5 131 154.7 75 ...
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-4">
+<h4 id="orgheadline3">Boston</h4>
+<div class="outline-text-4" id="text-orgheadline3">
+<table id="orgtable2" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">crim</td>
+<td class="org-left">per capita crime rate by town.</td>
+</tr>
+
+<tr>
+<td class="org-left">zn</td>
+<td class="org-left">proportion of residential land zoned for lots over 25,000 sq.ft.</td>
+</tr>
+
+<tr>
+<td class="org-left">indus</td>
+<td class="org-left">proportion of non-retail business acres per town.</td>
+</tr>
+
+<tr>
+<td class="org-left">chas</td>
+<td class="org-left">Charles River dummy variable (= 1 if tract bounds river; 0 otherwise).</td>
+</tr>
+
+<tr>
+<td class="org-left">nox</td>
+<td class="org-left">nitrogen oxides concentration (parts per 10 million).</td>
+</tr>
+
+<tr>
+<td class="org-left">rm</td>
+<td class="org-left">average number of rooms per dwelling(e.g, house).</td>
+</tr>
+
+<tr>
+<td class="org-left">age</td>
+<td class="org-left">proportion of owner-occupied units built prior to 1940.</td>
+</tr>
+
+<tr>
+<td class="org-left">dis</td>
+<td class="org-left">weighted mean of distances to five Boston employment centres.</td>
+</tr>
+
+<tr>
+<td class="org-left">rad</td>
+<td class="org-left">index of accessibility to radial highways.</td>
+</tr>
+
+<tr>
+<td class="org-left">tax</td>
+<td class="org-left">full-value property-tax rate per $10,000.</td>
+</tr>
+
+<tr>
+<td class="org-left">ptratio</td>
+<td class="org-left">pupil-teacher ratio by town.</td>
+</tr>
+
+<tr>
+<td class="org-left">black</td>
+<td class="org-left">1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town.</td>
+</tr>
+
+<tr>
+<td class="org-left">lstat</td>
+<td class="org-left">lower status of the population (percent), percent of households with low locioeconomic status(低社会经济阶层家挺百分比)</td>
+</tr>
+
+<tr>
+<td class="org-left">medv</td>
+<td class="org-left">median value of owner-occupied homes in $1000s, median house value</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="font-weight: bold; text-decoration: underline;">library</span>(MASS)
+str(Boston)
+</pre>
+</div>
+
+<pre class="example">
+'data.frame':	506 obs. of  14 variables:
+ $ crim   : num  0.00632 0.02731 0.02729 0.03237 0.06905 ...
+ $ zn     : num  18 0 0 0 0 0 12.5 12.5 12.5 12.5 ...
+ $ indus  : num  2.31 7.07 7.07 2.18 2.18 2.18 7.87 7.87 7.87 7.87 ...
+ $ chas   : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ nox    : num  0.538 0.469 0.469 0.458 0.458 0.458 0.524 0.524 0.524 0.524 ...
+ $ rm     : num  6.58 6.42 7.18 7 7.15 ...
+ $ age    : num  65.2 78.9 61.1 45.8 54.2 58.7 66.6 96.1 100 85.9 ...
+ $ dis    : num  4.09 4.97 4.97 6.06 6.06 ...
+ $ rad    : int  1 2 2 3 3 3 5 5 5 5 ...
+ $ tax    : num  296 242 242 222 222 222 311 311 311 311 ...
+ $ ptratio: num  15.3 17.8 17.8 18.7 18.7 18.7 15.2 15.2 15.2 15.2 ...
+ $ black  : num  397 397 393 395 397 ...
+ $ lstat  : num  4.98 9.14 4.03 2.94 5.33 ...
+ $ medv   : num  24 21.6 34.7 33.4 36.2 28.7 22.9 27.1 16.5 18.9 ...
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline10" class="outline-2">
+<h2 id="orgheadline10">Statistical learning</h2>
+<div class="outline-text-2" id="text-orgheadline10">
+</div><div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9">Lab: Introduction to R</h3>
+<div class="outline-text-3" id="text-orgheadline9">
+</div><div id="outline-container-orgheadline6" class="outline-4">
+<h4 id="orgheadline6"><i>cov</i> VS <i>cor</i></h4>
+<div class="outline-text-4" id="text-orgheadline6">
+<div class="org-src-container">
+
+<pre class="src src-R" id="orgsrcblock1"><span style="font-weight: bold; text-decoration: underline;">library</span>(ggplot2)
+<span style="font-weight: bold; text-decoration: underline;">library</span>(dplyr)
+<span style="font-weight: bold; text-decoration: underline;">library</span>(GGally)
+<span style="font-weight: bold; text-decoration: underline;">library</span>(ISLR)
+
+x <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> rnorm(50)
+y <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> x + rnorm(50, mean = 50, sd = .1)
+
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">&#30456;&#20851;&#31995;&#25968;&#65292;&#20004;&#20010;&#31561;&#38271;&#21521;&#37327;&#30340;&#30456;&#20851;&#31995;&#25968;&#65292;&#24402;&#19968;&#21270;&#30340;&#21327;&#26041;&#24046;</span>
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">E[(X - EX) (Y - EY)] / sd(X) / sd(Y) &lt;- sum[(X - X_bar) (Y - Y_bar)] / (n - 1) / sd(X) / sd(Y)</span>
+sum( (x - mean(x)) * (y - mean(y)) ) / (length(x) - 1) / sd(x) / sd(y)
+cor(x, y)
+
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">&#21327;&#26041;&#24046;&#65292;&#33509;&#22823;&#20110;0&#65292;&#34920;&#26126;&#20004;&#20010;&#21521;&#37327;&#21464;&#21270;&#19968;&#33268;&#65288;&#21516;&#22686;&#65292;&#21516;&#20943;&#65289;</span>
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">E[(X - EX) (Y - EY)] &lt;- sum[(X - X_bar) (Y - Y_bar)] / (n - 1)</span>
+sum( (x - mean(x)) * (y - mean(y)) ) / (length(x) - 1)
+cov(x, y)
+</pre>
+</div>
+
+<pre class="example">
+Attaching package: ‘dplyr’
+
+The following object is masked from ‘package:MASS’:
+
+    select
+
+The following object is masked from ‘package:stats’:
+
+    filter
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Attaching package: ‘GGally’
+
+The following object is masked from ‘package:dplyr’:
+
+    nasa
+[1] 0.9940893
+[1] 0.9940893
+[1] 0.9364318
+[1] 0.9364318
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-4">
+<h4 id="orgheadline7">3d plot in R</h4>
+<div class="outline-text-4" id="text-orgheadline7">
+<div class="org-src-container">
+
+<pre class="src src-R" id="orgsrcblock2"><span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">3d plot</span>
+x <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> seq(-pi, pi, length = 50)
+y <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> x
+z <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> outer(x, y, <span style="font-weight: bold;">function</span>(x, y) cos(y) / (1 + x^2)) <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">outer product</span>
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">contour(x, y, z, nlevels = 20) # use geom_contour()</span>
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">image(x, y, z)</span>
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">persp(x, y, z)</span>
+df <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> expand.grid(x = x, y = y) %&gt;% mutate(z = cos(y) / (1 + x^2))
+ggplot(data = df, aes(x = x, y = y, z = z, fill = z)) +
+    geom_tile() + geom_contour(color = <span style="font-style: italic;">"white"</span>, alpha = .5) +
+        scale_fill_gradient(low = <span style="font-style: italic;">"lightblue"</span>, high = <span style="font-style: italic;">"magenta"</span>) +
+            ggtitle(<span style="font-style: italic;">"z = cos(y) / (1 + x^2)"</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="../images/ISL_3d_in_R.svg" >
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-4">
+<h4 id="orgheadline8">Plot scatter matrix</h4>
+<div class="outline-text-4" id="text-orgheadline8">
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">Plot scatter matrix</span>
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">fix(Auto)                               # fix means repair or mend the data frame</span>
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">pairs(Auto)                             # use ggparis()</span>
+ggpairs(Auto[, c(1:8)])                 <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">preferred</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="../images/ISL_scatter_matrix_plot.svg" >
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.1 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p></div>
+</div>
+</body>
+</html>
