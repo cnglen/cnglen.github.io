@@ -1,0 +1,965 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2015-09-10 Thu 08:55 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>Linear regression</title>
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Jacky Wang" />
+<link rel="stylesheet" title="Standard" href="/style/worg.css" type="text/css" />
+<link rel="alternate stylesheet" title="Zenburn" href="/style/worg-zenburn.css" type="text/css" />
+<link rel="alternate stylesheet" title="Classic" href="/style/worg-classic.css" type="text/css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="preamble" class="status">
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded',function() {
+      document.getElementById("table-of-contents").onclick = function() {
+          var elem = document.getElementById("text-table-of-contents");
+          elem.style.display = elem.style.display == "block" ? "none" : "block";
+      }
+  });
+</script>
+</div>
+<div id="content">
+<h1 class="title">Linear regression</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">Using a single number for estimation</a></li>
+<li><a href="#orgheadline4">Model related concept</a>
+<ul>
+<li><a href="#orgheadline2">Model assessment parameters, which are shown in <i>summary(lm())</i></a></li>
+<li><a href="#orgheadline3">Other</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline13">Lab: linear regression</a>
+<ul>
+<li><a href="#orgheadline5">Explore data</a></li>
+<li><a href="#orgheadline6">Simple linear regression</a></li>
+<li><a href="#orgheadline7">Multiple linear regression</a></li>
+<li><a href="#orgheadline8">Performance on training data:</a></li>
+<li><a href="#orgheadline9">Interacton terms: [removing additive assumation]</a></li>
+<li><a href="#orgheadline10">Non-linear transformations of the predictors</a></li>
+<li><a href="#orgheadline11">Qualitative Predictors (Categracial Variable)</a></li>
+<li><a href="#orgheadline12">Assumations</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+<a href="../index.html">Home</a>
+</p>
+
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1">Using a single number for estimation</h2>
+<div class="outline-text-2" id="text-orgheadline1">
+<p>
+Given \(\mathbf{y}=[y_1, y_2, ..., y_n]^{T}\), Find
+</p>
+\begin{equation}
+\hat{y}_{best} = \arg\min_{\hat{y}} RSS = \arg\min_{\hat{y}} \sum_{i=1}^{n}(y_i - \hat{y})^2
+\end{equation}
+
+<p>
+<span class="underline">Solution</span>:
+</p>
+<ul class="org-ul">
+<li>Rewrite RSS as \(RSS=A \hat{y}^{2} + B \hat{y} + C\), note that
+\(A=n>0\), thus using the basic knowledge from high school, we get
+\(\hat{y}_{best}=-\frac{B}{2A}\).</li>
+
+<li><p>
+Or we can:
+</p>
+\begin{equation}
+\frac{\partial RSS}{\partial \hat{y}} = \sum_{i=1}^{n} 2(y_i - \hat{y}) (-1)=0
+\end{equation}</li>
+<li>Thus, \(\hat{y}_{best}=mean(\mathbf{y})\), which is used in:
+<ul class="org-ul">
+<li>calculating <i>TSS</i></li>
+<li><i>kNN regression</i> (For a observation's neighbors)</li>
+<li>and <i>regression tree</i> (For each leaf/terminal node)</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-2">
+<h2 id="orgheadline4">Model related concept</h2>
+<div class="outline-text-2" id="text-orgheadline4">
+</div><div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2">Model assessment parameters, which are shown in <i>summary(lm())</i></h3>
+<div class="outline-text-3" id="text-orgheadline2">
+<ul class="org-ul">
+<li>\(R^2 = 1 - \frac{RSS}{TSS}\) where \(RSS = \sum_{i} (y_i - \hat{y}_i)^2\) and \(TSS = \sum_{i} (y_i - \bar{y})^2\)
+<ul class="org-ul">
+<li>\(R^2 = 1 \text{ if } RSS=0\)</li>
+<li>\(R^2 = 0 \text{ if } RSS=TSS\), i.e, using \(\bar{y}\) as the estimate for each observation.</li>
+<li>\(R^2 = \rho^2\) where \(\rho=cor(\mathbf{x}, \mathbf{y})\) if there are only one predictor, i.e, \(\mathbf{x}\in \mathcal{R}^{1}\).</li>
+</ul></li>
+<li>\(RSE = \sqrt{\frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{n-p}}\), sd of \(\epsilon\), \(RSE^2\) is the power of noise</li>
+<li>If F-statistic &gt;&gt; 1, reject \(H_0\)
+<ul class="org-ul">
+<li>all regression coefficents are 0, \(H_0: \beta_0 = \beta_1 = ... \beta_p = 0\)</li>
+<li>\(H_a\): at least one \(\beta_j\) is non zero</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3">Other</h3>
+<div class="outline-text-3" id="text-orgheadline3">
+<ul class="org-ul">
+<li>Confidence interval VS prediction interval?</li>
+<li>VIF: \(VIF(\beta_j) = \frac{1}{1-R^2_{X_j|X_{-j}}} =
+   f(R^2_{X_j|X_{-j}})\) VS 5. The larger VIF for \(X_j\), the more
+collinearity \(X_j\) with other predictors \(X_{-j}\)</li>
+<li>Leverage: \(h_i = \frac{1}{n} + \frac{ ||\mathbf{x}_i
+   -\hat{\mathbf{x}}_i||^2 }{\sum_{i^{'}=1}^{n} || \mathbf{x}_i
+   -\hat{\mathbf{x}}_i||^2 }\)</li>
+<li>Outlier: high residual</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline13" class="outline-2">
+<h2 id="orgheadline13">Lab: linear regression</h2>
+<div class="outline-text-2" id="text-orgheadline13">
+</div><div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5">Explore data</h3>
+<div class="outline-text-3" id="text-orgheadline5">
+<p>
+Use <i>ggpairs()</i> to plot the scatter matrix. It's show that <i>lstat</i>
+(-0.738) and <i>rm</i> (0.695) has the largest cor() with <i>medv</i>.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="font-weight: bold; text-decoration: underline;">library</span>(ISLR)
+<span style="font-weight: bold; text-decoration: underline;">library</span>(ggplot2)
+<span style="font-weight: bold; text-decoration: underline;">library</span>(GGally)
+<span style="font-weight: bold; text-decoration: underline;">library</span>(MASS)
+ggpairs(Boston)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/ISL_boston_pairs.png" alt="ISL_boston_pairs.png" />
+</p>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6">Simple linear regression</h3>
+<div class="outline-text-3" id="text-orgheadline6">
+<p>
+Regressing <i>medv</i> (房价中位数) onto <i>lstat</i> (低社会经济阶层家庭百分比) using simple linear regression.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="font-weight: bold; font-style: italic;">### </span><span style="font-weight: bold; font-style: italic;">* Load library</span>
+<span style="font-weight: bold; text-decoration: underline;">library</span>(MASS)        <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">large collections of datasets and functions</span>
+<span style="font-weight: bold; text-decoration: underline;">library</span>(ISLR)        <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">functions and datasets assoicated with ISL book</span>
+
+<span style="font-weight: bold; font-style: italic;">### </span><span style="font-weight: bold; font-style: italic;">* Explore data</span>
+str(Boston)
+
+<span style="font-weight: bold; font-style: italic;">### </span><span style="font-weight: bold; font-style: italic;">* Fit</span>
+simple_linear_regression_model <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ lstat, data = Boston)
+</pre>
+</div>
+
+<pre class="example">
+'data.frame':	506 obs. of  14 variables:
+ $ crim   : num  0.00632 0.02731 0.02729 0.03237 0.06905 ...
+ $ zn     : num  18 0 0 0 0 0 12.5 12.5 12.5 12.5 ...
+ $ indus  : num  2.31 7.07 7.07 2.18 2.18 2.18 7.87 7.87 7.87 7.87 ...
+ $ chas   : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ nox    : num  0.538 0.469 0.469 0.458 0.458 0.458 0.524 0.524 0.524 0.524 ...
+ $ rm     : num  6.58 6.42 7.18 7 7.15 ...
+ $ age    : num  65.2 78.9 61.1 45.8 54.2 58.7 66.6 96.1 100 85.9 ...
+ $ dis    : num  4.09 4.97 4.97 6.06 6.06 ...
+ $ rad    : int  1 2 2 3 3 3 5 5 5 5 ...
+ $ tax    : num  296 242 242 222 222 222 311 311 311 311 ...
+ $ ptratio: num  15.3 17.8 17.8 18.7 18.7 18.7 15.2 15.2 15.2 15.2 ...
+ $ black  : num  397 397 393 395 397 ...
+ $ lstat  : num  4.98 9.14 4.03 2.94 5.33 ...
+ $ medv   : num  24 21.6 34.7 33.4 36.2 28.7 22.9 27.1 16.5 18.9 ...
+</pre>
+
+
+<p>
+Model assessment result using $RSE, R^2, F$-statistic:
+</p>
+<ul class="org-ul">
+<li>\(RSE = 6.216\)</li>
+<li>\(R^2 = 54.32%\)</li>
+<li><i>F</i>-statistic = 601.1 &gt;&gt; 1, so we are able to reject \(H_0: \beta_0 = \beta_1 = 0\)</li>
+<li><i>p</i> value for both <i>intercept</i> \(\beta_0\) and <i>lstat</i> \(\beta_1\)
+are very small, so we are able to reject \(H_0: \beta_0=0\) and
+\(H_0: \beta_1=0\). Later we will use CI(Confidence interval) to get
+the same result.</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="font-weight: bold; font-style: italic;">### </span><span style="font-weight: bold; font-style: italic;">** RSE, R^2, F-statistic</span>
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">RSE: residual standard error, estimate of sigma_epsilon</span>
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">R^2: [0, 1],  1 - RSS/TSS,  0 ~ denotes the same performance of mean(y), 1 denotes perfect</span>
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">F-statistic: H_0: beta_1 = beta_2 = beta_p = 0, if &gt; 1, reject H_0</span>
+summary(simple_linear_regression_model)
+</pre>
+</div>
+
+<pre class="example">
+Call:
+lm(formula = medv ~ lstat, data = Boston)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-15.168  -3.990  -1.318   2.034  24.500 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 34.55384    0.56263   61.41   &lt;2e-16 ***
+lstat       -0.95005    0.03873  -24.53   &lt;2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6.216 on 504 degrees of freedom
+Multiple R-squared:  0.5441,	Adjusted R-squared:  0.5432 
+F-statistic: 601.6 on 1 and 504 DF,  p-value: &lt; 2.2e-16
+</pre>
+
+
+
+
+<p>
+Get the coefficients using <i>coef()</i> and their confidence interval using <i>confint()</i>:
+</p>
+<ul class="org-ul">
+<li>\([33.448457 35.6592247]\) doesn't include 0, thus reject \(H_0: \beta_0=0\)</li>
+<li>\([-1.026148 -0.8739505]\) doesn't include 0, thus reject \(H_0: \beta_1=lstat=0\)</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-R">coef(simple_linear_regression_model)
+
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">Confidence interval of beta, more understandabel than p-value</span>
+confint(simple_linear_regression_model) <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">beta_0 + c( -1, 1) * qt(.975, dof) * se(beta_0)</span>
+</pre>
+</div>
+
+<pre class="example">
+(Intercept)       lstat 
+ 34.5538409  -0.9500494
+                2.5 %     97.5 %
+(Intercept) 33.448457 35.6592247
+lstat       -1.026148 -0.8739505
+</pre>
+
+
+<p>
+Predict and get the confidence interval and predict interval.?
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="font-weight: bold; font-style: italic;">### </span><span style="font-weight: bold; font-style: italic;">* Predict</span>
+predict(simple_linear_regression_model, data.frame(lstat = c(5, 10, 15)))
+predict(simple_linear_regression_model, data.frame(lstat = c(5, 10, 15)), interval=<span style="font-style: italic;">"prediction"</span>)
+predict(simple_linear_regression_model, data.frame(lstat = c(5, 10, 15)), interval=<span style="font-style: italic;">"confidence"</span>)
+</pre>
+</div>
+
+<pre class="example">
+       1        2        3 
+29.80359 25.05335 20.30310
+       fit       lwr      upr
+1 29.80359 17.565675 42.04151
+2 25.05335 12.827626 37.27907
+3 20.30310  8.077742 32.52846
+       fit      lwr      upr
+1 29.80359 29.00741 30.59978
+2 25.05335 24.47413 25.63256
+3 20.30310 19.73159 20.87461
+</pre>
+
+
+<p>
+Plot the training dataset and fitted line:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R" id="orgsrcblock1">plot(Boston$lstat, Boston$medv, main = <span style="font-style: italic;">"simple linear regression(Training data)"</span>)
+abline(simple_linear_regression_model, col = <span style="font-style: italic;">"red"</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="../images/olm_traing_data.svg" >
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+
+<p>
+Using plot(lm_model) to get the four diagnostic plots. (normal QQ plot?)
+</p>
+<ul class="org-ul">
+<li>residuals: \(y_i - \hat{y}_i\)</li>
+<li>studentized residuals: \(\frac{y_i - \hat{y}_i}{SE(y_i - \hat{y}_i)}\)</li>
+<li>leverage statistics: \(h_i = \frac{1}{n} + \frac{ ||\mathbf{x}_i
+     -\hat{\mathbf{x}}_i||^2 }{\sum_{i^{'}=1}^{n} || \mathbf{x}_i
+     -\hat{\mathbf{x}}_i||^2 }\) (to check for p&gt;1)</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-R" id="orgsrcblock2">par(mfrow = c(2, 2))
+plot(simple_linear_regression_model)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="../images/olm_plot.svg" >
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+
+
+<p>
+We can also plot the diagnostic plot mannually.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R" id="orgsrcblock3">par(mfrow = c(2, 2))
+plot(predict(simple_linear_regression_model), residuals(simple_linear_regression_model), main = <span style="font-style: italic;">"residual plot"</span>)
+plot(predict(simple_linear_regression_model), rstudent(simple_linear_regression_model), main = <span style="font-style: italic;">"studentized residuals"</span>)
+plot(hatvalues(simple_linear_regression_model), main = <span style="font-style: italic;">"leverage statistics"</span>)
+plot(hatvalues(simple_linear_regression_model), rstudent(simple_linear_regression_model),
+     xlab = <span style="font-style: italic;">"leverage statistics"</span>,
+     ylab = <span style="font-style: italic;">"studentlized residuals"</span>,
+     main = <span style="font-style: italic;">"levearge statistics VS studentlized residuals"</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="../images/olm_residual_leverage.svg" >
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7">Multiple linear regression</h3>
+<div class="outline-text-3" id="text-orgheadline7">
+<p>
+Since \(lstat, rm\) has largest \(\rho\) related to \(medv\), we regress \(medv\) to them:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R">lm_two_feature <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ lstat +  rm,  data = Boston)
+summary(lm_two_feature)
+</pre>
+</div>
+
+<pre class="example">
+Call:
+lm(formula = medv ~ lstat + rm, data = Boston)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-18.076  -3.516  -1.010   1.909  28.131 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -1.35827    3.17283  -0.428    0.669    
+lstat       -0.64236    0.04373 -14.689   &lt;2e-16 ***
+rm           5.09479    0.44447  11.463   &lt;2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 5.54 on 503 degrees of freedom
+Multiple R-squared:  0.6386,	Adjusted R-squared:  0.6371 
+F-statistic: 444.3 on 2 and 503 DF,  p-value: &lt; 2.2e-16
+</pre>
+
+
+<p>
+How about regress using all predictors?
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R">lm_all_feature <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ .,  data = Boston) <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">. denotes other variable except medv?</span>
+summary(lm_all_feature)        <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Find the feature with largest p value</span>
+</pre>
+</div>
+
+
+<pre class="example">
+    crim       zn    indus     chas      nox       rm      age      dis
+1.792192 2.298758 3.991596 1.073995 4.393720 1.933744 3.100826 3.955945
+     rad      tax  ptratio    black    lstat
+7.484496 9.008554 1.799084 1.348521 2.941491
+</pre>
+
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">Remove features that has large p value,  i.e, 0.95 confidence intervel has 0</span>
+confint(lm_all_feature)                 <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">See age and indus</span>
+lm_all_but_age <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ . - age, data = Boston)
+summary(lm_all_but_age)
+
+lm_all_but_age_indus <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ . - age - indus, data = Boston)
+summary(lm_all_but_age_indus)
+</pre>
+</div>
+
+<pre class="example">
+                    2.5 %        97.5 %
+(Intercept)  26.432226009  46.486750761
+crim         -0.172584412  -0.043438304
+zn            0.019448778   0.073392139
+indus        -0.100267941   0.141385193
+chas          0.993904193   4.379563446
+nox         -25.271633564 -10.261588893
+rm            2.988726773   4.631003640
+age          -0.025262320   0.026646769
+dis          -1.867454981  -1.083678710
+rad           0.175692169   0.436406789
+tax          -0.019723286  -0.004945902
+ptratio      -1.209795296  -0.695699168
+black         0.004034306   0.014589060
+lstat        -0.624403622  -0.425113133
+
+Call:
+lm(formula = medv ~ . - age, data = Boston)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-15.6054  -2.7313  -0.5188   1.7601  26.2243 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  36.436927   5.080119   7.172 2.72e-12 ***
+crim         -0.108006   0.032832  -3.290 0.001075 ** 
+zn            0.046334   0.013613   3.404 0.000719 ***
+indus         0.020562   0.061433   0.335 0.737989    
+chas          2.689026   0.859598   3.128 0.001863 ** 
+nox         -17.713540   3.679308  -4.814 1.97e-06 ***
+rm            3.814394   0.408480   9.338  &lt; 2e-16 ***
+dis          -1.478612   0.190611  -7.757 5.03e-14 ***
+rad           0.305786   0.066089   4.627 4.75e-06 ***
+tax          -0.012329   0.003755  -3.283 0.001099 ** 
+ptratio      -0.952211   0.130294  -7.308 1.10e-12 ***
+black         0.009321   0.002678   3.481 0.000544 ***
+lstat        -0.523852   0.047625 -10.999  &lt; 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 4.74 on 493 degrees of freedom
+Multiple R-squared:  0.7406,	Adjusted R-squared:  0.7343 
+F-statistic: 117.3 on 12 and 493 DF,  p-value: &lt; 2.2e-16
+
+Call:
+lm(formula = medv ~ . - age - indus, data = Boston)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-15.5984  -2.7386  -0.5046   1.7273  26.2373 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  36.341145   5.067492   7.171 2.73e-12 ***
+crim         -0.108413   0.032779  -3.307 0.001010 ** 
+zn            0.045845   0.013523   3.390 0.000754 ***
+chas          2.718716   0.854240   3.183 0.001551 ** 
+nox         -17.376023   3.535243  -4.915 1.21e-06 ***
+rm            3.801579   0.406316   9.356  &lt; 2e-16 ***
+dis          -1.492711   0.185731  -8.037 6.84e-15 ***
+rad           0.299608   0.063402   4.726 3.00e-06 ***
+tax          -0.011778   0.003372  -3.493 0.000521 ***
+ptratio      -0.946525   0.129066  -7.334 9.24e-13 ***
+black         0.009291   0.002674   3.475 0.000557 ***
+lstat        -0.522553   0.047424 -11.019  &lt; 2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 4.736 on 494 degrees of freedom
+Multiple R-squared:  0.7406,	Adjusted R-squared:  0.7348 
+F-statistic: 128.2 on 11 and 494 DF,  p-value: &lt; 2.2e-16
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8">Performance on training data:</h3>
+<div class="outline-text-3" id="text-orgheadline8">
+<ul class="org-ul">
+<li>\(R^2\) increases as the number of predictors used in regression,
+even the predictor is the noise. ( \(p\) 元、\(n\) 个方程, \(p\) 增达到
+\(n\),方程有解, \(RSS=0, R^2=1\)), lead to overfit.</li>
+<li>\(RSE, R^2\) penalize if \(p\) is too large</li>
+</ul>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">method</th>
+<th scope="col" class="org-right">\(R^2\)</th>
+<th scope="col" class="org-right">\(R^2_{adjusted}\)</th>
+<th scope="col" class="org-right">RSE</th>
+<th scope="col" class="org-right">F-statistic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">1 predictor</td>
+<td class="org-right">0.5441</td>
+<td class="org-right">0.5432</td>
+<td class="org-right">6.216</td>
+<td class="org-right">601.6</td>
+</tr>
+
+<tr>
+<td class="org-left">2 perdictors</td>
+<td class="org-right">0.6386</td>
+<td class="org-right">0.6371</td>
+<td class="org-right">5.540</td>
+<td class="org-right">444.3</td>
+</tr>
+
+<tr>
+<td class="org-left">all predictors</td>
+<td class="org-right">0.74064266410940938</td>
+<td class="org-right">0.7343</td>
+<td class="org-right">4.745</td>
+<td class="org-right">117.3</td>
+</tr>
+
+<tr>
+<td class="org-left">all but age</td>
+<td class="org-right">0.74064121655051440</td>
+<td class="org-right">0.7343</td>
+<td class="org-right">4.740</td>
+<td class="org-right">117.3</td>
+</tr>
+
+<tr>
+<td class="org-left">all but age, indus</td>
+<td class="org-right">0.74058228025695738</td>
+<td class="org-right">0.7348</td>
+<td class="org-right">4.736</td>
+<td class="org-right">128.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9">Interacton terms: [removing additive assumation]</h3>
+<div class="outline-text-3" id="text-orgheadline9">
+<div class="org-src-container">
+
+<pre class="src src-R">summary(lm(medv ~ lstat * age, data = Boston)) <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">i.e,  lstat + age + lstat:age</span>
+</pre>
+</div>
+
+<pre class="example">
+Call:
+lm(formula = medv ~ lstat * age, data = Boston)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-15.806  -4.045  -1.333   2.085  27.552 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 36.0885359  1.4698355  24.553  &lt; 2e-16 ***
+lstat       -1.3921168  0.1674555  -8.313 8.78e-16 ***
+age         -0.0007209  0.0198792  -0.036   0.9711    
+lstat:age    0.0041560  0.0018518   2.244   0.0252 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6.149 on 502 degrees of freedom
+Multiple R-squared:  0.5557,	Adjusted R-squared:  0.5531 
+F-statistic: 209.3 on 3 and 502 DF,  p-value: &lt; 2.2e-16
+</pre>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10">Non-linear transformations of the predictors</h3>
+<div class="outline-text-3" id="text-orgheadline10">
+<p>
+It's shown that \(medv, lstat\) in not linear relationship in
+<a href="file:///home/touch/studyspace/data_science/cnglen_github_io/images/ISL_boston_pairs.png">scatter matrix plot</a>. Thus, we try to regression onto \(lstat,
+    lstat^2\).
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-R">lm_quad_lstat <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ lstat + I(lstat^2), data = Boston)
+summary(lm_quad_lstat)
+</pre>
+</div>
+
+<pre class="example">
+Call:
+lm(formula = medv ~ lstat + I(lstat^2), data = Boston)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-15.2834  -3.8313  -0.5295   2.3095  25.4148 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 42.862007   0.872084   49.15   &lt;2e-16 ***
+lstat       -2.332821   0.123803  -18.84   &lt;2e-16 ***
+I(lstat^2)   0.043547   0.003745   11.63   &lt;2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 5.524 on 503 degrees of freedom
+Multiple R-squared:  0.6407,	Adjusted R-squared:  0.6393 
+F-statistic: 448.5 on 2 and 503 DF,  p-value: &lt; 2.2e-16
+</pre>
+
+<p>
+Small value of \(p\) value of \(F\), thus
+</p>
+<ul class="org-ul">
+<li>Reject \(H_0:\) model-1 and model-2 are equal</li>
+<li>Accept \(H_a:\) model-2 is better than model-1</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-R">anova(simple_linear_regression_model, lm_quad_lstat)
+</pre>
+</div>
+
+<pre class="example">
+Analysis of Variance Table
+
+Model 1: medv ~ lstat
+Model 2: medv ~ lstat + I(lstat^2)
+  Res.Df   RSS Df Sum of Sq     F    Pr(&gt;F)    
+1    504 19472                                 
+2    503 15347  1    4125.1 135.2 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+</pre>
+
+
+<div class="org-src-container">
+
+<pre class="src src-R">par(mfrow = c(2, 2))
+plot(lm_quad_lstat)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="../images/olm_quad_lsat.svg" >
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+
+<p>
+How about $lstat^3, lstat^4, &#x2026;$? It's shown that order greater
+than 5 have big \(p\) values, so we are NOT able to reject:
+</p>
+<ul class="org-ul">
+<li>\(H_0: \beta_{lstat^6} = 0\)</li>
+<li>\(H_0: \beta_{lstat^7} = 0\)</li>
+<li>\(H_0: \beta_{lstat^8} = 0\)</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-R">lm_poly_lstat_8 <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ poly(lstat, 8), data = Boston)
+summary(lm_poly_lstat_8)
+</pre>
+</div>
+
+<pre class="example">
+Call:
+lm(formula = medv ~ poly(lstat, 8), data = Boston)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-13.7394  -3.1475  -0.7329   2.0959  26.9915 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       22.5328     0.2317  97.233  &lt; 2e-16 ***
+poly(lstat, 8)1 -152.4595     5.2129 -29.247  &lt; 2e-16 ***
+poly(lstat, 8)2   64.2272     5.2129  12.321  &lt; 2e-16 ***
+poly(lstat, 8)3  -27.0511     5.2129  -5.189 3.08e-07 ***
+poly(lstat, 8)4   25.4517     5.2129   4.882 1.41e-06 ***
+poly(lstat, 8)5  -19.2524     5.2129  -3.693 0.000246 ***
+poly(lstat, 8)6    6.5088     5.2129   1.249 0.212404    
+poly(lstat, 8)7    1.9416     5.2129   0.372 0.709703    
+poly(lstat, 8)8   -6.7299     5.2129  -1.291 0.197302    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 5.213 on 497 degrees of freedom
+Multiple R-squared:  0.6838,	Adjusted R-squared:  0.6787 
+F-statistic: 134.4 on 8 and 497 DF,  p-value: &lt; 2.2e-16
+</pre>
+
+<div class="org-src-container">
+
+<pre class="src src-R">lm_poly_lstat_5 <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ poly(lstat, 5), data = Boston)
+summary(lm_poly_lstat_5)
+</pre>
+</div>
+
+<pre class="example">
+Call:
+lm(formula = medv ~ poly(lstat, 5), data = Boston)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-13.5433  -3.1039  -0.7052   2.0844  27.1153 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       22.5328     0.2318  97.197  &lt; 2e-16 ***
+poly(lstat, 5)1 -152.4595     5.2148 -29.236  &lt; 2e-16 ***
+poly(lstat, 5)2   64.2272     5.2148  12.316  &lt; 2e-16 ***
+poly(lstat, 5)3  -27.0511     5.2148  -5.187 3.10e-07 ***
+poly(lstat, 5)4   25.4517     5.2148   4.881 1.42e-06 ***
+poly(lstat, 5)5  -19.2524     5.2148  -3.692 0.000247 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 5.215 on 500 degrees of freedom
+Multiple R-squared:  0.6817,	Adjusted R-squared:  0.6785 
+F-statistic: 214.2 on 5 and 500 DF,  p-value: &lt; 2.2e-16
+</pre>
+
+<p>
+The fitted curve using \(5th\) and \(8th\) power are almost the same.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="font-weight: bold; text-decoration: underline;">library</span>(ggplot2)
+ggplot(data=data.frame(lstat = Boston$lstat,
+                       medv_8 = predict(lm_poly_lstat_8, data = Boston),
+                       medv_5=predict(lm_poly_lstat_5, data = Boston) ),
+       aes(x = lstat, y = medv_5)) + geom_point(aes(color = <span style="font-style: italic;">"lstat_5"</span>)) +
+           geom_point(aes(y = medv_8, color = <span style="font-style: italic;">"lstat_8"</span>)) +
+               scale_color_manual(<span style="font-style: italic;">"maximum power level"</span>, values = c(<span style="font-style: italic;">"lstat_5"</span> = <span style="font-style: italic;">"blue"</span>, <span style="font-style: italic;">"lstat_8"</span> = <span style="font-style: italic;">"red"</span> ))
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/olm_poly_5_8_order.png" alt="olm_poly_5_8_order.png" />
+</p>
+</div>
+
+<p>
+We can also use other non-linear transformation, such as <i>log</i>.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R">lm_logrm <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ log(rm), data = Boston)
+</pre>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11">Qualitative Predictors (Categracial Variable)</h3>
+<div class="outline-text-3" id="text-orgheadline11">
+<p>
+Categorical variable are coded into <i>dummy</i> variables:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="font-weight: bold; text-decoration: underline;">library</span>(ISLR)
+str(Carseats)
+
+lm_model <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(Sales ~ . + Income:Advertising + Price:Age, data = Carseats)
+summary(lm_model)
+contrasts(Carseats$ShelveLoc)
+</pre>
+</div>
+
+<pre class="example">
+'data.frame':	400 obs. of  11 variables:
+ $ Sales      : num  9.5 11.22 10.06 7.4 4.15 ...
+ $ CompPrice  : num  138 111 113 117 141 124 115 136 132 132 ...
+ $ Income     : num  73 48 35 100 64 113 105 81 110 113 ...
+ $ Advertising: num  11 16 10 4 3 13 0 15 0 0 ...
+ $ Population : num  276 260 269 466 340 501 45 425 108 131 ...
+ $ Price      : num  120 83 80 97 128 72 108 120 124 124 ...
+ $ ShelveLoc  : Factor w/ 3 levels "Bad","Good","Medium": 1 2 3 3 1 1 3 2 3 3 ...
+ $ Age        : num  42 65 59 55 38 78 71 67 76 76 ...
+ $ Education  : num  17 10 12 14 13 16 15 10 10 17 ...
+ $ Urban      : Factor w/ 2 levels "No","Yes": 2 2 2 2 2 1 2 2 1 1 ...
+ $ US         : Factor w/ 2 levels "No","Yes": 2 2 2 2 1 2 1 2 1 2 ...
+
+Call:
+lm(formula = Sales ~ . + Income:Advertising + Price:Age, data = Carseats)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.9208 -0.7503  0.0177  0.6754  3.3413 
+
+Coefficients:
+                     Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)         6.5755654  1.0087470   6.519 2.22e-10 ***
+CompPrice           0.0929371  0.0041183  22.567  &lt; 2e-16 ***
+Income              0.0108940  0.0026044   4.183 3.57e-05 ***
+Advertising         0.0702462  0.0226091   3.107 0.002030 ** 
+Population          0.0001592  0.0003679   0.433 0.665330    
+Price              -0.1008064  0.0074399 -13.549  &lt; 2e-16 ***
+ShelveLocGood       4.8486762  0.1528378  31.724  &lt; 2e-16 ***
+ShelveLocMedium     1.9532620  0.1257682  15.531  &lt; 2e-16 ***
+Age                -0.0579466  0.0159506  -3.633 0.000318 ***
+Education          -0.0208525  0.0196131  -1.063 0.288361    
+UrbanYes            0.1401597  0.1124019   1.247 0.213171    
+USYes              -0.1575571  0.1489234  -1.058 0.290729    
+Income:Advertising  0.0007510  0.0002784   2.698 0.007290 ** 
+Price:Age           0.0001068  0.0001333   0.801 0.423812    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.011 on 386 degrees of freedom
+Multiple R-squared:  0.8761,	Adjusted R-squared:  0.8719 
+F-statistic:   210 on 13 and 386 DF,  p-value: &lt; 2.2e-16
+       Good Medium
+Bad       0      0
+Good      1      0
+Medium    0      1
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12">Assumations</h3>
+<div class="outline-text-3" id="text-orgheadline12">
+<dl class="org-dl">
+<dt>Additive</dt><dd>the effect of change in \(X_j\) on \(Y\) is independent of the other predictors</dd>
+<dt>Linear</dt><dd>change in \(Y\) is constant due to a one-unite change in \(X_j\)</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.1 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p></div>
+</div>
+</body>
+</html>
