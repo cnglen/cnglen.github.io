@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2015-09-10 Thu 08:55 -->
+<!-- 2015-09-13 Sun 09:32 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>Introduction of statistical learning</title>
@@ -58,6 +58,28 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -87,6 +109,7 @@ for the JavaScript code in this tag.
 </li>
 </ul>
 </li>
+<li><a href="#orgheadline5">Bias Variance trade-off</a></li>
 </ul>
 </div>
 </div>
@@ -321,6 +344,28 @@ str(Boston)
  $ medv   : num  24 21.6 34.7 33.4 36.2 28.7 22.9 27.1 16.5 18.9 ...
 </pre>
 </div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5">Bias Variance trade-off</h2>
+<div class="outline-text-2" id="text-orgheadline5">
+<p>
+Assuming:
+</p>
+<ul class="org-ul">
+<li>\(y = f(\mathbf{x}) + \epsilon\)</li>
+<li>\(E[\epsilon\)] = 0$ and \(\epsilon\) is independent of \(\mathbf{x}\)</li>
+</ul>
+
+<p>
+We use \(\hat{f}(\mathbf{x})\) estimate \(y\).
+</p>
+
+<p>
+For an observation \((\mathbf{x_j}, y_j)\) in test set:
+$E[(\hat{f}(\mathbf{x}_j) - y_j)^2] = E[(\hat{f}(\mathbf{x}_j) - f(x_j) - &epsilon;_j)^2] = E[(\hat{f}(\mathbf{x}_j) - f(x_j) - &epsilon;_j)^2] $
+</p>
 </div>
 </div>
 </div>
