@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2015-09-20 Sun 13:38 -->
+<!-- 2015-09-20 Sun 20:39 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>Non-Personalized Recommender</title>
@@ -58,6 +58,28 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -76,9 +98,13 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgheadline2">Non-Personalized Recommenders</a>
+<li><a href="#orgheadline1">Non-Personalized Recommenders</a>
 <ul>
-<li><a href="#orgheadline1">Quiz (week2</a></li>
+<li><a href="#orgheadline2">Aggregated opinion (通过平均的方法，获得的统计信息，比如点评分、TOP- <i>n</i> 热销)</a></li>
+<li><a href="#orgheadline3">Product association: People who X also Y</a></li>
+<li><a href="#orgheadline4">Preference Model: what do users like?</a></li>
+<li><a href="#orgheadline5">Prediction VS Recommendation (UI, 如何展示给用户)</a></li>
+<li><a href="#orgheadline6">Quiz (week2)</a></li>
 </ul>
 </li>
 </ul>
@@ -88,12 +114,88 @@ for the JavaScript code in this tag.
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-orgheadline2" class="outline-2">
-<h2 id="orgheadline2">Non-Personalized Recommenders</h2>
-<div class="outline-text-2" id="text-orgheadline2">
-</div><div id="outline-container-orgheadline1" class="outline-3">
-<h3 id="orgheadline1">Quiz (week2</h3>
-<div class="outline-text-3" id="text-orgheadline1">
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1">Non-Personalized Recommenders</h2>
+<div class="outline-text-2" id="text-orgheadline1">
+<ul class="org-ul">
+<li>概括来讲，用统计平均(what users <i>say</i> and <i>do</i>)来推荐, 故推荐出来的适合大众的要求，小众群体被忽略。</li>
+<li>可以人为地通过对不同群体分组求平均，即通过<b>个性化</b>来解决。</li>
+</ul>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2">Aggregated opinion (通过平均的方法，获得的统计信息，比如点评分、TOP- <i>n</i> 热销)</h3>
+<div class="outline-text-3" id="text-orgheadline2">
+<ul class="org-ul">
+<li>Effective in right application</li>
+<li>Really User needs? Correct average such as weight average</li>
+<li><span class="underline">Lack Context, without product association</span></li>
+<li>Self selection biased, increased diversity of raters</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3">Product association: People who X also Y</h3>
+<div class="outline-text-3" id="text-orgheadline3">
+<ul class="org-ul">
+<li>In a context, need to <span class="underline">identify the context</span></li>
+<li>time-window: follow up sales or at the same time</li>
+<li>what if Y is a overwhelmingly popular product?
+<ul class="org-ul">
+<li>\(P(Y|X) = \frac{P(XY)}{P(X)}\)</li>
+<li>Penalize P(Y) by \(P(Y|X) = \frac{P(XY)}{P(X)P(Y)}\)</li>
+</ul></li>
+<li>Chanllenges in a clustered diverse population</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4">Preference Model: what do users like?</h3>
+<div class="outline-text-3" id="text-orgheadline4">
+<ul class="org-ul">
+<li>Explict (what users <i>say</i>, rating)
+<ul class="org-ul">
+<li>rating:
+<ul class="org-ul">
+<li>when are ratings provided, consumation or memory or expection?</li>
+<li>reliabel? accurate?</li>
+<li>what does it mean?</li>
+</ul></li>
+<li>review:</li>
+<li>vote: up/down, +1</li>
+</ul></li>
+<li>Implict (what users <i>do</i>, actions), greater volumn
+<ul class="org-ul">
+<li>how long did user read/listen/watch?</li>
+<li>binary actions
+<ul class="org-ul">
+<li>click</li>
+<li>purchase</li>
+<li>follow</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5">Prediction VS Recommendation (UI, 如何展示给用户)</h3>
+<div class="outline-text-3" id="text-orgheadline5">
+<p>
+How explict?
+</p>
+<ul class="org-ul">
+<li>prediction with number (解释性强，但可能会出错)</li>
+<li>recommendation without number (不解释)</li>
+<li>softer presentation, organic (更加自然的UI，防止用户反感)</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6">Quiz (week2)</h3>
+<div class="outline-text-3" id="text-orgheadline6">
 <p>
 Data from : <a href="https://eventing.coursera.org/api/redirectStrict/D0T9icSNi9-Oohnrx9rjTJMNBrA5dCsUBjk__ZF3WwvMpHQWoPG7V0OJV7FZEbP8BWu3YwC09JrVaHpmTkgn7w.wm79W6QY5wdQiiZc2xU7fQ.BaLZ6t_Bo4GVCDVvqPbwsjbk60BHEST6EJzOxIPol4QeGpWOyoRGgXj7y_zTvEHhz9ZWoP116IA6PVIeQguu77x6fxP2eJqJ0OEPWfz1G6pQlIJf_ic06tQjNclNr9Kgyoj-fchnuTDBkk3MBC6Doj2gTZdXYeLj_booj02YgOuI0nuLw5QkZJ_9ur_IN85hu2KrGDKTdW6_SIf8yu5K9-gVUeHpIQctVqek9Haj6RrcVg8GOIdvBrbx2hvb3uVZ5k92V4YYM1Ecjr_x5WxefFJZ1M0ekvgA-S2iZel6qecCVLy4-MHhUyvehNl-4mtXG8b64GzkzGcebae9lDuO9SeOyZs79KGZ5ADbu6tBdeqKkZC1-TZjzI9rKGgwGP_dACRJrHlvMpyU07XULMojPI-P22v5rlqjmRwhwxJytto">A1Ratings.csv</a>
 </p>
