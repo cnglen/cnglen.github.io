@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2015-09-20 Sun 13:38 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>Non-Personalized Recommender</title>
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Jacky Wang" />
+<link rel="stylesheet" title="Standard" href="/style/worg.css" type="text/css" />
+<link rel="alternate stylesheet" title="Zenburn" href="/style/worg-zenburn.css" type="text/css" />
+<link rel="alternate stylesheet" title="Classic" href="/style/worg-classic.css" type="text/css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded',function() {
+      document.getElementById("table-of-contents").onclick = function() {
+          var elem = document.getElementById("text-table-of-contents");
+          elem.style.display = elem.style.display == "block" ? "none" : "block";
+      }
+  });
+</script>
+</div>
+<div id="content">
+<h1 class="title">Non-Personalized Recommender</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline2">Non-Personalized Recommenders</a>
+<ul>
+<li><a href="#orgheadline1">Quiz (week2</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+<a href="../index.html">Home</a>
+</p>
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2">Non-Personalized Recommenders</h2>
+<div class="outline-text-2" id="text-orgheadline2">
+</div><div id="outline-container-orgheadline1" class="outline-3">
+<h3 id="orgheadline1">Quiz (week2</h3>
+<div class="outline-text-3" id="text-orgheadline1">
+<p>
+Data from : <a href="https://eventing.coursera.org/api/redirectStrict/D0T9icSNi9-Oohnrx9rjTJMNBrA5dCsUBjk__ZF3WwvMpHQWoPG7V0OJV7FZEbP8BWu3YwC09JrVaHpmTkgn7w.wm79W6QY5wdQiiZc2xU7fQ.BaLZ6t_Bo4GVCDVvqPbwsjbk60BHEST6EJzOxIPol4QeGpWOyoRGgXj7y_zTvEHhz9ZWoP116IA6PVIeQguu77x6fxP2eJqJ0OEPWfz1G6pQlIJf_ic06tQjNclNr9Kgyoj-fchnuTDBkk3MBC6Doj2gTZdXYeLj_booj02YgOuI0nuLw5QkZJ_9ur_IN85hu2KrGDKTdW6_SIf8yu5K9-gVUeHpIQctVqek9Haj6RrcVg8GOIdvBrbx2hvb3uVZ5k92V4YYM1Ecjr_x5WxefFJZ1M0ekvgA-S2iZel6qecCVLy4-MHhUyvehNl-4mtXG8b64GzkzGcebae9lDuO9SeOyZs79KGZ5ADbu6tBdeqKkZC1-TZjzI9rKGgwGP_dACRJrHlvMpyU07XULMojPI-P22v5rlqjmRwhwxJytto">A1Ratings.csv</a>
+</p>
+<ol class="org-ol">
+<li>fat data -&gt; high data</li>
+<li>split movie_ID, movie_name from one colume</li>
+<li>Get the column named
+<dl class="org-dl">
+<dt><i>mean_rating</i></dt><dd>mean rating for each movie</dd>
+<dt><i>n_rating</i></dt><dd>number of ratings for each movie</dd>
+<dt><i>p_positive_rating</i></dt><dd>the percentage of ratings for each movie that are 4 or higher</dd>
+</dl></li>
+</ol>
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="orgsrcblock1"><span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">Load raw data</span>
+<span style="font-weight: bold; text-decoration: underline;">library</span>(dplyr)
+<span style="font-weight: bold; text-decoration: underline;">library</span>(tidyr)
+raw_data <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> read.csv(<span style="font-style: italic;">'../data/A1Ratings.csv'</span>, header = <span style="font-weight: bold; text-decoration: underline;">TRUE</span>)
+
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">Get pre-processed data</span>
+pre_processed_data <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> gather(data = raw_data, key = movie, value = rating, -User )
+pre_processed_data <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> tidyr::extract(data = pre_processed_data, col = movie, into = c(<span style="font-style: italic;">"movie_ID"</span>, <span style="font-style: italic;">"movie_name"</span>), regex = <span style="font-style: italic;">"X([[:alnum:]]+)\\.\\.(.*)"</span>)
+pre_processed_data <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> pre_processed_data %&gt;% select( -User) %&gt;%
+    group_by(movie_ID, movie_name) %&gt;%
+        summarise(mean_rating = mean(rating, na.rm = <span style="font-weight: bold; text-decoration: underline;">TRUE</span>),
+                  n_rating = sum(!is.na(rating)),
+                  n_positive_rating = sum(ifelse(rating&gt;=4 &amp; !is.na(rating), 1, 0))
+                  ) %&gt;%
+            ungroup() %&gt;% arrange(desc(mean_rating)) %&gt;%
+                mutate(p_positive_rating = n_positive_rating/n_rating)
+
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">q1</span>
+arrange(pre_processed_data, desc(mean_rating)) %&gt;% select(movie_ID, mean_rating)
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">q2</span>
+arrange(pre_processed_data, desc(n_rating)) %&gt;% select(movie_ID, n_rating)
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">q3</span>
+arrange(pre_processed_data, desc(p_positive_rating)) %&gt;% select(movie_ID, p_positive_rating)
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">q4 P( Y | Star Wars: Episode IV - A New Hope (1977))</span>
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">dirty method,  to be updated</span>
+n_x <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> select(filter(pre_processed_data, movie_ID == 260), n_rating)[[1]]
+index_star_war_1977 <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> 2
+result <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> data.frame()
+<span style="font-weight: bold;">for</span> (index_movie <span style="font-weight: bold;">in</span> c(3:ncol(raw_data))) {
+    n_xy <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> sum(!is.na(raw_data[, index_star_war_1977]) &amp; !is.na(raw_data[, index_movie]))
+    py_on_x <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> n_xy / n_x
+    result <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> rbind(result, data.frame(py_on_x = py_on_x, index_movie = index_movie, movie_info = names(raw_data)[index_movie]))
+}
+arrange(result, desc(py_on_x)) %&gt;% select(py_on_x, movie_info)
+</pre>
+</div>
+
+<pre class="example">
+Attaching package: ‘dplyr’
+
+The following object is masked from ‘package:stats’:
+
+    filter
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+Source: local data frame [20 x 2]
+
+   movie_ID mean_rating
+1       318    3.600000
+2       260    3.266667
+3       541    3.222222
+4      1265    3.166667
+5       593    3.062500
+6      1210    3.000000
+7      2028    3.000000
+8       296    3.000000
+9        34    3.000000
+10      527    3.000000
+11     3578    2.916667
+12     1198    2.909091
+13     2396    2.909091
+14     2571    2.833333
+15     2762    2.833333
+16        1    2.823529
+17      780    2.769231
+18      356    2.700000
+19     1259    2.636364
+20     2916    1.916667
+Source: local data frame [20 x 2]
+
+   movie_ID n_rating
+1         1       17
+2       593       16
+3       260       15
+4      1210       14
+5       780       13
+6      1265       12
+7       527       12
+8      3578       12
+9      2571       12
+10     2762       12
+11     2916       12
+12     2028       11
+13      296       11
+14     1198       11
+15     2396       11
+16     1259       11
+17      318       10
+18       34       10
+19      356       10
+20      541        9
+Source: local data frame [20 x 2]
+
+   movie_ID p_positive_rating
+1       318        0.70000000
+2       260        0.53333333
+3      3578        0.50000000
+4       541        0.44444444
+5       593        0.43750000
+6      1265        0.41666667
+7      2571        0.41666667
+8        34        0.40000000
+9      2028        0.36363636
+10      296        0.36363636
+11     1259        0.36363636
+12     1210        0.35714286
+13        1        0.35294118
+14      527        0.33333333
+15     2762        0.33333333
+16      780        0.30769231
+17      356        0.30000000
+18     1198        0.27272727
+19     2396        0.27272727
+20     2916        0.08333333
+     py_on_x                                               movie_info
+1  0.9333333                                     X1..Toy.Story..1995.
+2  0.8666667 X1210..Star.Wars..Episode.VI...Return.of.the.Jedi..1983.
+3  0.8000000                   X593..Silence.of.the.Lambs..The..1991.
+4  0.7333333                      X780..Independence.Day..ID4...1996.
+5  0.6666667                               X2916..Total.Recall..1990.
+6  0.6000000                                  X3578..Gladiator..2000.
+7  0.6000000                                X1259..Stand.by.Me..1986.
+8  0.6000000                              X1265..Groundhog.Day..1993.
+9  0.6000000                            X527..Schindler.s.List..1993.
+10 0.6000000                           X2762..Sixth.Sense..The..1999.
+11 0.5333333                                X356..Forrest.Gump..1994.
+12 0.5333333                   X318..Shawshank.Redemption..The..1994.
+13 0.5333333                        X2028..Saving.Private.Ryan..1998.
+14 0.5333333                                X296..Pulp.Fiction..1994.
+15 0.5333333                        X2396..Shakespeare.in.Love..1998.
+16 0.5333333                                X2571..Matrix..The..1999.
+17 0.4666667                    X1198..Raiders.of.the.Lost.Ark..1981.
+18 0.4000000                                X541..Blade.Runner..1982.
+19 0.4000000                                         X34..Babe..1995.
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.1 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p></div>
+</div>
+</body>
+</html>
