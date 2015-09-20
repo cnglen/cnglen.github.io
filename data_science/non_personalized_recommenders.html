@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2015-09-20 Sun 20:39 -->
+<!-- 2015-09-20 Sun 20:53 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>Non-Personalized Recommender</title>
@@ -213,8 +213,8 @@ Data from : <a href="https://eventing.coursera.org/api/redirectStrict/D0T9icSNi9
 <div class="org-src-container">
 
 <pre class="src src-R" id="orgsrcblock1"><span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">Load raw data</span>
-<span style="font-weight: bold; text-decoration: underline;">library</span>(dplyr)
-<span style="font-weight: bold; text-decoration: underline;">library</span>(tidyr)
+<span style="font-weight: bold; text-decoration: underline;">library</span>(dplyr, warn.conflicts=<span style="font-weight: bold; text-decoration: underline;">FALSE</span>)
+<span style="font-weight: bold; text-decoration: underline;">library</span>(tidyr, warn.conflicts=<span style="font-weight: bold; text-decoration: underline;">FALSE</span>)
 raw_data <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> read.csv(<span style="font-style: italic;">'../data/A1Ratings.csv'</span>, header = <span style="font-weight: bold; text-decoration: underline;">TRUE</span>)
 
 <span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">Get pre-processed data</span>
@@ -231,10 +231,13 @@ pre_processed_data <span style="font-weight: bold; text-decoration: underline;">
 
 <span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">q1</span>
 arrange(pre_processed_data, desc(mean_rating)) %&gt;% select(movie_ID, mean_rating)
+
 <span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">q2</span>
 arrange(pre_processed_data, desc(n_rating)) %&gt;% select(movie_ID, n_rating)
+
 <span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">q3</span>
 arrange(pre_processed_data, desc(p_positive_rating)) %&gt;% select(movie_ID, p_positive_rating)
+
 <span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">q4 P( Y | Star Wars: Episode IV - A New Hope (1977))</span>
 <span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">dirty method,  to be updated</span>
 n_x <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> select(filter(pre_processed_data, movie_ID == 260), n_rating)[[1]]
@@ -245,20 +248,12 @@ result <span style="font-weight: bold; text-decoration: underline;">&lt;-</span>
     py_on_x <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> n_xy / n_x
     result <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> rbind(result, data.frame(py_on_x = py_on_x, index_movie = index_movie, movie_info = names(raw_data)[index_movie]))
 }
+result <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> tbl_df(result)
 arrange(result, desc(py_on_x)) %&gt;% select(py_on_x, movie_info)
 </pre>
 </div>
 
 <pre class="example">
-Attaching package: ‘dplyr’
-
-The following object is masked from ‘package:stats’:
-
-    filter
-
-The following objects are masked from ‘package:base’:
-
-    intersect, setdiff, setequal, union
 Source: local data frame [20 x 2]
 
    movie_ID mean_rating
@@ -328,6 +323,8 @@ Source: local data frame [20 x 2]
 18     1198        0.27272727
 19     2396        0.27272727
 20     2916        0.08333333
+Source: local data frame [19 x 2]
+
      py_on_x                                               movie_info
 1  0.9333333                                     X1..Toy.Story..1995.
 2  0.8666667 X1210..Star.Wars..Episode.VI...Return.of.the.Jedi..1983.
