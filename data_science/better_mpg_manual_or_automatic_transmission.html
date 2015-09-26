@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2015-09-26 Sat 17:24 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>Better mpg: manual or automatic transmission?</title>
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Jacky Wang" />
+<link rel="stylesheet" title="Standard" href="/style/worg.css" type="text/css" />
+<link rel="alternate stylesheet" title="Zenburn" href="/style/worg-zenburn.css" type="text/css" />
+<link rel="alternate stylesheet" title="Classic" href="/style/worg-classic.css" type="text/css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="preamble" class="status">
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded',function() {
+      document.getElementById("table-of-contents").onclick = function() {
+          var elem = document.getElementById("text-table-of-contents");
+          elem.style.display = elem.style.display == "block" ? "none" : "block";
+      }
+  });
+</script>
+</div>
+<div id="content">
+<h1 class="title">Better mpg: manual or automatic transmission?</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">Introduction</a></li>
+<li><a href="#orgheadline2">Preproces and Explore the data</a></li>
+<li><a href="#orgheadline3">Regression Analysis</a></li>
+<li><a href="#orgheadline4">Conclusion</a></li>
+<li><a href="#orgheadline8">Appendix</a>
+<ul>
+<li><a href="#orgheadline5">Scatter plot matrix</a></li>
+<li><a href="#orgheadline6">Diagnostic</a></li>
+<li><a href="#orgheadline7">Summary of two linear models</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+<a href="../index.html">Home</a>
+</p>
+
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1">Introduction</h2>
+<div class="outline-text-2" id="text-orgheadline1">
+<p>
+In this report, we will analysis the <i>mtcars</i> data set to answer:
+</p>
+<ul class="org-ul">
+<li>Is an automatic or manual transmission better for MPG?</li>
+<li>Quantify the MPG difference between automatic and manual transmissions?</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2">Preproces and Explore the data</h2>
+<div class="outline-text-2" id="text-orgheadline2">
+<p>
+We use categorical variable to denote:
+</p>
+<ul class="org-ul">
+<li><i>vs</i> ~ the engine type</li>
+<li><i>am</i> ~ whether manual or automatic</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="orgsrcblock1"><span style="font-weight: bold; text-decoration: underline;">library</span>(ggplot2); <span style="font-weight: bold; text-decoration: underline;">library</span>(GGally); <span style="font-weight: bold; text-decoration: underline;">library</span>(dplyr, warn.conflicts=<span style="font-weight: bold; text-decoration: underline;">FALSE</span>); data(mtcars)
+raw_data <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> mtcars
+processed_data <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> mutate(mtcars, am = factor(ifelse(am == 0, <span style="font-style: italic;">"automatic"</span>, <span style="font-style: italic;">"manual"</span>)),
+                        vs = factor(ifelse(vs == 0, <span style="font-style: italic;">"v"</span>, <span style="font-style: italic;">"s"</span>)))
+</pre>
+</div>
+
+<p>
+We use <i>ggpairs</i> to explore relation bewtten <i>mpg</i> and <i>am</i>. The
+first figure in Appendix shown that: <span class="underline">manual cars seems have a
+better mpg than automatic ones</span>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="orgheadline3">Regression Analysis</h2>
+<div class="outline-text-2" id="text-orgheadline3">
+<p>
+Previous figure only shows the relationship between <i>mpg</i> and <i>am</i>,
+other feature are ignored. In this section, we will use linear
+regression model to answer the target question.
+</p>
+
+<p>
+We will use <i>step()</i> to choose the model by AIC in a stepwise
+algorithm, which suggests using <i>wt</i>, <i>am</i> and <i>qsec</i>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="orgsrcblock2">model <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> step(lm(mpg ~ ., processed_data), trace=<span style="font-weight: bold; text-decoration: underline;">FALSE</span>)
+coefficients(model)
+</pre>
+</div>
+
+<pre class="example">
+(Intercept)          wt        qsec    ammanual 
+   9.617781   -3.916504    1.225886    2.935837
+</pre>
+
+<p>
+Add the inteaction terms (all <i>wt:qsec, wt:am, qsec:am</i> are tried,
+based on <i>p</i>-value and adjusted \(R^2\), <i>am:wt</i> is used.):
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R" id="orgsrcblock3">final_model <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(mpg ~ wt + am + qsec + am:wt, processed_data)
+coefficients(final_model)
+confint(final_model)
+</pre>
+</div>
+
+<pre class="example">
+(Intercept)          wt    ammanual        qsec wt:ammanual 
+   9.723053   -2.936531   14.079428    1.016974   -4.141376
+                 2.5 %    97.5 %
+(Intercept) -2.3807791 21.826884
+wt          -4.3031019 -1.569960
+ammanual     7.0308746 21.127981
+qsec         0.4998811  1.534066
+wt:ammanual -6.5970316 -1.685721
+</pre>
+
+<p>
+Since the 95% confidence interval of intercept contains zero(large p
+value), we are not able to reject \(H_{NULL}: \beta_0=0\).  So
+the <span class="underline">final model is given by</span>:
+</p>
+\begin{equation}
+mpg = -2.937 wt + 1.017 qsec + (14.079 - 4.141 wt) am_{manual}
+\end{equation}
+
+<p>
+And the <i>anova()</i> shows the prediction is improved by the final model.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R">anova(model, final_model)
+</pre>
+</div>
+
+<pre class="example">
+Analysis of Variance Table
+
+Model 1: mpg ~ wt + qsec + am
+Model 2: mpg ~ wt + am + qsec + am:wt
+  Res.Df    RSS Df Sum of Sq      F   Pr(&gt;F)   
+1     28 169.29                                
+2     27 117.28  1     52.01 11.974 0.001809 **
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+</pre>
+
+<p>
+The residual plot and diagnostics are given in appendix.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-2">
+<h2 id="orgheadline4">Conclusion</h2>
+<div class="outline-text-2" id="text-orgheadline4">
+<p>
+From previous model, for <b>fixed values of \(wt\) and \(qsec\)</b>, the
+<span class="underline">average difference of <i>mpg</i> is given by</span>:
+</p>
+\begin{equation}
+mpg_{manual} - mpg_{automatic} = 14.079 - 4.141 wt = \begin{cases} >0 & \mbox{if } wt \leq 3.40 \\ <0 & \mbox{if } wt >3.40 \end{cases}
+\end{equation}
+
+<p>
+Thus, <span class="underline">the answer of the target quesition can't be answered
+directly, it dpends on \(wt, qsec\)</span>.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline8" class="outline-2">
+<h2 id="orgheadline8">Appendix</h2>
+<div class="outline-text-2" id="text-orgheadline8">
+</div><div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5">Scatter plot matrix</h3>
+<div class="outline-text-3" id="text-orgheadline5">
+<div class="org-src-container">
+
+<pre class="src src-R" id="orgsrcblock4"><span style="font-weight: bold; text-decoration: underline;">library</span>(GGally); <span style="font-weight: bold; text-decoration: underline;">library</span>(dplyr, warn.conflicts=<span style="font-weight: bold; text-decoration: underline;">FALSE</span>); options(warn=-1)
+ggpairs(select(processed_data, mpg, am, wt, qsec), color=<span style="font-style: italic;">'am'</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/pairs_mtcar.png" alt="pairs_mtcar.png" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6">Diagnostic</h3>
+<div class="outline-text-3" id="text-orgheadline6">
+<div class="org-src-container">
+
+<pre class="src src-R">par(mfrow = c(2, 2))
+plot(final_model)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="../images/plot_final_model_mtcars.png" alt="plot_final_model_mtcars.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7">Summary of two linear models</h3>
+<div class="outline-text-3" id="text-orgheadline7">
+<div class="org-src-container">
+
+<pre class="src src-R">summary(model)
+summary(final_model)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.1 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p></div>
+</div>
+</body>
+</html>
