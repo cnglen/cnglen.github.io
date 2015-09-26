@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2015-09-26 Sat 17:24 -->
+<!-- 2015-09-26 Sat 17:41 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>Better mpg: manual or automatic transmission?</title>
@@ -271,7 +271,7 @@ directly, it dpends on \(wt, qsec\)</span>.
 <div class="org-src-container">
 
 <pre class="src src-R" id="orgsrcblock4"><span style="font-weight: bold; text-decoration: underline;">library</span>(GGally); <span style="font-weight: bold; text-decoration: underline;">library</span>(dplyr, warn.conflicts=<span style="font-weight: bold; text-decoration: underline;">FALSE</span>); options(warn=-1)
-ggpairs(select(processed_data, mpg, am, wt, qsec), color=<span style="font-style: italic;">'am'</span>)
+ggpairs(dplyr::select(processed_data, mpg, am, wt, qsec), color=<span style="font-style: italic;">'am'</span>)
 </pre>
 </div>
 
