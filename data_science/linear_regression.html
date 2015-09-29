@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2015-09-26 Sat 17:41 -->
+<!-- 2015-09-29 Tue 22:45 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>Linear regression</title>
@@ -98,7 +98,7 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgheadline9">Theory</a>
+<li><a href="#orgheadline10">Theory</a>
 <ul>
 <li><a href="#orgheadline1">Math symbols</a></li>
 <li><a href="#orgheadline2">Using a single number for estimation: \(\hat{y} = \theta_0\)</a></li>
@@ -111,26 +111,27 @@ for the JavaScript code in this tag.
 <li><a href="#orgheadline6">General regression: \(\hat{y} = \theta_0 + \theta_1 x_1 + ... + \theta_p x_p\)</a>
 <ul>
 <li><a href="#orgheadline7">Maximum likelihood estimation</a></li>
-<li><a href="#orgheadline8">Assumations</a></li>
+<li><a href="#orgheadline8">Generalized linear model(glm) for <i>gaussian</i> case</a></li>
+<li><a href="#orgheadline9">Assumations</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgheadline12">Model related concept</a>
+<li><a href="#orgheadline13">Model related concept</a>
 <ul>
-<li><a href="#orgheadline10">Model assessment parameters, which are shown in <i>summary(lm())</i></a></li>
-<li><a href="#orgheadline11">Other</a></li>
+<li><a href="#orgheadline11">Model assessment parameters, which are shown in <i>summary(lm())</i></a></li>
+<li><a href="#orgheadline12">Other</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline20">Lab: linear regression</a>
+<li><a href="#orgheadline21">Lab: linear regression</a>
 <ul>
-<li><a href="#orgheadline13">Explore data</a></li>
-<li><a href="#orgheadline14">Simple linear regression</a></li>
-<li><a href="#orgheadline15">Multiple linear regression</a></li>
-<li><a href="#orgheadline16">Performance on training data:</a></li>
-<li><a href="#orgheadline17">Interacton terms: [removing additive assumation]</a></li>
-<li><a href="#orgheadline18">Non-linear transformations of the predictors</a></li>
-<li><a href="#orgheadline19">Qualitative Predictors (Categracial Variable)</a></li>
+<li><a href="#orgheadline14">Explore data</a></li>
+<li><a href="#orgheadline15">Simple linear regression</a></li>
+<li><a href="#orgheadline16">Multiple linear regression</a></li>
+<li><a href="#orgheadline17">Performance on training data:</a></li>
+<li><a href="#orgheadline18">Interacton terms: [removing additive assumation]</a></li>
+<li><a href="#orgheadline19">Non-linear transformations of the predictors</a></li>
+<li><a href="#orgheadline20">Qualitative Predictors (Categracial Variable)</a></li>
 </ul>
 </li>
 </ul>
@@ -141,9 +142,9 @@ for the JavaScript code in this tag.
 </p>
 
 
-<div id="outline-container-orgheadline9" class="outline-2">
-<h2 id="orgheadline9">Theory</h2>
-<div class="outline-text-2" id="text-orgheadline9">
+<div id="outline-container-orgheadline10" class="outline-2">
+<h2 id="orgheadline10">Theory</h2>
+<div class="outline-text-2" id="text-orgheadline10">
 </div><div id="outline-container-orgheadline1" class="outline-3">
 <h3 id="orgheadline1">Math symbols</h3>
 <div class="outline-text-3" id="text-orgheadline1">
@@ -273,15 +274,13 @@ Find
 <p>
 Again,
 </p>
-<ul class="org-ul">
-<li>\begin{equation}
+\begin{equation}
 \frac{\partial RSS}{\partial \theta_0} = 0
-\end{equation}</li>
+\end{equation}
 
-<li>\begin{equation}
+\begin{equation}
 \frac{\partial RSS}{\partial \theta_1} = 0
-\end{equation}</li>
-</ul>
+\end{equation}
 
 <p>
 We'll get
@@ -301,8 +300,8 @@ We'll get
 Degree of freedom \(n-p-1=n-2\) when \(p=1\)
 </p>
 <ul class="org-ul">
-<li>\(\sum_{i=1}^{n} x_0^{(i)} (y^{(i)} - \hat{y}^{(i)}) = \sum_{i=1}^{n} (y^{(i)} - \hat{y}^{(i)}) = 0\)</li>
-<li>\(\sum_{i=1}^{n} x_1^{(i)} (y^{(i)} - \hat{y}^{(i)}) = 0\)</li>
+<li>From <a href="#orglatexenvironment1">1</a>: \(\sum_{i=1}^{n} x_0^{(i)} (y^{(i)} - \hat{y}^{(i)}) = \sum_{i=1}^{n} (y^{(i)} - \hat{y}^{(i)}) = 0\)</li>
+<li>From <a href="#orglatexenvironment2">1</a>: \(\sum_{i=1}^{n} x_1^{(i)} (y^{(i)} - \hat{y}^{(i)}) = 0\)</li>
 </ul>
 </div>
 </div>
@@ -340,8 +339,8 @@ To understand:
 <li>If \(\bar{x}_1 = 0\), \(\sigma^2_{\theta_0} = \frac{\sigma^2}{n}\)</li>
 <li>As \(n \to \infty\):
 <ul class="org-ul">
-<li>\(\sigma^2_{\theta_0} = \sigma^2_{\theta_1} = SE_{line} = 0\), uncertainty surrounding a particular \(y\) at \(x_1^{'}\), related to uncertainty of \(\theta_0, \theta_1\)</li>
-<li>\(SE_{prediction} = \sigma\),  uncertainty surrounding the average \(y\) at \(x_1^{'}\), which includes irreducible error</li>
+<li>\(\sigma^2_{\theta_0} = \sigma^2_{\theta_1} = SE_{line} = 0\), uncertainty surrounding the average  \(y\) at \(x_1^{'}\), related to uncertainty of \(\theta_0, \theta_1\)</li>
+<li>\(SE_{prediction} = \sigma\),  uncertainty surrounding a particular \(y\) at \(x_1^{'}\), which includes irreducible error</li>
 </ul></li>
 </ul>
 </div>
@@ -416,8 +415,69 @@ Thus maximum likelihood estimatoin of \(\pmb{\theta}\) is equivalent to LS.
 </div>
 
 <div id="outline-container-orgheadline8" class="outline-4">
-<h4 id="orgheadline8">Assumations</h4>
+<h4 id="orgheadline8">Generalized linear model(glm) for <i>gaussian</i> case</h4>
 <div class="outline-text-4" id="text-orgheadline8">
+<ul class="org-ul">
+<li>A <span class="underline">random component</span>: normal, bernolli, possion, etc.</li>
+<li>A <span class="underline">systematic component</span>: a linear predictor \(\pmb{\theta}^T \mathbf{x^{(i)}}\)</li>
+<li><span class="underline">Link function</span> connects \(E(y^{(i)}) \xrightarrow{g()} \pmb{\theta}^T \mathbf{x^{(i)}}\), i.e, \(g\big(E(y^{(i)})\big) = \pmb{\theta}^T \mathbf{x^{(i)}}\)</li>
+</ul>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Distribution of \(y^{(i)}\)</th>
+<th scope="col" class="org-left">E(y<sup>(i)</sup>)</th>
+<th scope="col" class="org-left">Var(y<sup>(i)</sup>)</th>
+<th scope="col" class="org-left">linear combination of x</th>
+<th scope="col" class="org-left">Link Function \(g()\)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">\(N(\mu_i, \sigma^2)\)</td>
+<td class="org-left">\(\mu_i\)</td>
+<td class="org-left">\(\sigma^2\)</td>
+<td class="org-left">\(\pmb{\theta}^T \mathbf{x^{(i)}}\)</td>
+<td class="org-left">\(g(\mu_i) = \mu_i\)</td>
+</tr>
+
+<tr>
+<td class="org-left">Bernolli(\(p_i\))</td>
+<td class="org-left">\(p_i\)</td>
+<td class="org-left">\(p_i(1-p_i)\)</td>
+<td class="org-left">the same to above</td>
+<td class="org-left">\(g(p_i) = log( \frac{p_i}{1-p_i} )\)</td>
+</tr>
+
+<tr>
+<td class="org-left">Possion(\(\lambda_i\))</td>
+<td class="org-left">\(\lambda_i\)</td>
+<td class="org-left">\(\lambda_i\)</td>
+<td class="org-left">the same to above</td>
+<td class="org-left">\(g(\lambda_i) =log(\lambda_i)\)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgheadline9" class="outline-4">
+<h4 id="orgheadline9">Assumations</h4>
+<div class="outline-text-4" id="text-orgheadline9">
 <dl class="org-dl">
 <dt>Additive</dt><dd>the effect of change in \(x_j\) on \(y\) is independent of the other predictors</dd>
 <dt>Linear</dt><dd>change in \(Y\) is constant due to a one-unite change in \(x_j\)</dd>
@@ -428,12 +488,12 @@ Thus maximum likelihood estimatoin of \(\pmb{\theta}\) is equivalent to LS.
 </div>
 
 
-<div id="outline-container-orgheadline12" class="outline-2">
-<h2 id="orgheadline12">Model related concept</h2>
-<div class="outline-text-2" id="text-orgheadline12">
-</div><div id="outline-container-orgheadline10" class="outline-3">
-<h3 id="orgheadline10">Model assessment parameters, which are shown in <i>summary(lm())</i></h3>
-<div class="outline-text-3" id="text-orgheadline10">
+<div id="outline-container-orgheadline13" class="outline-2">
+<h2 id="orgheadline13">Model related concept</h2>
+<div class="outline-text-2" id="text-orgheadline13">
+</div><div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11">Model assessment parameters, which are shown in <i>summary(lm())</i></h3>
+<div class="outline-text-3" id="text-orgheadline11">
 <ul class="org-ul">
 <li>\(R^2 = 1 - \frac{RSS}{TSS}\) where \(RSS = \sum_{i} (y^{(i)} - \hat{y}^{(i)})^2\) and \(TSS = \sum_{i} (y^{(i)} - \bar{y})^2\)
 <ul class="org-ul">
@@ -442,7 +502,7 @@ Thus maximum likelihood estimatoin of \(\pmb{\theta}\) is equivalent to LS.
 <li>\(R^2 = \rho^2\) where \(\rho=cor(\mathbf{x}_1, \mathbf{y})\) if there are only one predictor, i.e, \(\mathbf{X}\in \mathcal{R}^{n \times 1}\).</li>
 </ul></li>
 <li>\(RSE = \sqrt{\frac{\sum_{i=1}^{n}(y^{(i)} - \hat{y}^{(i)})^2}{n-p-1}}=\sigma\), sd of \(\epsilon\), \(RSE^2\) is the power of noise</li>
-<li>E\(RSE\) = 0</li>
+<li>E\(\epsilon = 0 = \sum_{i=1}^{n} (y^{(i)} - \hat{y} ^{(i)})\)</li>
 <li>If F-statistic &gt;&gt; 1, reject \(H_0\)
 <ul class="org-ul">
 <li>all regression coefficents are 0, \(H_0: \theta_0 = \theta_1 = ... \theta_p = 0\)</li>
@@ -453,27 +513,41 @@ Thus maximum likelihood estimatoin of \(\pmb{\theta}\) is equivalent to LS.
 </div>
 </div>
 
-<div id="outline-container-orgheadline11" class="outline-3">
-<h3 id="orgheadline11">Other</h3>
-<div class="outline-text-3" id="text-orgheadline11">
+<div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12">Other</h3>
+<div class="outline-text-3" id="text-orgheadline12">
 <ul class="org-ul">
-<li>Confidence interval VS prediction interval?</li>
-<li>VIF: \(VIF(\theta_j) = \frac{1}{1-R^2_{x_j|x_{-j}}} =
-   f(R^2_{x_j|x_{-j}})\) VS 5. The larger VIF for \(x_j\), the more
-collinearity \(x_j\) with other predictors \(x_{-j}\)</li>
-<li>Leverage: \(h^{(i)} = \frac{1}{n} + \frac{||\mathbf{x}^{(i)} -\hat{\mathbf{x}}^{(i)}||^2}{\sum_{i^{'}=1}^{n} || \mathbf{x}^{(i)} -\hat{\mathbf{x}}^{(i)}||^2 }\)</li>
+<li>Confidence interval (Line) VS prediction interval
+<ul class="org-ul">
+<li>\(SE_{line}\), the average \(y\) at \(\mathbf{x}\), which only considers the error in the estimate of \(f(\mathbf{x})\)</li>
+<li>\(SE_{prediction}\), a particular \(y\) at \(\mathbf{x}\), which considers the <span class="underline">irreducible error</span> and the error in the estimate of \(f(\mathbf{x})\)</li>
+</ul></li>
+<li>variance inflation factor(VIF): \(VIF(\theta_j) = \frac{1}{1-R^2_{x_j|x_{-j}}} =
+   f(R^2_{x_j|x_{-j}})\) VS 5. The larger VIF for \(x_j\), the <b>more
+collinearity \(x_j\) with other predictors \(x_{-j}\)</b>
+<ul class="org-ul">
+<li>\(R^2 \in [0, 1]\)</li>
+<li>\(VIF \in [1, +\infty]\)</li>
+<li>multicollinearity results in a great deal of uncertainty in the
+coefficents estimate(think of the contour plots, why the name of
+<span class="underline">variance inflation</span>), cause the SE of coefficents to grow, which
+has a wider CI, so we may fail to reject H_0: \(\beta_j=0\), the
+probability of correctly detecting a non-zero coefficents is
+reduced by collinearity.</li>
+</ul></li>
+<li>Leverage: \(h^{(i)} = \frac{1}{n} + \frac{||\mathbf{x}^{(i)} -\bar{\mathbf{x}}^{(i)}||^2}{\sum_{i^{'}=1}^{n} || \mathbf{x}^{(i)} -\bar{\mathbf{x}}^{(i)}||^2 }\)</li>
 <li>Outlier: high residual</li>
 </ul>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgheadline20" class="outline-2">
-<h2 id="orgheadline20">Lab: linear regression</h2>
-<div class="outline-text-2" id="text-orgheadline20">
-</div><div id="outline-container-orgheadline13" class="outline-3">
-<h3 id="orgheadline13">Explore data</h3>
-<div class="outline-text-3" id="text-orgheadline13">
+<div id="outline-container-orgheadline21" class="outline-2">
+<h2 id="orgheadline21">Lab: linear regression</h2>
+<div class="outline-text-2" id="text-orgheadline21">
+</div><div id="outline-container-orgheadline14" class="outline-3">
+<h3 id="orgheadline14">Explore data</h3>
+<div class="outline-text-3" id="text-orgheadline14">
 <p>
 Use <i>ggpairs()</i> to plot the scatter matrix. It's show that <i>lstat</i>
 (-0.738) and <i>rm</i> (0.695) has the largest cor() with <i>medv</i>.
@@ -499,9 +573,9 @@ ggpairs(Boston)
 
 
 
-<div id="outline-container-orgheadline14" class="outline-3">
-<h3 id="orgheadline14">Simple linear regression</h3>
-<div class="outline-text-3" id="text-orgheadline14">
+<div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15">Simple linear regression</h3>
+<div class="outline-text-3" id="text-orgheadline15">
 <p>
 Regressing <i>medv</i> (房价中位数) onto <i>lstat</i> (低社会经济阶层家庭百分比) using simple linear regression.
 </p>
@@ -544,7 +618,7 @@ The following object is masked from ‘package:dplyr’:
 
 
 <p>
-Model assessment result using $RSE, R^2, F$-statistic:
+Model assessment result using \(RSE, R^2\), <i>F</i>-statistic:
 </p>
 <ul class="org-ul">
 <li>\(RSE = 6.216\)</li>
@@ -620,8 +694,8 @@ Predict and get the confidence interval and predict interval.?
 
 <pre class="src src-R"><span style="font-weight: bold; font-style: italic;">### </span><span style="font-weight: bold; font-style: italic;">* Predict</span>
 predict(simple_linear_regression_model, data.frame(lstat = c(5, 10, 15)))
-predict(simple_linear_regression_model, data.frame(lstat = c(5, 10, 15)), interval=<span style="font-style: italic;">"prediction"</span>)
-predict(simple_linear_regression_model, data.frame(lstat = c(5, 10, 15)), interval=<span style="font-style: italic;">"confidence"</span>)
+predict(simple_linear_regression_model, data.frame(lstat = c(5, 10, 15)), interval=<span style="font-style: italic;">"prediction"</span>) <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">particular y</span>
+predict(simple_linear_regression_model, data.frame(lstat = c(5, 10, 15)), interval=<span style="font-style: italic;">"confidence"</span>) <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">line, average y</span>
 </pre>
 </div>
 
@@ -661,10 +735,10 @@ Using plot(lm_model) to get the four diagnostic plots. (normal QQ plot?)
 </p>
 <ul class="org-ul">
 <li>residuals: \(y^{(i)} - \hat{y}^{(i)}\)</li>
-<li>studentized residuals: \(\frac{y^{(i)} - \hat{y}^{(i)}}{SE(y^{(i)} - \hat{y}^{(i)})}\)</li>
+<li>studentized residuals: \(\frac{y^{(i)} - \hat{y}^{(i)}}{RSE (1-h_{ii})}\)</li>
 <li>leverage statistics: \(h^{(i)} = \frac{1}{n} + \frac{ ||\mathbf{x}^{(i)}
-     -\hat{\mathbf{x}}^{(i)}||^2 }{\sum_{i^{'}=1}^{n} || \mathbf{x}^{(i)}
-     -\hat{\mathbf{x}}^{(i)}||^2 }\) (to check for p&gt;1)</li>
+     -\bar{\mathbf{x}}^{(i)}||^2 }{\sum_{i^{'}=1}^{n} || \mathbf{x}^{(i)}
+     -\bar{\mathbf{x}}^{(i)}||^2 }\) (to check for p&gt;1)</li>
 </ul>
 <div class="org-src-container">
 
@@ -707,9 +781,9 @@ Sorry, your browser does not support SVG.</object>
 </div>
 
 
-<div id="outline-container-orgheadline15" class="outline-3">
-<h3 id="orgheadline15">Multiple linear regression</h3>
-<div class="outline-text-3" id="text-orgheadline15">
+<div id="outline-container-orgheadline16" class="outline-3">
+<h3 id="orgheadline16">Multiple linear regression</h3>
+<div class="outline-text-3" id="text-orgheadline16">
 <p>
 Since \(lstat, rm\) has largest \(\rho\) related to \(medv\), we regress \(medv\) to them:
 </p>
@@ -850,13 +924,12 @@ F-statistic: 128.2 on 11 and 494 DF,  p-value: &lt; 2.2e-16
 </div>
 
 
-<div id="outline-container-orgheadline16" class="outline-3">
-<h3 id="orgheadline16">Performance on training data:</h3>
-<div class="outline-text-3" id="text-orgheadline16">
+<div id="outline-container-orgheadline17" class="outline-3">
+<h3 id="orgheadline17">Performance on training data:</h3>
+<div class="outline-text-3" id="text-orgheadline17">
 <ul class="org-ul">
-<li>\(R^2\) increases as the number of predictors used in regression,
-even the predictor is the noise. ( \(p\) 元、\(n\) 个方程, \(p\) 增达到
-\(n\),方程有解, \(RSS=0, R^2=1\)), lead to overfit.</li>
+<li><b>\(R^2\) increases as the number of predictors used in regression,
+even the predictor is the noise.</b> ( \(p\) 元、\(n\) 个方程, \(p\) 增达到\(n\),方程有解, \(RSS=0, R^2=1\)), lead to overfit.</li>
 <li>\(RSE, R_{adjusted}^2\) penalize if \(p\) is too large</li>
 </ul>
 
@@ -931,9 +1004,9 @@ even the predictor is the noise. ( \(p\) 元、\(n\) 个方程, \(p\) 增达到
 
 
 
-<div id="outline-container-orgheadline17" class="outline-3">
-<h3 id="orgheadline17">Interacton terms: [removing additive assumation]</h3>
-<div class="outline-text-3" id="text-orgheadline17">
+<div id="outline-container-orgheadline18" class="outline-3">
+<h3 id="orgheadline18">Interacton terms: [removing additive assumation]</h3>
+<div class="outline-text-3" id="text-orgheadline18">
 <div class="org-src-container">
 
 <pre class="src src-R">summary(lm(medv ~ lstat * age, data = Boston)) <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">i.e,  lstat + age + lstat:age</span>
@@ -966,9 +1039,9 @@ F-statistic: 209.3 on 3 and 502 DF,  p-value: &lt; 2.2e-16
 
 
 
-<div id="outline-container-orgheadline18" class="outline-3">
-<h3 id="orgheadline18">Non-linear transformations of the predictors</h3>
-<div class="outline-text-3" id="text-orgheadline18">
+<div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19">Non-linear transformations of the predictors</h3>
+<div class="outline-text-3" id="text-orgheadline19">
 <p>
 It's shown that \(medv, lstat\) in not linear relationship in
 <a href="file:///home/touch/studyspace/data_science/cnglen_github_io/images/ISL_boston_pairs.png">scatter matrix plot</a>. Thus, we try to regression onto \(lstat,
@@ -1152,9 +1225,9 @@ We can also use other non-linear transformation, such as <i>log</i>.
 
 
 
-<div id="outline-container-orgheadline19" class="outline-3">
-<h3 id="orgheadline19">Qualitative Predictors (Categracial Variable)</h3>
-<div class="outline-text-3" id="text-orgheadline19">
+<div id="outline-container-orgheadline20" class="outline-3">
+<h3 id="orgheadline20">Qualitative Predictors (Categracial Variable)</h3>
+<div class="outline-text-3" id="text-orgheadline20">
 <p>
 Categorical variable are coded into <i>dummy</i> variables:
 </p>
