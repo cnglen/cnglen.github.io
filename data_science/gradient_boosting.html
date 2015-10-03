@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2015-10-03 Sat 20:06 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gradient boosting</title>
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Jacky Wang" />
+<link rel="stylesheet" title="Standard" href="/style/worg.css" type="text/css" />
+<link rel="alternate stylesheet" title="Zenburn" href="/style/worg-zenburn.css" type="text/css" />
+<link rel="alternate stylesheet" title="Classic" href="/style/worg-classic.css" type="text/css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="preamble" class="status">
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded',function() {
+      document.getElementById("table-of-contents").onclick = function() {
+          var elem = document.getElementById("text-table-of-contents");
+          elem.style.display = elem.style.display == "block" ? "none" : "block";
+      }
+  });
+</script>
+</div>
+<div id="content">
+<h1 class="title">Gradient boosting</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">Theory</a>
+<ul>
+<li><a href="#orgheadline2">gradient boosting</a></li>
+<li><a href="#orgheadline3">Note</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+<a href="../index.html">Home</a>
+</p>
+
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1">Theory</h2>
+<div class="outline-text-2" id="text-orgheadline1">
+<p>
+In a function estimation problem, the goal is to find
+</p>
+\begin{equation}
+\begin{split}
+F^{*}(\mathbf{x})
+&= \arg \min_{F} E_{y, \mathbf{x}} L(y, F(\mathbf{x})) \\
+& \overset{\bar{\mu} \to \mu \text{when sample size } n \text{ is large}}{= \mathrel{\mkern-3mu} =} \arg \min_{F} \frac{1}{n}\sum_{i=1}^{n}L(y_i, F(\mathbf{x_i})) \\
+\end{split}
+\end{equation}
+<p>
+where:
+</p>
+<ul class="org-ul">
+<li>\(\{\mathbf{x}_i=[x_{i0}, x_{i1}, ..., x_{ip}]^T, y_i\}_{i=1}^{n}\) are the observations</li>
+<li>\(L(y_i, F(\mathbf{x}))\) is the loss function</li>
+</ul>
+
+<p>
+Restrited \(F(\mathbf{x})\) to the "additive" expansion of form (_smoothness imposed_):
+</p>
+\begin{equation}
+F(\mathbf{x}) = \sum_{m=0}^{M} \rho_m h(\mathbf{x}; \mathbf{a}_m) = F(\mathbf{x};\{\rho_m, \mathbf{a}_m\}_{m=0}^{M})
+\end{equation}
+
+<p>
+then the goal is:
+</p>
+\begin{equation}
+\begin{split}
+\{\rho_m, \mathbf{a}_m\}_{m=0}^{M} = \arg \min_{ \{\rho_m^{'}, \mathbf{a}_m^{'}\}_{m=0}^{M}} \frac{1}{n}\sum_{i=1}^{n}L(y_i, F(\mathbf{x}_i;\{\rho_m, \mathbf{a}_m\}_{m=0}^{M}))
+\end{split}
+\end{equation}
+
+<p>
+It's infeasible to solve <a href="#orglatexenvironment1">1</a>, we can try a <b>greedy stagewise</b> approach:
+</p>
+<ul class="org-ul">
+<li>Initial guess \(F_0(\mathbf{x})\)</li>
+</ul>
+<ul class="org-ul">
+<li>For \(m=1, 2, ..., M\):
+<ul class="org-ul">
+<li><p>
+Get \((\rho_m, \mathbf{a}_m)\) (which can be approximately solved by <b>gradient boosting</b>)
+</p>
+\begin{equation}
+\begin{split}
+(\rho_m, \mathbf{a}_m) = \arg \min_{ (\rho, \mathbf{a})} \frac{1}{n}\sum_{i=1}^{n}L(y_i, F_{m-1}(\mathbf{x}_i) + \rho h(\mathbf{x}_i; \mathbf{a})
+\end{split}
+\end{equation}</li>
+
+<li><p>
+Update the function estimation
+</p>
+\begin{equation}
+\begin{split}
+F_m(\mathbf{x}) = F_{m-1}(\mathbf{x}) + \rho_m h(\mathbf{x}; \mathbf{a}_m)
+\end{split}
+\end{equation}</li>
+</ul></li>
+</ul>
+</div>
+
+
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2">gradient boosting</h3>
+<div class="outline-text-3" id="text-orgheadline2">
+<ul class="org-ul">
+<li>Initialize \(F_0(\mathbf{x})=\arg\min _c \sum_{i=1}^{n}L(y_i-c)\)</li>
+<li>For \(m = 1\) to \(M\):
+<ul class="org-ul">
+<li><p>
+Compute the negative gradient
+</p>
+\begin{equation}
+\tilde{y}_{im} = - \frac{ \partial L(y_i, F(\mathbf{x_i})) }{ \partial F(\mathbf{x}_i)} \big|_{F(\mathbf{x})=F_{m-1}(\mathbf{x})}
+\end{equation}</li>
+<li><p>
+Fit a new base-learner function using \(\{ \mathbf{x}_i, \tilde{y}_{im} \}_{i=1}^{n}\): \(h(\mathbf{x};\mathbf{a}_m)\)
+</p>
+\begin{equation}
+\mathbf{a}_m = \arg \min _{\mathbf{a}} \sum_{i=1}^{n} L(y_i, h(\mathbf{x}_i; \mathbf{a}))
+\end{equation}</li>
+<li><p>
+Find the best gradient descent step-size
+</p>
+\begin{equation}
+\rho_m = \arg \min _{\rho} \sum_{i=1}^{n} L(y_i, F_{m-1}(\mathbf{x}_i) + \rho h(\mathbf{x}_i; \mathbf{a}_m))
+\end{equation}</li>
+<li><p>
+Update the function estimate
+</p>
+\begin{equation}
+F_{m}(\mathbf{x}_i) = F_{m-1}(\mathbf{x}_i) + \rho_m h(\mathbf{x}_i; \mathbf{a}_m)
+\end{equation}</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3">Note</h3>
+<div class="outline-text-3" id="text-orgheadline3">
+<ul class="org-ul">
+<li>理解梯度下降法时，将 \(F(\mathbf{x}_i) _{i=1}^{n}\) 看成要优化的参数</li>
+<li>直接将 \(F(\mathbf{x}_i) _{i=1}^{n}\) 看成参数优化有问题，通过 \(\{\rho_m, \mathbf{a}_m\}\) 间接指定\(F_(\mathbf{x}_i)\), 起到一个平滑的作用</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.1 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2015-10-03 20:05:48</p></div>
+</div>
+</body>
+</html>
