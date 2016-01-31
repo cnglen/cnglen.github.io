@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2015-10-03 Sat 20:06 -->
+<!-- 2016-01-31 Sun 16:46 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>Linear regression</title>
@@ -301,7 +301,7 @@ We'll get
 </p>
 <ul class="org-ul">
 <li>\(\theta_1 = cor(\mathbf{x}_1,\mathbf{y}) \frac{sd(\mathbf{y})}{sd(\mathbf{x}_1)}
-              = \frac{\sum_{i=1}^n (x_1^{(i)} - \bar{x}_1) (y^{(i)} - \bar{y})}{\sqrt{\sum_{i=1}^n (x_1^{(i)} - \bar{x}_1)^2} \sqrt{\sum_{i=1}^n (y^{(i)} - \bar{y}_1)^2}} \frac{\frac{1}{n}\sqrt{\sum_{i=1}^n (y^{(i)} - \bar{y})^2}}{\frac{1}{n}\sqrt{\sum_{i=1}^n (x_1^{(i)} - \bar{x}_1)^2}}\)</li>
+              = \frac{\frac{1}{n}\sum_{i=1}^n (x_1^{(i)} - \bar{x}_1) (y^{(i)} - \bar{y})}{\sqrt{\frac{1}{n}\sum_{i=1}^n (x_1^{(i)} - \bar{x}_1)^2} \sqrt{\frac{1}{n}\sum_{i=1}^n (y^{(i)} - \bar{y}_1)^2}} \frac{\sqrt{\frac{1}{n}\sum_{i=1}^n (y^{(i)} - \bar{y})^2}}{\sqrt{\frac{1}{n}\sum_{i=1}^n (x_1^{(i)} - \bar{x}_1)^2}}\)</li>
 <li>\(\theta_0 = mean(\mathbf{y}) - \theta_1 mean(\mathbf{x}_1)
               = \bar{y} - \theta_1 \bar{x}_1\)</li>
 </ul>
@@ -1309,7 +1309,7 @@ Medium    0      1
 </div>
 </div>
 <div id="postamble" class="status">
-<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.1 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2015-10-03 20:05:48</p></div>
+<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.1 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-01-31 16:45:41</p></div>
 </div>
 </body>
 </html>
