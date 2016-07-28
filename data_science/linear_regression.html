@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-04-12 Tue 21:29 -->
+<!-- 2016-07-28 Thu 22:47 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>Linear regression</title>
@@ -568,10 +568,10 @@ Use <i>ggpairs()</i> to plot the scatter matrix. It's show that <i>lstat</i>
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="font-weight: bold; text-decoration: underline;">library</span>(ISLR)
-<span style="font-weight: bold; text-decoration: underline;">library</span>(ggplot2)
-<span style="font-weight: bold; text-decoration: underline;">library</span>(GGally)
-<span style="font-weight: bold; text-decoration: underline;">library</span>(MASS)
+<pre class="src src-R"><span style="color: #268bd2;">library</span>(ISLR)
+<span style="color: #268bd2;">library</span>(ggplot2)
+<span style="color: #268bd2;">library</span>(GGally)
+<span style="color: #268bd2;">library</span>(MASS)
 ggpairs(Boston)
 </pre>
 </div>
@@ -595,15 +595,15 @@ Regressing <i>medv</i> (房价中位数) onto <i>lstat</i> (低社会经济阶�
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="font-weight: bold; font-style: italic;">### </span><span style="font-weight: bold; font-style: italic;">* Load library</span>
-<span style="font-weight: bold; text-decoration: underline;">library</span>(MASS)        <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">large collections of datasets and functions</span>
-<span style="font-weight: bold; text-decoration: underline;">library</span>(ISLR)        <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">functions and datasets assoicated with ISL book</span>
+<pre class="src src-R"><span style="color: #93a1a1; font-style: italic;">### </span><span style="color: #93a1a1; font-style: italic;">* Load library</span>
+<span style="color: #268bd2;">library</span>(MASS)        <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">large collections of datasets and functions</span>
+<span style="color: #268bd2;">library</span>(ISLR)        <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">functions and datasets assoicated with ISL book</span>
 
-<span style="font-weight: bold; font-style: italic;">### </span><span style="font-weight: bold; font-style: italic;">* Explore data</span>
+<span style="color: #93a1a1; font-style: italic;">### </span><span style="color: #93a1a1; font-style: italic;">* Explore data</span>
 str(Boston)
 
-<span style="font-weight: bold; font-style: italic;">### </span><span style="font-weight: bold; font-style: italic;">* Fit</span>
-simple_linear_regression_model <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ lstat, data = Boston)
+<span style="color: #93a1a1; font-style: italic;">### </span><span style="color: #93a1a1; font-style: italic;">* Fit</span>
+simple_linear_regression_model <span style="color: #268bd2;">&lt;-</span> lm(medv ~ lstat, data = Boston)
 </pre>
 </div>
 
@@ -645,10 +645,10 @@ the same result.</li>
 </ul>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="font-weight: bold; font-style: italic;">### </span><span style="font-weight: bold; font-style: italic;">** RSE, R^2, F-statistic</span>
-<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">RSE: residual standard error, estimate of sigma_epsilon</span>
-<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">R^2: [0, 1],  1 - RSS/TSS,  0 ~ denotes the same performance of mean(y), 1 denotes perfect</span>
-<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">F-statistic: H_0: beta_1 = beta_2 = beta_p = 0, if &gt; 1, reject H_0</span>
+<pre class="src src-R"><span style="color: #93a1a1; font-style: italic;">### </span><span style="color: #93a1a1; font-style: italic;">** RSE, R^2, F-statistic</span>
+<span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">RSE: residual standard error, estimate of sigma_epsilon</span>
+<span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">R^2: [0, 1],  1 - RSS/TSS,  0 ~ denotes the same performance of mean(y), 1 denotes perfect</span>
+<span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">F-statistic: H_0: beta_1 = beta_2 = beta_p = 0, if &gt; 1, reject H_0</span>
 summary(simple_linear_regression_model)
 </pre>
 </div>
@@ -687,8 +687,8 @@ Get the coefficients using <i>coef()</i> and their confidence interval using <i>
 
 <pre class="src src-R">coef(simple_linear_regression_model)
 
-<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">Confidence interval of beta, more understandabel than p-value</span>
-confint(simple_linear_regression_model) <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">beta_0 + c( -1, 1) * qt(.975, dof) * se(beta_0)</span>
+<span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">Confidence interval of beta, more understandabel than p-value</span>
+confint(simple_linear_regression_model) <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">beta_0 + c( -1, 1) * qt(.975, dof) * se(beta_0)</span>
 </pre>
 </div>
 
@@ -706,10 +706,10 @@ Predict and get the confidence interval and predict interval.?
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="font-weight: bold; font-style: italic;">### </span><span style="font-weight: bold; font-style: italic;">* Predict</span>
+<pre class="src src-R"><span style="color: #93a1a1; font-style: italic;">### </span><span style="color: #93a1a1; font-style: italic;">* Predict</span>
 predict(simple_linear_regression_model, data.frame(lstat = c(5, 10, 15)))
-predict(simple_linear_regression_model, data.frame(lstat = c(5, 10, 15)), interval=<span style="font-style: italic;">"prediction"</span>) <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">particular y</span>
-predict(simple_linear_regression_model, data.frame(lstat = c(5, 10, 15)), interval=<span style="font-style: italic;">"confidence"</span>) <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">line, average y</span>
+predict(simple_linear_regression_model, data.frame(lstat = c(5, 10, 15)), interval=<span style="color: #2aa198;">"prediction"</span>) <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">particular y</span>
+predict(simple_linear_regression_model, data.frame(lstat = c(5, 10, 15)), interval=<span style="color: #2aa198;">"confidence"</span>) <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">line, average y</span>
 </pre>
 </div>
 
@@ -732,8 +732,8 @@ Plot the training dataset and fitted line:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock1">plot(Boston$lstat, Boston$medv, main = <span style="font-style: italic;">"simple linear regression(Training data)"</span>)
-abline(simple_linear_regression_model, col = <span style="font-style: italic;">"red"</span>)
+<pre class="src src-R" id="orgsrcblock1">plot(Boston$lstat, Boston$medv, main = <span style="color: #2aa198;">"simple linear regression(Training data)"</span>)
+abline(simple_linear_regression_model, col = <span style="color: #2aa198;">"red"</span>)
 </pre>
 </div>
 
@@ -775,13 +775,13 @@ We can also plot the diagnostic plot mannually.
 <div class="org-src-container">
 
 <pre class="src src-R" id="orgsrcblock3">par(mfrow = c(2, 2))
-plot(predict(simple_linear_regression_model), residuals(simple_linear_regression_model), main = <span style="font-style: italic;">"residual plot"</span>)
-plot(predict(simple_linear_regression_model), rstudent(simple_linear_regression_model), main = <span style="font-style: italic;">"studentized residuals"</span>)
-plot(hatvalues(simple_linear_regression_model), main = <span style="font-style: italic;">"leverage statistics"</span>)
+plot(predict(simple_linear_regression_model), residuals(simple_linear_regression_model), main = <span style="color: #2aa198;">"residual plot"</span>)
+plot(predict(simple_linear_regression_model), rstudent(simple_linear_regression_model), main = <span style="color: #2aa198;">"studentized residuals"</span>)
+plot(hatvalues(simple_linear_regression_model), main = <span style="color: #2aa198;">"leverage statistics"</span>)
 plot(hatvalues(simple_linear_regression_model), rstudent(simple_linear_regression_model),
-     xlab = <span style="font-style: italic;">"leverage statistics"</span>,
-     ylab = <span style="font-style: italic;">"studentlized residuals"</span>,
-     main = <span style="font-style: italic;">"levearge statistics VS studentlized residuals"</span>)
+     xlab = <span style="color: #2aa198;">"leverage statistics"</span>,
+     ylab = <span style="color: #2aa198;">"studentlized residuals"</span>,
+     main = <span style="color: #2aa198;">"levearge statistics VS studentlized residuals"</span>)
 </pre>
 </div>
 
@@ -803,7 +803,7 @@ Since \(lstat, rm\) has largest \(\rho\) related to \(medv\), we regress \(medv\
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">lm_two_feature <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ lstat +  rm,  data = Boston)
+<pre class="src src-R">lm_two_feature <span style="color: #268bd2;">&lt;-</span> lm(medv ~ lstat +  rm,  data = Boston)
 summary(lm_two_feature)
 </pre>
 </div>
@@ -835,8 +835,8 @@ How about regress using all predictors?
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">lm_all_feature <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ .,  data = Boston) <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">. denotes other variable except medv?</span>
-summary(lm_all_feature)        <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Find the feature with largest p value</span>
+<pre class="src src-R">lm_all_feature <span style="color: #268bd2;">&lt;-</span> lm(medv ~ .,  data = Boston) <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">. denotes other variable except medv?</span>
+summary(lm_all_feature)        <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">Find the feature with largest p value</span>
 </pre>
 </div>
 
@@ -850,12 +850,12 @@ summary(lm_all_feature)        <span style="font-weight: bold; font-style: itali
 
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">Remove features that has large p value,  i.e, 0.95 confidence intervel has 0</span>
-confint(lm_all_feature)                 <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">See age and indus</span>
-lm_all_but_age <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ . - age, data = Boston)
+<pre class="src src-R"><span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">Remove features that has large p value,  i.e, 0.95 confidence intervel has 0</span>
+confint(lm_all_feature)                 <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">See age and indus</span>
+lm_all_but_age <span style="color: #268bd2;">&lt;-</span> lm(medv ~ . - age, data = Boston)
 summary(lm_all_but_age)
 
-lm_all_but_age_indus <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ . - age - indus, data = Boston)
+lm_all_but_age_indus <span style="color: #268bd2;">&lt;-</span> lm(medv ~ . - age - indus, data = Boston)
 summary(lm_all_but_age_indus)
 </pre>
 </div>
@@ -1023,7 +1023,7 @@ even the predictor is the noise.</b> ( \(p\) 元、\(n\) 个方程, \(p\) 增达
 <div class="outline-text-3" id="text-orgheadline19">
 <div class="org-src-container">
 
-<pre class="src src-R">summary(lm(medv ~ lstat * age, data = Boston)) <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">i.e,  lstat + age + lstat:age</span>
+<pre class="src src-R">summary(lm(medv ~ lstat * age, data = Boston)) <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">i.e,  lstat + age + lstat:age</span>
 </pre>
 </div>
 
@@ -1064,7 +1064,7 @@ It's shown that \(medv, lstat\) in not linear relationship in
 
 <div class="org-src-container">
 
-<pre class="src src-R">lm_quad_lstat <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ lstat + I(lstat^2), data = Boston)
+<pre class="src src-R">lm_quad_lstat <span style="color: #268bd2;">&lt;-</span> lm(medv ~ lstat + I(lstat^2), data = Boston)
 summary(lm_quad_lstat)
 </pre>
 </div>
@@ -1142,7 +1142,7 @@ than 5 have big \(p\) values, so we are NOT able to reject:
 
 <div class="org-src-container">
 
-<pre class="src src-R">lm_poly_lstat_8 <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ poly(lstat, 8), data = Boston)
+<pre class="src src-R">lm_poly_lstat_8 <span style="color: #268bd2;">&lt;-</span> lm(medv ~ poly(lstat, 8), data = Boston)
 summary(lm_poly_lstat_8)
 </pre>
 </div>
@@ -1176,7 +1176,7 @@ F-statistic: 134.4 on 8 and 497 DF,  p-value: &lt; 2.2e-16
 
 <div class="org-src-container">
 
-<pre class="src src-R">lm_poly_lstat_5 <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ poly(lstat, 5), data = Boston)
+<pre class="src src-R">lm_poly_lstat_5 <span style="color: #268bd2;">&lt;-</span> lm(medv ~ poly(lstat, 5), data = Boston)
 summary(lm_poly_lstat_5)
 </pre>
 </div>
@@ -1210,13 +1210,13 @@ The fitted curve using \(5th\) and \(8th\) power are almost the same.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="font-weight: bold; text-decoration: underline;">library</span>(ggplot2)
+<pre class="src src-R"><span style="color: #268bd2;">library</span>(ggplot2)
 ggplot(data=data.frame(lstat = Boston$lstat,
                        medv_8 = predict(lm_poly_lstat_8, data = Boston),
                        medv_5=predict(lm_poly_lstat_5, data = Boston) ),
-       aes(x = lstat, y = medv_5)) + geom_point(aes(color = <span style="font-style: italic;">"lstat_5"</span>)) +
-           geom_point(aes(y = medv_8, color = <span style="font-style: italic;">"lstat_8"</span>)) +
-               scale_color_manual(<span style="font-style: italic;">"maximum power level"</span>, values = c(<span style="font-style: italic;">"lstat_5"</span> = <span style="font-style: italic;">"blue"</span>, <span style="font-style: italic;">"lstat_8"</span> = <span style="font-style: italic;">"red"</span> ))
+       aes(x = lstat, y = medv_5)) + geom_point(aes(color = <span style="color: #2aa198;">"lstat_5"</span>)) +
+           geom_point(aes(y = medv_8, color = <span style="color: #2aa198;">"lstat_8"</span>)) +
+               scale_color_manual(<span style="color: #2aa198;">"maximum power level"</span>, values = c(<span style="color: #2aa198;">"lstat_5"</span> = <span style="color: #2aa198;">"blue"</span>, <span style="color: #2aa198;">"lstat_8"</span> = <span style="color: #2aa198;">"red"</span> ))
 </pre>
 </div>
 
@@ -1231,7 +1231,7 @@ We can also use other non-linear transformation, such as <i>log</i>.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">lm_logrm <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ log(rm), data = Boston)
+<pre class="src src-R">lm_logrm <span style="color: #268bd2;">&lt;-</span> lm(medv ~ log(rm), data = Boston)
 </pre>
 </div>
 </div>
@@ -1247,10 +1247,10 @@ Categorical variable are coded into <i>dummy</i> variables:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="font-weight: bold; text-decoration: underline;">library</span>(ISLR)
+<pre class="src src-R"><span style="color: #268bd2;">library</span>(ISLR)
 str(Carseats)
 
-lm_model <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(Sales ~ . + Income:Advertising + Price:Age, data = Carseats)
+lm_model <span style="color: #268bd2;">&lt;-</span> lm(Sales ~ . + Income:Advertising + Price:Age, data = Carseats)
 summary(lm_model)
 contrasts(Carseats$ShelveLoc)
 </pre>
@@ -1309,7 +1309,7 @@ Medium    0      1
 </div>
 </div>
 <div id="postamble" class="status">
-<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.1 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-04-12 21:29:23</p></div>
+<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.4 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-07-28 22:46:52</p></div>
 </div>
 </body>
 </html>

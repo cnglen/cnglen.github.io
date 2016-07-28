@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-04-12 Tue 21:29 -->
+<!-- 2016-07-28 Thu 22:47 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>Better mpg: manual or automatic transmission?</title>
@@ -143,10 +143,10 @@ We use categorical variable to denote:
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock1"><span style="font-weight: bold; text-decoration: underline;">library</span>(ggplot2); <span style="font-weight: bold; text-decoration: underline;">library</span>(GGally); <span style="font-weight: bold; text-decoration: underline;">library</span>(dplyr, warn.conflicts=<span style="font-weight: bold; text-decoration: underline;">FALSE</span>); data(mtcars)
-raw_data <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> mtcars
-processed_data <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> mutate(mtcars, am = factor(ifelse(am == 0, <span style="font-style: italic;">"automatic"</span>, <span style="font-style: italic;">"manual"</span>)),
-                        vs = factor(ifelse(vs == 0, <span style="font-style: italic;">"v"</span>, <span style="font-style: italic;">"s"</span>)))
+<pre class="src src-R" id="orgsrcblock1"><span style="color: #268bd2;">library</span>(ggplot2); <span style="color: #268bd2;">library</span>(GGally); <span style="color: #268bd2;">library</span>(dplyr, warn.conflicts=<span style="color: #268bd2;">FALSE</span>); data(mtcars)
+raw_data <span style="color: #268bd2;">&lt;-</span> mtcars
+processed_data <span style="color: #268bd2;">&lt;-</span> mutate(mtcars, am = factor(ifelse(am == 0, <span style="color: #2aa198;">"automatic"</span>, <span style="color: #2aa198;">"manual"</span>)),
+                        vs = factor(ifelse(vs == 0, <span style="color: #2aa198;">"v"</span>, <span style="color: #2aa198;">"s"</span>)))
 </pre>
 </div>
 
@@ -174,7 +174,7 @@ algorithm, which suggests using <i>wt</i>, <i>am</i> and <i>qsec</i>.
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock2">model <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> step(lm(mpg ~ ., processed_data), trace=<span style="font-weight: bold; text-decoration: underline;">FALSE</span>)
+<pre class="src src-R" id="orgsrcblock2">model <span style="color: #268bd2;">&lt;-</span> step(lm(mpg ~ ., processed_data), trace=<span style="color: #268bd2;">FALSE</span>)
 coefficients(model)
 </pre>
 </div>
@@ -190,7 +190,7 @@ based on <i>p</i>-value and adjusted \(R^2\), <i>am:wt</i> is used.):
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock3">final_model <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(mpg ~ wt + am + qsec + am:wt, processed_data)
+<pre class="src src-R" id="orgsrcblock3">final_model <span style="color: #268bd2;">&lt;-</span> lm(mpg ~ wt + am + qsec + am:wt, processed_data)
 coefficients(final_model)
 confint(final_model)
 </pre>
@@ -270,8 +270,8 @@ directly, it dpends on \(wt, qsec\)</span>.
 <div class="outline-text-3" id="text-orgheadline5">
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock4"><span style="font-weight: bold; text-decoration: underline;">library</span>(GGally); <span style="font-weight: bold; text-decoration: underline;">library</span>(dplyr, warn.conflicts=<span style="font-weight: bold; text-decoration: underline;">FALSE</span>); options(warn=-1)
-ggpairs(dplyr::select(processed_data, mpg, am, wt, qsec), color=<span style="font-style: italic;">'am'</span>)
+<pre class="src src-R" id="orgsrcblock4"><span style="color: #268bd2;">library</span>(GGally); <span style="color: #268bd2;">library</span>(dplyr, warn.conflicts=<span style="color: #268bd2;">FALSE</span>); options(warn=-1)
+ggpairs(dplyr::select(processed_data, mpg, am, wt, qsec), color=<span style="color: #2aa198;">'am'</span>)
 </pre>
 </div>
 
@@ -316,7 +316,7 @@ summary(final_model)
 </div>
 </div>
 <div id="postamble" class="status">
-<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.1 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-04-12 21:29:23</p></div>
+<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.4 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-07-28 22:46:52</p></div>
 </div>
 </body>
 </html>

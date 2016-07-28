@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-04-12 Tue 21:29 -->
+<!-- 2016-07-28 Thu 22:47 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>AB Testing</title>
@@ -99,9 +99,10 @@ for the JavaScript code in this tag.
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#orgheadline1">AB Test</a></li>
-<li><a href="#orgheadline3">Sample Size</a>
+<li><a href="#orgheadline4">Sample Size</a>
 <ul>
 <li><a href="#orgheadline2">Hypothesis</a></li>
+<li><a href="#orgheadline3">Hypothesis</a></li>
 </ul>
 </li>
 </ul>
@@ -123,10 +124,8 @@ for the JavaScript code in this tag.
 <li>\(H_1\): alternative hypothesis</li>
 <li>Type I Error, False Positive, \(P(\hat{H_1}|H_0 \text{ is true}), \alpha\), believing a lie, false alarm,</li>
 <li>type II error, Flase Negative, \(P(\hat{H_0}|H_1 \text{ is true}), \beta\), faling to raise an alarm</li>
-<li>Power: \(1-\beta\)</li>
-<li>Recall: \(\frac{TP}{TP+FN}\)</li>
 <li><p>
-Precision: \(\frac{TP}{TP+FP}\)
+Power: \(1-\beta\)
 </p>
 
 <p>
@@ -134,16 +133,16 @@ A random sample of \(n\) observations \(X_i, i=1,2,\cdots,n\) is taken
 from a normal populatoni with mean \(\mu\) and variance \(\sigma^2\).
 </p>
 <ul class="org-ul">
-<li>sample mean \(\bar{X}=\sum_{i=1}^{n}X_i\)</li>
-<li>sample variance \(\bar{X}\)</li>
+<li>sample mean \(\bar{X}=\frac{1}{n}\sum_{i=1}^{n}X_i\)</li>
+<li>sample variance \(S^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \hat{X})^2\)</li>
 </ul></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgheadline3" class="outline-2">
-<h2 id="orgheadline3">Sample Size</h2>
-<div class="outline-text-2" id="text-orgheadline3">
+<div id="outline-container-orgheadline4" class="outline-2">
+<h2 id="orgheadline4">Sample Size</h2>
+<div class="outline-text-2" id="text-orgheadline4">
 </div><div id="outline-container-orgheadline2" class="outline-3">
 <h3 id="orgheadline2">Hypothesis</h3>
 <div class="outline-text-3" id="text-orgheadline2">
@@ -159,15 +158,43 @@ from a normal populatoni with mean \(\mu\) and variance \(\sigma^2\).
 Then,
 </p>
 \begin{equation}
-0 + z_{1-\frac{\alpha}{2}}\sqrt{\frac{\sigma_0^2}{n}+\frac{\sigma_1^2}{n}} = \delta - z_{1-\beta}\sqrt{\frac{\sigma_0^2}{n}+\frac{\sigma_1^2}{n}} \\
+0 + z_{1-\frac{\alpha}{2}}\sqrt{\frac{\sigma_0^2}{n}+\frac{\sigma_1^2}{n}} = \delta - z_{1-\beta}\sqrt{\frac{\sigma_0^2}{n}+\frac{\sigma_1^2}{n}}
+\end{equation}
+
+\begin{equation}
 n = \frac{ (z_{1-\frac{\alpha}{2}}+z_{1-\beta})^2 (\sigma_0^2+\sigma_1^2)}{\delta^2}
+\end{equation}
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3">Hypothesis</h3>
+<div class="outline-text-3" id="text-orgheadline3">
+<ul class="org-ul">
+<li>Control Group: \(X_0 \sim (\mu_0, \sigma_0^2) \Longrightarrow \bar{X_0} \sim N(\mu_0, \frac{\sigma_0^2}{n_0})\)</li>
+<li>Treatment Group: \(X_1 \sim (\mu_1, \sigma_1^2) \Longrightarrow \bar{X_1} \sim N(\mu_1, \frac{\sigma_1^2}{n_1})\)</li>
+<li>\(H_0: \mu_1-\mu_0=0\)</li>
+<li>\(H_1: \mu_1-\mu_0 = \delta > 0\)</li>
+<li>\(n_0 = n_1 = n\)</li>
+</ul>
+
+<p>
+Then,
+</p>
+\begin{equation}
+0 + z_{1-\alpha}\sqrt{\frac{\sigma_0^2}{n}+\frac{\sigma_1^2}{n}} = \delta - z_{1-\beta}\sqrt{\frac{\sigma_0^2}{n}+\frac{\sigma_1^2}{n}}
+\end{equation}
+
+\begin{equation}
+n = \frac{ (z_{1-\alpha}+z_{1-\beta})^2 (\sigma_0^2+\sigma_1^2)}{\delta^2}
 \end{equation}
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.1 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-04-12 21:29:23</p></div>
+<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.4 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-07-28 22:46:52</p></div>
 </div>
 </body>
 </html>

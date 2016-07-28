@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-04-12 Tue 21:29 -->
+<!-- 2016-07-28 Thu 22:47 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>Non-Personalized Recommender</title>
@@ -168,7 +168,7 @@ for the JavaScript code in this tag.
 </ul></li>
 <li>Implict (what users <i>do</i>, actions), greater volumn
 <ul class="org-ul">
-<li>how long did user read<i>listen</i>watch?</li>
+<li>how long did user read/listen/watch?</li>
 <li>binary actions
 <ul class="org-ul">
 <li>click</li>
@@ -212,44 +212,44 @@ Data from : <a href="https://eventing.coursera.org/api/redirectStrict/D0T9icSNi9
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock1"><span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">Load raw data</span>
-<span style="font-weight: bold; text-decoration: underline;">library</span>(dplyr, warn.conflicts=<span style="font-weight: bold; text-decoration: underline;">FALSE</span>)
-<span style="font-weight: bold; text-decoration: underline;">library</span>(tidyr, warn.conflicts=<span style="font-weight: bold; text-decoration: underline;">FALSE</span>)
-raw_data <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> read.csv(<span style="font-style: italic;">'../data/A1Ratings.csv'</span>, header = <span style="font-weight: bold; text-decoration: underline;">TRUE</span>)
+<pre class="src src-R" id="orgsrcblock1"><span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">Load raw data</span>
+<span style="color: #268bd2;">library</span>(dplyr, warn.conflicts=<span style="color: #268bd2;">FALSE</span>)
+<span style="color: #268bd2;">library</span>(tidyr, warn.conflicts=<span style="color: #268bd2;">FALSE</span>)
+raw_data <span style="color: #268bd2;">&lt;-</span> read.csv(<span style="color: #2aa198;">'../data/A1Ratings.csv'</span>, header = <span style="color: #268bd2;">TRUE</span>)
 
-<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">Get pre-processed data</span>
-pre_processed_data <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> gather(data = raw_data, key = movie, value = rating, -User )
-pre_processed_data <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> tidyr::extract(data = pre_processed_data, col = movie, into = c(<span style="font-style: italic;">"movie_ID"</span>, <span style="font-style: italic;">"movie_name"</span>), regex = <span style="font-style: italic;">"X([[:alnum:]]+)\\.\\.(.*)"</span>)
-pre_processed_data <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> pre_processed_data %&gt;% select( -User) %&gt;%
-    group_by(movie_ID, movie_name) %&gt;%
-        summarise(mean_rating = mean(rating, na.rm = <span style="font-weight: bold; text-decoration: underline;">TRUE</span>),
+<span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">Get pre-processed data</span>
+pre_processed_data <span style="color: #268bd2;">&lt;-</span> gather(data = raw_data, key = movie, value = rating, -User )
+pre_processed_data <span style="color: #268bd2;">&lt;-</span> tidyr::extract(data = pre_processed_data, col = movie, into = c(<span style="color: #2aa198;">"movie_ID"</span>, <span style="color: #2aa198;">"movie_name"</span>), regex = <span style="color: #2aa198;">"X([[:alnum:]]+)\\.\\.(.*)"</span>)
+pre_processed_data <span style="color: #268bd2;">&lt;-</span> pre_processed_data <span style="color: #268bd2;">%&gt;%</span> select( -User) <span style="color: #268bd2;">%&gt;%</span>
+    group_by(movie_ID, movie_name) <span style="color: #268bd2;">%&gt;%</span>
+        summarise(mean_rating = mean(rating, na.rm = <span style="color: #268bd2;">TRUE</span>),
                   n_rating = sum(!is.na(rating)),
                   n_positive_rating = sum(ifelse(rating&gt;=4 &amp; !is.na(rating), 1, 0))
-                  ) %&gt;%
-            ungroup() %&gt;% arrange(desc(mean_rating)) %&gt;%
+                  ) <span style="color: #268bd2;">%&gt;%</span>
+            ungroup() <span style="color: #268bd2;">%&gt;%</span> arrange(desc(mean_rating)) <span style="color: #268bd2;">%&gt;%</span>
                 mutate(p_positive_rating = n_positive_rating/n_rating)
 
-<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">q1</span>
-arrange(pre_processed_data, desc(mean_rating)) %&gt;% select(movie_ID, mean_rating)
+<span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">q1</span>
+arrange(pre_processed_data, desc(mean_rating)) <span style="color: #268bd2;">%&gt;%</span> select(movie_ID, mean_rating)
 
-<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">q2</span>
-arrange(pre_processed_data, desc(n_rating)) %&gt;% select(movie_ID, n_rating)
+<span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">q2</span>
+arrange(pre_processed_data, desc(n_rating)) <span style="color: #268bd2;">%&gt;%</span> select(movie_ID, n_rating)
 
-<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">q3</span>
-arrange(pre_processed_data, desc(p_positive_rating)) %&gt;% select(movie_ID, p_positive_rating)
+<span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">q3</span>
+arrange(pre_processed_data, desc(p_positive_rating)) <span style="color: #268bd2;">%&gt;%</span> select(movie_ID, p_positive_rating)
 
-<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">q4 P( Y | Star Wars: Episode IV - A New Hope (1977))</span>
-<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">dirty method,  to be updated</span>
-n_x <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> select(filter(pre_processed_data, movie_ID == 260), n_rating)[[1]]
-index_star_war_1977 <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> 2
-result <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> data.frame()
-<span style="font-weight: bold;">for</span> (index_movie <span style="font-weight: bold;">in</span> c(3:ncol(raw_data))) {
-    n_xy <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> sum(!is.na(raw_data[, index_star_war_1977]) &amp; !is.na(raw_data[, index_movie]))
-    py_on_x <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> n_xy / n_x
-    result <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> rbind(result, data.frame(py_on_x = py_on_x, index_movie = index_movie, movie_info = names(raw_data)[index_movie]))
+<span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">q4 P( Y | Star Wars: Episode IV - A New Hope (1977))</span>
+<span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">dirty method,  to be updated</span>
+n_x <span style="color: #268bd2;">&lt;-</span> select(filter(pre_processed_data, movie_ID == 260), n_rating)[[1]]
+index_star_war_1977 <span style="color: #268bd2;">&lt;-</span> 2
+result <span style="color: #268bd2;">&lt;-</span> data.frame()
+<span style="color: #859900;">for</span> (index_movie <span style="color: #859900;">in</span> c(3:ncol(raw_data))) {
+    n_xy <span style="color: #268bd2;">&lt;-</span> sum(!is.na(raw_data[, index_star_war_1977]) &amp; !is.na(raw_data[, index_movie]))
+    py_on_x <span style="color: #268bd2;">&lt;-</span> n_xy / n_x
+    result <span style="color: #268bd2;">&lt;-</span> rbind(result, data.frame(py_on_x = py_on_x, index_movie = index_movie, movie_info = names(raw_data)[index_movie]))
 }
-result <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> tbl_df(result)
-arrange(result, desc(py_on_x)) %&gt;% select(py_on_x, movie_info)
+result <span style="color: #268bd2;">&lt;-</span> tbl_df(result)
+arrange(result, desc(py_on_x)) <span style="color: #268bd2;">%&gt;%</span> select(py_on_x, movie_info)
 </pre>
 </div>
 
@@ -355,7 +355,7 @@ Source: local data frame [19 x 2]
 </div>
 </div>
 <div id="postamble" class="status">
-<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.1 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-04-12 21:29:23</p></div>
+<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.4 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-07-28 22:46:52</p></div>
 </div>
 </body>
 </html>
