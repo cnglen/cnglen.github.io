@@ -3,10 +3,9 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-07-29 Fri 09:29 -->
-<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>Introduction to  R</title>
+<!-- 2016-07-29 Fri 22:31 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Jacky Wang" />
 <link rel="stylesheet" title="Standard" href="/style/worg.css" type="text/css" />
@@ -76,11 +75,11 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgheadline4">Lab: Introduction to R</a>
+<li><a href="#sec-1">Lab: Introduction to R</a>
 <ul>
-<li><a href="#orgheadline1"><i>cov</i> VS <i>cor</i></a></li>
-<li><a href="#orgheadline2">3d plot in R</a></li>
-<li><a href="#orgheadline3">Plot scatter matrix</a></li>
+<li><a href="#sec-1-1"><i>cov</i> VS <i>cor</i></a></li>
+<li><a href="#sec-1-2">3d plot in R</a></li>
+<li><a href="#sec-1-3">Plot scatter matrix</a></li>
 </ul>
 </li>
 </ul>
@@ -91,59 +90,59 @@ for the JavaScript code in this tag.
 </p>
 
 
-<div id="outline-container-orgheadline4" class="outline-2">
-<h2 id="orgheadline4">Lab: Introduction to R</h2>
-<div class="outline-text-2" id="text-orgheadline4">
-</div><div id="outline-container-orgheadline1" class="outline-3">
-<h3 id="orgheadline1"><i>cov</i> VS <i>cor</i></h3>
-<div class="outline-text-3" id="text-orgheadline1">
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Lab: Introduction to R</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><i>cov</i> VS <i>cor</i></h3>
+<div class="outline-text-3" id="text-1-1">
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock1"><span style="color: #268bd2;">library</span>(ggplot2)
-<span style="color: #268bd2;">library</span>(dplyr)
-<span style="color: #268bd2;">library</span>(ISLR)
+<pre class="src src-R" id="cor_vs_cvr">library(ggplot2)
+library(dplyr)
+library(ISLR)
 
-x <span style="color: #268bd2;">&lt;-</span> rnorm(50)
-y <span style="color: #268bd2;">&lt;-</span> x + rnorm(50, mean = 50, sd = .1)
+x &lt;- rnorm(50)
+y &lt;- x + rnorm(50, mean = 50, sd = .1)
 
-<span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">&#30456;&#20851;&#31995;&#25968;&#65292;&#20004;&#20010;&#31561;&#38271;&#21521;&#37327;&#30340;&#30456;&#20851;&#31995;&#25968;&#65292;&#24402;&#19968;&#21270;&#30340;&#21327;&#26041;&#24046;</span>
-<span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">E[(X - EX) (Y - EY)] / sd(X) / sd(Y) &lt;- sum[(X - X_bar) (Y - Y_bar)] / (n - 1) / sd(X) / sd(Y)</span>
+## 相关系数，两个等长向量的相关系数，归一化的协方差
+## E[(X - EX) (Y - EY)] / sd(X) / sd(Y) &lt;- sum[(X - X_bar) (Y - Y_bar)] / (n - 1) / sd(X) / sd(Y)
 sum( (x - mean(x)) * (y - mean(y)) ) / (length(x) - 1) / sd(x) / sd(y)
 cor(x, y)
 
-<span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">&#21327;&#26041;&#24046;&#65292;&#33509;&#22823;&#20110;0&#65292;&#34920;&#26126;&#20004;&#20010;&#21521;&#37327;&#21464;&#21270;&#19968;&#33268;&#65288;&#21516;&#22686;&#65292;&#21516;&#20943;&#65289;</span>
-<span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">E[(X - EX) (Y - EY)] &lt;- sum[(X - X_bar) (Y - Y_bar)] / (n - 1)</span>
+## 协方差，若大于0，表明两个向量变化一致（同增，同减）
+## E[(X - EX) (Y - EY)] &lt;- sum[(X - X_bar) (Y - Y_bar)] / (n - 1)
 sum( (x - mean(x)) * (y - mean(y)) ) / (length(x) - 1)
 cov(x, y)
 </pre>
 </div>
 
 <pre class="example">
-[1] 0.9948019
-[1] 0.9948019
-[1] 1.078478
-[1] 1.078478
+[1] 0.9941107
+[1] 0.9941107
+[1] 0.8348429
+[1] 0.8348429
 </pre>
 </div>
 </div>
 
-<div id="outline-container-orgheadline2" class="outline-3">
-<h3 id="orgheadline2">3d plot in R</h3>
-<div class="outline-text-3" id="text-orgheadline2">
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">3d plot in R</h3>
+<div class="outline-text-3" id="text-1-2">
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock2"><span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">3d plot</span>
-x <span style="color: #268bd2;">&lt;-</span> seq(-pi, pi, length = 50)
-y <span style="color: #268bd2;">&lt;-</span> x
-z <span style="color: #268bd2;">&lt;-</span> outer(x, y, <span style="color: #859900;">function</span>(x, y) cos(y) / (1 + x^2)) <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">outer product</span>
-<span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">contour(x, y, z, nlevels = 20) # use geom_contour()</span>
-<span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">image(x, y, z)</span>
-<span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">persp(x, y, z)</span>
-df <span style="color: #268bd2;">&lt;-</span> expand.grid(x = x, y = y) <span style="color: #268bd2;">%&gt;%</span> mutate(z = cos(y) / (1 + x^2))
+<pre class="src src-R" id="3d_in_R">## 3d plot
+x &lt;- seq(-pi, pi, length = 50)
+y &lt;- x
+z &lt;- outer(x, y, function(x, y) cos(y) / (1 + x^2)) # outer product
+## contour(x, y, z, nlevels = 20) # use geom_contour()
+## image(x, y, z)
+## persp(x, y, z)
+df &lt;- expand.grid(x = x, y = y) %&gt;% mutate(z = cos(y) / (1 + x^2))
 ggplot(data = df, aes(x = x, y = y, z = z, fill = z)) +
-    geom_tile() + geom_contour(color = <span style="color: #2aa198;">"white"</span>, alpha = .5) +
-        scale_fill_gradient(low = <span style="color: #2aa198;">"lightblue"</span>, high = <span style="color: #2aa198;">"magenta"</span>) +
-            ggtitle(<span style="color: #2aa198;">"z = cos(y) / (1 + x^2)"</span>)
+    geom_tile() + geom_contour(color = "white", alpha = .5) +
+	scale_fill_gradient(low = "lightblue", high = "magenta") +
+	    ggtitle("z = cos(y) / (1 + x^2)")
 </pre>
 </div>
 
@@ -155,18 +154,18 @@ ggplot(data = df, aes(x = x, y = y, z = z, fill = z)) +
 </div>
 </div>
 
-<div id="outline-container-orgheadline3" class="outline-3">
-<h3 id="orgheadline3">Plot scatter matrix</h3>
-<div class="outline-text-3" id="text-orgheadline3">
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3">Plot scatter matrix</h3>
+<div class="outline-text-3" id="text-1-3">
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #268bd2;">library</span>(GGally)
-<span style="color: #268bd2;">library</span>(ISLR)
+<pre class="src src-R">library(GGally)
+library(ISLR)
 
-<span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">Plot scatter matrix</span>
-<span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">fix(Auto)                               # fix means repair or mend the data frame</span>
-<span style="color: #93a1a1; font-style: italic;">## </span><span style="color: #93a1a1; font-style: italic;">pairs(Auto)                             # use ggparis()</span>
-ggpairs(Auto[, c(1:8)])                 <span style="color: #93a1a1; font-style: italic;"># </span><span style="color: #93a1a1; font-style: italic;">preferred</span>
+## Plot scatter matrix
+## fix(Auto)                               # fix means repair or mend the data frame
+## pairs(Auto)                             # use ggparis()
+ggpairs(Auto[, c(1:8)])                 # preferred
 </pre>
 </div>
 
@@ -180,7 +179,7 @@ ggpairs(Auto[, c(1:8)])                 <span style="color: #93a1a1; font-style:
 </div>
 </div>
 <div id="postamble" class="status">
-<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.5 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-07-29 09:28:50</p></div>
+<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.2.10 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-07-29 22:31:37</p></div>
 </div>
 </body>
 </html>

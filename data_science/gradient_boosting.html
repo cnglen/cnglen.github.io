@@ -3,10 +3,9 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-07-29 Fri 09:29 -->
-<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>Gradient boosting</title>
+<!-- 2016-07-29 Fri 22:31 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Jacky Wang" />
 <link rel="stylesheet" title="Standard" href="/style/worg.css" type="text/css" />
@@ -58,28 +57,48 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/x-mathjax-config">
+<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
     MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
         displayAlign: "center",
-        displayIndent: "0em",
+        displayIndent: "2em",
 
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
              }
-});
+        }
+    });
+/*]]>*///-->
 </script>
-<script type="text/javascript"
-        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -98,10 +117,10 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgheadline1">Theory</a>
+<li><a href="#sec-1">Theory</a>
 <ul>
-<li><a href="#orgheadline2">gradient boosting</a></li>
-<li><a href="#orgheadline3">Note</a></li>
+<li><a href="#sec-1-1">gradient boosting</a></li>
+<li><a href="#sec-1-2">Note</a></li>
 </ul>
 </li>
 </ul>
@@ -112,9 +131,9 @@ for the JavaScript code in this tag.
 </p>
 
 
-<div id="outline-container-orgheadline1" class="outline-2">
-<h2 id="orgheadline1">Theory</h2>
-<div class="outline-text-2" id="text-orgheadline1">
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Theory</h2>
+<div class="outline-text-2" id="text-1">
 <p>
 In a function estimation problem, the goal is to find
 </p>
@@ -129,8 +148,10 @@ F^{*}(\mathbf{x})
 where:
 </p>
 <ul class="org-ul">
-<li>\(\{\mathbf{x}_i=[x_{i0}, x_{i1}, ..., x_{ip}]^T, y_i\}_{i=1}^{n}\) are the observations</li>
-<li>\(L(y_i, F(\mathbf{x}))\) is the loss function</li>
+<li>\(\{\mathbf{x}_i=[x_{i0}, x_{i1}, ..., x_{ip}]^T, y_i\}_{i=1}^{n}\) are the observations
+</li>
+<li>\(L(y_i, F(\mathbf{x}))\) is the loss function
+</li>
 </ul>
 
 <p>
@@ -150,85 +171,83 @@ then the goal is:
 \end{equation}
 
 <p>
-It's infeasible to solve <a href="#orglatexenvironment1">1</a>, we can try a <b>greedy stagewise</b> approach:
+It's infeasible to solve <a href="#equation_goal">1</a>, we can try a <b>greedy stagewise</b> approach:
 </p>
 <ul class="org-ul">
-<li>Initial guess \(F_0(\mathbf{x})\)</li>
-</ul>
-<ul class="org-ul">
+<li>Initial guess \(F_0(\mathbf{x})\)
+</li>
 <li>For \(m=1, 2, ..., M\):
 <ul class="org-ul">
-<li><p>
-Get \((\rho_m, \mathbf{a}_m)\) (which can be approximately solved by <b>gradient boosting</b>)
-</p>
+<li>Get \((\rho_m, \mathbf{a}_m)\) (which can be approximately solved by <b>gradient boosting</b>)
 \begin{equation}
 \begin{split}
 (\rho_m, \mathbf{a}_m) = \arg \min_{ (\rho, \mathbf{a})} \frac{1}{n}\sum_{i=1}^{n}L(y_i, F_{m-1}(\mathbf{x}_i) + \rho h(\mathbf{x}_i; \mathbf{a})
 \end{split}
-\end{equation}</li>
+\end{equation}
+</li>
 
-<li><p>
-Update the function estimation
-</p>
+<li>Update the function estimation
 \begin{equation}
 \begin{split}
 F_m(\mathbf{x}) = F_{m-1}(\mathbf{x}) + \rho_m h(\mathbf{x}; \mathbf{a}_m)
 \end{split}
-\end{equation}</li>
-</ul></li>
+\end{equation}
+</li>
+</ul>
+</li>
 </ul>
 </div>
 
 
-<div id="outline-container-orgheadline2" class="outline-3">
-<h3 id="orgheadline2">gradient boosting</h3>
-<div class="outline-text-3" id="text-orgheadline2">
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">gradient boosting</h3>
+<div class="outline-text-3" id="text-1-1">
 <ul class="org-ul">
-<li>Initialize \(F_0(\mathbf{x})=\arg\min _c \sum_{i=1}^{n}L(y_i-c)\)</li>
+<li>Initialize \(F_0(\mathbf{x})=\arg\min _c \sum_{i=1}^{n}L(y_i-c)\)
+</li>
 <li>For \(m = 1\) to \(M\):
 <ul class="org-ul">
-<li><p>
-Compute the negative gradient
-</p>
+<li>Compute the negative gradient
 \begin{equation}
 \tilde{y}_{im} = - \frac{ \partial L(y_i, F(\mathbf{x_i})) }{ \partial F(\mathbf{x}_i)} \big|_{F(\mathbf{x})=F_{m-1}(\mathbf{x})}
-\end{equation}</li>
-<li><p>
-Fit a new base-learner function using \(\{ \mathbf{x}_i, \tilde{y}_{im} \}_{i=1}^{n}\): \(h(\mathbf{x};\mathbf{a}_m)\)
-</p>
+\end{equation}
+</li>
+<li>Fit a new base-learner function using \(\{ \mathbf{x}_i, \tilde{y}_{im} \}_{i=1}^{n}\): \(h(\mathbf{x};\mathbf{a}_m)\)
 \begin{equation}
 \mathbf{a}_m = \arg \min _{\mathbf{a}} \sum_{i=1}^{n} L(y_i, h(\mathbf{x}_i; \mathbf{a}))
-\end{equation}</li>
-<li><p>
-Find the best gradient descent step-size
-</p>
+\end{equation}
+</li>
+<li>Find the best gradient descent step-size
 \begin{equation}
 \rho_m = \arg \min _{\rho} \sum_{i=1}^{n} L(y_i, F_{m-1}(\mathbf{x}_i) + \rho h(\mathbf{x}_i; \mathbf{a}_m))
-\end{equation}</li>
-<li><p>
-Update the function estimate
-</p>
+\end{equation}
+</li>
+<li>Update the function estimate
 \begin{equation}
 F_{m}(\mathbf{x}_i) = F_{m-1}(\mathbf{x}_i) + \rho_m h(\mathbf{x}_i; \mathbf{a}_m)
-\end{equation}</li>
-</ul></li>
+\end{equation}
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgheadline3" class="outline-3">
-<h3 id="orgheadline3">Note</h3>
-<div class="outline-text-3" id="text-orgheadline3">
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">Note</h3>
+<div class="outline-text-3" id="text-1-2">
 <ul class="org-ul">
-<li>理解梯度下降法时，将 \(F(\mathbf{x}_i) _{i=1}^{n}\) 看成要优化的参数</li>
-<li>直接将 \(F(\mathbf{x}_i) _{i=1}^{n}\) 看成参数优化有问题，通过 \(\{\rho_m, \mathbf{a}_m\}\) 间接指定\(F_(\mathbf{x}_i)\), 起到一个平滑的作用</li>
+<li>理解梯度下降法时，将 \(F(\mathbf{x}_i) _{i=1}^{n}\) 看成要优化的参数
+</li>
+<li>直接将 \(F(\mathbf{x}_i) _{i=1}^{n}\) 看成参数优化有问题，通过 \(\{\rho_m, \mathbf{a}_m\}\) 间接指定\(F_(\mathbf{x}_i)\), 起到一个平滑的作用
+</li>
 </ul>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.5 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-07-29 09:28:50</p></div>
+<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.2.10 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-07-29 22:31:37</p></div>
 </div>
 </body>
 </html>
