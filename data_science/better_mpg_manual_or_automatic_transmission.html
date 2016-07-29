@@ -3,9 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>Better mpg: manual or automatic transmission?</title>
-<!-- 2016-07-29 Fri 23:29 -->
+<!-- 2016-07-29 Fri 23:51 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>Better mpg: manual or automatic transmission?</title>
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Jacky Wang" />
 <link rel="stylesheet" title="Standard" href="/style/worg.css" type="text/css" />
@@ -57,48 +58,28 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
+<script type="text/x-mathjax-config">
     MathJax.Hub.Config({
-        // Only one of the two following lines, depending on user settings
-        // First allows browser-native MathML display, second forces HTML/CSS
-        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
-            jax: ["input/TeX", "output/HTML-CSS"],
-        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
-                     "TeX/noUndefined.js"],
-        tex2jax: {
-            inlineMath: [ ["\\(","\\)"] ],
-            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
-            skipTags: ["script","noscript","style","textarea","pre","code"],
-            ignoreClass: "tex2jax_ignore",
-            processEscapes: false,
-            processEnvironments: true,
-            preview: "TeX"
-        },
-        showProcessingMessages: true,
         displayAlign: "center",
-        displayIndent: "2em",
+        displayIndent: "0em",
 
-        "HTML-CSS": {
-             scale: 100,
-             availableFonts: ["STIX","TeX"],
-             preferredFont: "TeX",
-             webFont: "TeX",
-             imageFont: "TeX",
-             showMathMenu: true,
-        },
-        MMLorHTML: {
-             prefer: {
-                 MSIE:    "MML",
-                 Firefox: "MML",
-                 Opera:   "HTML",
-                 other:   "HTML"
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
              }
-        }
-    });
-/*]]>*///-->
+});
 </script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -117,15 +98,15 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">Introduction</a></li>
-<li><a href="#sec-2">Preproces and Explore the data</a></li>
-<li><a href="#sec-3">Regression Analysis</a></li>
-<li><a href="#sec-4">Conclusion</a></li>
-<li><a href="#sec-5">Appendix</a>
+<li><a href="#orgheadline1">Introduction</a></li>
+<li><a href="#orgheadline2">Preproces and Explore the data</a></li>
+<li><a href="#orgheadline3">Regression Analysis</a></li>
+<li><a href="#orgheadline4">Conclusion</a></li>
+<li><a href="#orgheadline8">Appendix</a>
 <ul>
-<li><a href="#sec-5-1">Scatter plot matrix</a></li>
-<li><a href="#sec-5-2">Diagnostic</a></li>
-<li><a href="#sec-5-3">Summary of two linear models</a></li>
+<li><a href="#orgheadline5">Scatter plot matrix</a></li>
+<li><a href="#orgheadline6">Diagnostic</a></li>
+<li><a href="#orgheadline7">Summary of two linear models</a></li>
 </ul>
 </li>
 </ul>
@@ -136,40 +117,36 @@ for the JavaScript code in this tag.
 </p>
 
 
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1">Introduction</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1">Introduction</h2>
+<div class="outline-text-2" id="text-orgheadline1">
 <p>
 In this report, we will analysis the <i>mtcars</i> data set to answer:
 </p>
 <ul class="org-ul">
-<li>Is an automatic or manual transmission better for MPG?
-</li>
-<li>Quantify the MPG difference between automatic and manual transmissions?
-</li>
+<li>Is an automatic or manual transmission better for MPG?</li>
+<li>Quantify the MPG difference between automatic and manual transmissions?</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2">Preproces and Explore the data</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2">Preproces and Explore the data</h2>
+<div class="outline-text-2" id="text-orgheadline2">
 <p>
 We use categorical variable to denote:
 </p>
 <ul class="org-ul">
-<li><i>vs</i> ~ the engine type
-</li>
-<li><i>am</i> ~ whether manual or automatic
-</li>
+<li><i>vs</i> ~ the engine type</li>
+<li><i>am</i> ~ whether manual or automatic</li>
 </ul>
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="preprocess_data">library(ggplot2); library(GGally); library(dplyr, warn.conflicts=FALSE); data(mtcars)
-raw_data &lt;- mtcars
-processed_data &lt;- mutate(mtcars, am = factor(ifelse(am == 0, "automatic", "manual")),
-			vs = factor(ifelse(vs == 0, "v", "s")))
+<pre class="src src-R" id="orgsrcblock1"><span style="font-weight: bold; text-decoration: underline;">library</span>(ggplot2); <span style="font-weight: bold; text-decoration: underline;">library</span>(GGally); <span style="font-weight: bold; text-decoration: underline;">library</span>(dplyr, warn.conflicts=<span style="font-weight: bold; text-decoration: underline;">FALSE</span>); data(mtcars)
+raw_data <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> mtcars
+processed_data <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> mutate(mtcars, am = factor(ifelse(am == 0, <span style="font-style: italic;">"automatic"</span>, <span style="font-style: italic;">"manual"</span>)),
+                        vs = factor(ifelse(vs == 0, <span style="font-style: italic;">"v"</span>, <span style="font-style: italic;">"s"</span>)))
 </pre>
 </div>
 
@@ -181,9 +158,9 @@ better mpg than automatic ones</span>.
 </div>
 </div>
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3">Regression Analysis</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="orgheadline3">Regression Analysis</h2>
+<div class="outline-text-2" id="text-orgheadline3">
 <p>
 Previous figure only shows the relationship between <i>mpg</i> and <i>am</i>,
 other feature are ignored. In this section, we will use linear
@@ -197,7 +174,7 @@ algorithm, which suggests using <i>wt</i>, <i>am</i> and <i>qsec</i>.
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="linear_regression_mtcars">model &lt;- step(lm(mpg ~ ., processed_data), trace=FALSE)
+<pre class="src src-R" id="orgsrcblock2">model <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> step(lm(mpg ~ ., processed_data), trace=<span style="font-weight: bold; text-decoration: underline;">FALSE</span>)
 coefficients(model)
 </pre>
 </div>
@@ -213,7 +190,7 @@ based on <i>p</i>-value and adjusted \(R^2\), <i>am:wt</i> is used.):
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="final_model">final_model &lt;- lm(mpg ~ wt + am + qsec + am:wt, processed_data)
+<pre class="src src-R" id="orgsrcblock3">final_model <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(mpg ~ wt + am + qsec + am:wt, processed_data)
 coefficients(final_model)
 confint(final_model)
 </pre>
@@ -266,9 +243,9 @@ The residual plot and diagnostics are given in appendix.
 </div>
 </div>
 
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4">Conclusion</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-orgheadline4" class="outline-2">
+<h2 id="orgheadline4">Conclusion</h2>
+<div class="outline-text-2" id="text-orgheadline4">
 <p>
 From previous model, for <b>fixed values of \(wt\) and \(qsec\)</b>, the
 <span class="underline">average difference of <i>mpg</i> is given by</span>:
@@ -285,16 +262,16 @@ directly, it dpends on \(wt, qsec\)</span>.
 </div>
 
 
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5">Appendix</h2>
-<div class="outline-text-2" id="text-5">
-</div><div id="outline-container-sec-5-1" class="outline-3">
-<h3 id="sec-5-1">Scatter plot matrix</h3>
-<div class="outline-text-3" id="text-5-1">
+<div id="outline-container-orgheadline8" class="outline-2">
+<h2 id="orgheadline8">Appendix</h2>
+<div class="outline-text-2" id="text-orgheadline8">
+</div><div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5">Scatter plot matrix</h3>
+<div class="outline-text-3" id="text-orgheadline5">
 <div class="org-src-container">
 
-<pre class="src src-R" id="explore_data">library(GGally); library(dplyr, warn.conflicts=FALSE); options(warn=-1)
-ggpairs(dplyr::select(processed_data, mpg, am, wt, qsec), color='am')
+<pre class="src src-R" id="orgsrcblock4"><span style="font-weight: bold; text-decoration: underline;">library</span>(GGally); <span style="font-weight: bold; text-decoration: underline;">library</span>(dplyr, warn.conflicts=<span style="font-weight: bold; text-decoration: underline;">FALSE</span>); options(warn=-1)
+ggpairs(dplyr::select(processed_data, mpg, am, wt, qsec), color=<span style="font-style: italic;">'am'</span>)
 </pre>
 </div>
 
@@ -307,9 +284,9 @@ ggpairs(dplyr::select(processed_data, mpg, am, wt, qsec), color='am')
 </div>
 
 
-<div id="outline-container-sec-5-2" class="outline-3">
-<h3 id="sec-5-2">Diagnostic</h3>
-<div class="outline-text-3" id="text-5-2">
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6">Diagnostic</h3>
+<div class="outline-text-3" id="text-orgheadline6">
 <div class="org-src-container">
 
 <pre class="src src-R">par(mfrow = c(2, 2))
@@ -325,9 +302,9 @@ plot(final_model)
 </div>
 </div>
 
-<div id="outline-container-sec-5-3" class="outline-3">
-<h3 id="sec-5-3">Summary of two linear models</h3>
-<div class="outline-text-3" id="text-5-3">
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7">Summary of two linear models</h3>
+<div class="outline-text-3" id="text-orgheadline7">
 <div class="org-src-container">
 
 <pre class="src src-R">summary(model)
@@ -339,7 +316,7 @@ summary(final_model)
 </div>
 </div>
 <div id="postamble" class="status">
-<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.2.10 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-07-29 23:29:19</p></div>
+<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.5 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-07-29 23:51:45</p></div>
 </div>
 </body>
 </html>

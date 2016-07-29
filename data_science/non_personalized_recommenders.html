@@ -3,9 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>Non-Personalized Recommender</title>
-<!-- 2016-07-29 Fri 23:29 -->
+<!-- 2016-07-29 Fri 23:51 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>Non-Personalized Recommender</title>
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Jacky Wang" />
 <link rel="stylesheet" title="Standard" href="/style/worg.css" type="text/css" />
@@ -57,48 +58,28 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
+<script type="text/x-mathjax-config">
     MathJax.Hub.Config({
-        // Only one of the two following lines, depending on user settings
-        // First allows browser-native MathML display, second forces HTML/CSS
-        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
-            jax: ["input/TeX", "output/HTML-CSS"],
-        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
-                     "TeX/noUndefined.js"],
-        tex2jax: {
-            inlineMath: [ ["\\(","\\)"] ],
-            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
-            skipTags: ["script","noscript","style","textarea","pre","code"],
-            ignoreClass: "tex2jax_ignore",
-            processEscapes: false,
-            processEnvironments: true,
-            preview: "TeX"
-        },
-        showProcessingMessages: true,
         displayAlign: "center",
-        displayIndent: "2em",
+        displayIndent: "0em",
 
-        "HTML-CSS": {
-             scale: 100,
-             availableFonts: ["STIX","TeX"],
-             preferredFont: "TeX",
-             webFont: "TeX",
-             imageFont: "TeX",
-             showMathMenu: true,
-        },
-        MMLorHTML: {
-             prefer: {
-                 MSIE:    "MML",
-                 Firefox: "MML",
-                 Opera:   "HTML",
-                 other:   "HTML"
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
              }
-        }
-    });
-/*]]>*///-->
+});
 </script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -117,13 +98,13 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">Non-Personalized Recommenders</a>
+<li><a href="#orgheadline1">Non-Personalized Recommenders</a>
 <ul>
-<li><a href="#sec-1-1">Aggregated opinion (通过平均的方法，获得的统计信息，比如点评分、TOP- <i>n</i> 热销)</a></li>
-<li><a href="#sec-1-2">Product association: People who X also Y</a></li>
-<li><a href="#sec-1-3">Preference Model \(\to\) what do users like?</a></li>
-<li><a href="#sec-1-4">Prediction VS Recommendation (UI, 如何展示给用户)</a></li>
-<li><a href="#sec-1-5">Quiz (week2)</a></li>
+<li><a href="#orgheadline2">Aggregated opinion (通过平均的方法，获得的统计信息，比如点评分、TOP- <i>n</i> 热销)</a></li>
+<li><a href="#orgheadline3">Product association: People who X also Y</a></li>
+<li><a href="#orgheadline4">Preference Model \(\to\) what do users like?</a></li>
+<li><a href="#orgheadline5">Prediction VS Recommendation (UI, 如何展示给用户)</a></li>
+<li><a href="#orgheadline6">Quiz (week2)</a></li>
 </ul>
 </li>
 </ul>
@@ -133,202 +114,158 @@ for the JavaScript code in this tag.
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1">Non-Personalized Recommenders</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1">Non-Personalized Recommenders</h2>
+<div class="outline-text-2" id="text-orgheadline1">
 <ul class="org-ul">
 <li>概括来讲，用统计信息(what users <i>say</i> and <i>do</i>)来推荐, 故推荐出来的适合大众的要求，小众群体被忽略。
 <ul class="org-ul">
-<li>Aggreated opinion: 根据多数人的意见推荐，未考虑场景
-</li>
-<li>Associatoin rule: 考虑场景
-</li>
-</ul>
-</li>
-<li>后续扩展: 可以人为地通过对不同群体分组求平均，即通过<b>个性化</b>来解决
-</li>
+<li>Aggreated opinion: 根据多数人的意见推荐，未考虑场景</li>
+<li>Associatoin rule: 考虑场景</li>
+</ul></li>
+<li>后续扩展: 可以人为地通过对不同群体分组求平均，即通过<b>个性化</b>来解决</li>
 </ul>
 </div>
 
-<div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1">Aggregated opinion (通过平均的方法，获得的统计信息，比如点评分、TOP- <i>n</i> 热销)</h3>
-<div class="outline-text-3" id="text-1-1">
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2">Aggregated opinion (通过平均的方法，获得的统计信息，比如点评分、TOP- <i>n</i> 热销)</h3>
+<div class="outline-text-3" id="text-orgheadline2">
 <ul class="org-ul">
-<li>Effective in right application
-</li>
-<li>Really User needs? Correct average such as weight average
-</li>
-<li><span class="underline">Lack Context, without product association</span>
-</li>
+<li>Effective in right application</li>
+<li>Really User needs? Correct average such as weight average</li>
+<li><span class="underline">Lack Context, without product association</span></li>
 <li>mediocre and excellent products NOT distiguished
 <ul class="org-ul">
-<li>Self selection biased
-</li>
-<li>increased diversity of raters
-</li>
-</ul>
-</li>
+<li>Self selection biased</li>
+<li>increased diversity of raters</li>
+</ul></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-sec-1-2" class="outline-3">
-<h3 id="sec-1-2">Product association: People who X also Y</h3>
-<div class="outline-text-3" id="text-1-2">
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3">Product association: People who X also Y</h3>
+<div class="outline-text-3" id="text-orgheadline3">
 <ul class="org-ul">
-<li>In a context, need to <span class="underline">identify the context</span>
-</li>
-<li>time-window: follow up sales or at the same time
-</li>
+<li>In a context, need to <span class="underline">identify the context</span></li>
+<li>time-window: follow up sales or at the same time</li>
 <li>what if Y is a overwhelmingly popular product?
 <ul class="org-ul">
-<li>\(P(Y|X) = \frac{P(XY)}{P(X)}\)
-</li>
-<li>Penalize P(Y) by \(P(Y|X) = \frac{P(XY)}{P(X)P(Y)}\)
-</li>
-</ul>
-</li>
-<li>Chanllenges in a clustered diverse population
-</li>
-<li>\(\frac{ P(X \cdot Y)/P(X)}{P(!X \cdot Y)/P(!X)}\)
-</li>
+<li>\(P(Y|X) = \frac{P(XY)}{P(X)}\)</li>
+<li>Penalize P(Y) by \(P(Y|X) = \frac{P(XY)}{P(X)P(Y)}\)</li>
+</ul></li>
+<li>Chanllenges in a clustered diverse population</li>
+<li>\(\frac{ P(X \cdot Y)/P(X)}{P(!X \cdot Y)/P(!X)}\)</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-1-3" class="outline-3">
-<h3 id="sec-1-3">Preference Model \(\to\) what do users like?</h3>
-<div class="outline-text-3" id="text-1-3">
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4">Preference Model \(\to\) what do users like?</h3>
+<div class="outline-text-3" id="text-orgheadline4">
 <ul class="org-ul">
 <li>Explict (what users <i>say</i> ~ rating), <b>sparsity</b>
 <ul class="org-ul">
 <li>rating:
 <ul class="org-ul">
-<li>when are ratings provided, consumation or memory or expection?
-</li>
-<li>reliabel? accurate?
-</li>
-<li>what does it mean?
-</li>
-</ul>
-</li>
-<li>review:
-</li>
-<li>vote: up/down, +1
-</li>
-</ul>
-</li>
+<li>when are ratings provided, consumation or memory or expection?</li>
+<li>reliabel? accurate?</li>
+<li>what does it mean?</li>
+</ul></li>
+<li>review:</li>
+<li>vote: up/down, +1</li>
+</ul></li>
 <li>Implict (what users <i>do</i> ~ actions), <b>greater volumn</b>
 <ul class="org-ul">
-<li>how long did user read/listen/watch?
-</li>
+<li>how long did user read/listen/watch?</li>
 <li>binary actions
 <ul class="org-ul">
-<li>click
-</li>
-<li>purchase
-</li>
-<li>follow
-</li>
-</ul>
-</li>
-</ul>
-</li>
+<li>click</li>
+<li>purchase</li>
+<li>follow</li>
+</ul></li>
+</ul></li>
 <li>There are : <b>noisy</b> measurements
 <ul class="org-ul">
-<li>purchase: they might still hate it
-</li>
-<li>don't click: <span class="underline">didn't see</span> or expect bad
-</li>
-<li>temporal effects
-</li>
-<li>user selection biased, increased by user diveristy
-</li>
-</ul>
-</li>
+<li>purchase: they might still hate it</li>
+<li>don't click: <span class="underline">didn't see</span> or expect bad</li>
+<li>temporal effects</li>
+<li>user selection biased, increased by user diveristy</li>
+</ul></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-1-4" class="outline-3">
-<h3 id="sec-1-4">Prediction VS Recommendation (UI, 如何展示给用户)</h3>
-<div class="outline-text-3" id="text-1-4">
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5">Prediction VS Recommendation (UI, 如何展示给用户)</h3>
+<div class="outline-text-3" id="text-orgheadline5">
 <p>
 How explict?
 </p>
 <ul class="org-ul">
-<li>prediction with number (解释性强，但可能会出错)
-</li>
-<li>recommendation without number (不解释)
-</li>
-<li>softer presentation, organic (更加自然的UI，防止用户反感)
-</li>
+<li>prediction with number (解释性强，但可能会出错)</li>
+<li>recommendation without number (不解释)</li>
+<li>softer presentation, organic (更加自然的UI，防止用户反感)</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-1-5" class="outline-3">
-<h3 id="sec-1-5">Quiz (week2)</h3>
-<div class="outline-text-3" id="text-1-5">
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6">Quiz (week2)</h3>
+<div class="outline-text-3" id="text-orgheadline6">
 <p>
 Data from : <a href="https://eventing.coursera.org/api/redirectStrict/D0T9icSNi9-Oohnrx9rjTJMNBrA5dCsUBjk__ZF3WwvMpHQWoPG7V0OJV7FZEbP8BWu3YwC09JrVaHpmTkgn7w.wm79W6QY5wdQiiZc2xU7fQ.BaLZ6t_Bo4GVCDVvqPbwsjbk60BHEST6EJzOxIPol4QeGpWOyoRGgXj7y_zTvEHhz9ZWoP116IA6PVIeQguu77x6fxP2eJqJ0OEPWfz1G6pQlIJf_ic06tQjNclNr9Kgyoj-fchnuTDBkk3MBC6Doj2gTZdXYeLj_booj02YgOuI0nuLw5QkZJ_9ur_IN85hu2KrGDKTdW6_SIf8yu5K9-gVUeHpIQctVqek9Haj6RrcVg8GOIdvBrbx2hvb3uVZ5k92V4YYM1Ecjr_x5WxefFJZ1M0ekvgA-S2iZel6qecCVLy4-MHhUyvehNl-4mtXG8b64GzkzGcebae9lDuO9SeOyZs79KGZ5ADbu6tBdeqKkZC1-TZjzI9rKGgwGP_dACRJrHlvMpyU07XULMojPI-P22v5rlqjmRwhwxJytto">A1Ratings.csv</a>
 </p>
 <ol class="org-ol">
-<li>fat data -&gt; high data
-</li>
-<li>split movie_ID, movie_name from one colume
-</li>
+<li>fat data -&gt; high data</li>
+<li>split movie_ID, movie_name from one colume</li>
 <li>Get the column named
 <dl class="org-dl">
-<dt> <i>mean_rating</i> </dt><dd>mean rating for each movie
-</dd>
-<dt> <i>n_rating</i> </dt><dd>number of ratings for each movie
-</dd>
-<dt> <i>p_positive_rating</i> </dt><dd>the percentage of ratings for each movie that are 4 or higher
-</dd>
-</dl>
-</li>
+<dt><i>mean_rating</i></dt><dd>mean rating for each movie</dd>
+<dt><i>n_rating</i></dt><dd>number of ratings for each movie</dd>
+<dt><i>p_positive_rating</i></dt><dd>the percentage of ratings for each movie that are 4 or higher</dd>
+</dl></li>
 </ol>
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="Non-Personalized-Recommenders-Quiz-Part-I">## Load raw data
-library(dplyr, warn.conflicts=FALSE)
-library(tidyr, warn.conflicts=FALSE)
-raw_data &lt;- read.csv('../data/A1Ratings.csv', header = TRUE)
+<pre class="src src-R" id="orgsrcblock1"><span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">Load raw data</span>
+<span style="font-weight: bold; text-decoration: underline;">library</span>(dplyr, warn.conflicts=<span style="font-weight: bold; text-decoration: underline;">FALSE</span>)
+<span style="font-weight: bold; text-decoration: underline;">library</span>(tidyr, warn.conflicts=<span style="font-weight: bold; text-decoration: underline;">FALSE</span>)
+raw_data <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> read.csv(<span style="font-style: italic;">'../data/A1Ratings.csv'</span>, header = <span style="font-weight: bold; text-decoration: underline;">TRUE</span>)
 
-## Get pre-processed data
-pre_processed_data &lt;- gather(data = raw_data, key = movie, value = rating, -User )
-pre_processed_data &lt;- tidyr::extract(data = pre_processed_data, col = movie, into = c("movie_ID", "movie_name"), regex = "X([[:alnum:]]+)\\.\\.(.*)")
-pre_processed_data &lt;- pre_processed_data %&gt;% select( -User) %&gt;%
-    group_by(movie_ID, movie_name) %&gt;%
-	summarise(mean_rating = mean(rating, na.rm = TRUE),
-		  n_rating = sum(!is.na(rating)),
-		  n_positive_rating = sum(ifelse(rating&gt;=4 &amp; !is.na(rating), 1, 0))
-		  ) %&gt;%
-	    ungroup() %&gt;% arrange(desc(mean_rating)) %&gt;%
-		mutate(p_positive_rating = n_positive_rating/n_rating)
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">Get pre-processed data</span>
+pre_processed_data <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> gather(data = raw_data, key = movie, value = rating, -User )
+pre_processed_data <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> tidyr::extract(data = pre_processed_data, col = movie, into = c(<span style="font-style: italic;">"movie_ID"</span>, <span style="font-style: italic;">"movie_name"</span>), regex = <span style="font-style: italic;">"X([[:alnum:]]+)\\.\\.(.*)"</span>)
+pre_processed_data <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> pre_processed_data <span style="font-weight: bold; text-decoration: underline;">%&gt;%</span> select( -User) <span style="font-weight: bold; text-decoration: underline;">%&gt;%</span>
+    group_by(movie_ID, movie_name) <span style="font-weight: bold; text-decoration: underline;">%&gt;%</span>
+        summarise(mean_rating = mean(rating, na.rm = <span style="font-weight: bold; text-decoration: underline;">TRUE</span>),
+                  n_rating = sum(!is.na(rating)),
+                  n_positive_rating = sum(ifelse(rating&gt;=4 &amp; !is.na(rating), 1, 0))
+                  ) <span style="font-weight: bold; text-decoration: underline;">%&gt;%</span>
+            ungroup() <span style="font-weight: bold; text-decoration: underline;">%&gt;%</span> arrange(desc(mean_rating)) <span style="font-weight: bold; text-decoration: underline;">%&gt;%</span>
+                mutate(p_positive_rating = n_positive_rating/n_rating)
 
-## q1
-arrange(pre_processed_data, desc(mean_rating)) %&gt;% select(movie_ID, mean_rating)
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">q1</span>
+arrange(pre_processed_data, desc(mean_rating)) <span style="font-weight: bold; text-decoration: underline;">%&gt;%</span> select(movie_ID, mean_rating)
 
-## q2
-arrange(pre_processed_data, desc(n_rating)) %&gt;% select(movie_ID, n_rating)
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">q2</span>
+arrange(pre_processed_data, desc(n_rating)) <span style="font-weight: bold; text-decoration: underline;">%&gt;%</span> select(movie_ID, n_rating)
 
-## q3
-arrange(pre_processed_data, desc(p_positive_rating)) %&gt;% select(movie_ID, p_positive_rating)
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">q3</span>
+arrange(pre_processed_data, desc(p_positive_rating)) <span style="font-weight: bold; text-decoration: underline;">%&gt;%</span> select(movie_ID, p_positive_rating)
 
-## q4 P( Y | Star Wars: Episode IV - A New Hope (1977))
-## dirty method,  to be updated
-n_x &lt;- select(filter(pre_processed_data, movie_ID == 260), n_rating)[[1]]
-index_star_war_1977 &lt;- 2
-result &lt;- data.frame()
-for (index_movie in c(3:ncol(raw_data))) {
-    n_xy &lt;- sum(!is.na(raw_data[, index_star_war_1977]) &amp; !is.na(raw_data[, index_movie]))
-    py_on_x &lt;- n_xy / n_x
-    result &lt;- rbind(result, data.frame(py_on_x = py_on_x, index_movie = index_movie, movie_info = names(raw_data)[index_movie]))
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">q4 P( Y | Star Wars: Episode IV - A New Hope (1977))</span>
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">dirty method,  to be updated</span>
+n_x <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> select(filter(pre_processed_data, movie_ID == 260), n_rating)[[1]]
+index_star_war_1977 <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> 2
+result <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> data.frame()
+<span style="font-weight: bold;">for</span> (index_movie <span style="font-weight: bold;">in</span> c(3:ncol(raw_data))) {
+    n_xy <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> sum(!is.na(raw_data[, index_star_war_1977]) &amp; !is.na(raw_data[, index_movie]))
+    py_on_x <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> n_xy / n_x
+    result <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> rbind(result, data.frame(py_on_x = py_on_x, index_movie = index_movie, movie_info = names(raw_data)[index_movie]))
 }
-result &lt;- tbl_df(result)
-arrange(result, desc(py_on_x)) %&gt;% select(py_on_x, movie_info)
+result <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> tbl_df(result)
+arrange(result, desc(py_on_x)) <span style="font-weight: bold; text-decoration: underline;">%&gt;%</span> select(py_on_x, movie_info)
 </pre>
 </div>
 
@@ -430,7 +367,7 @@ Source: local data frame [19 x 2]
 </div>
 </div>
 <div id="postamble" class="status">
-<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.2.10 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-07-29 23:29:19</p></div>
+<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.5 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-07-29 23:51:45</p></div>
 </div>
 </body>
 </html>

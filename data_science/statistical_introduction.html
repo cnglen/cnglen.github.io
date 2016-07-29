@@ -3,9 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>Introduction of statistical learning</title>
-<!-- 2016-07-29 Fri 23:29 -->
+<!-- 2016-07-29 Fri 23:51 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>Introduction of statistical learning</title>
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Jacky Wang" />
 <link rel="stylesheet" title="Standard" href="/style/worg.css" type="text/css" />
@@ -57,48 +58,28 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
+<script type="text/x-mathjax-config">
     MathJax.Hub.Config({
-        // Only one of the two following lines, depending on user settings
-        // First allows browser-native MathML display, second forces HTML/CSS
-        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
-            jax: ["input/TeX", "output/HTML-CSS"],
-        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
-                     "TeX/noUndefined.js"],
-        tex2jax: {
-            inlineMath: [ ["\\(","\\)"] ],
-            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
-            skipTags: ["script","noscript","style","textarea","pre","code"],
-            ignoreClass: "tex2jax_ignore",
-            processEscapes: false,
-            processEnvironments: true,
-            preview: "TeX"
-        },
-        showProcessingMessages: true,
         displayAlign: "center",
-        displayIndent: "2em",
+        displayIndent: "0em",
 
-        "HTML-CSS": {
-             scale: 100,
-             availableFonts: ["STIX","TeX"],
-             preferredFont: "TeX",
-             webFont: "TeX",
-             imageFont: "TeX",
-             showMathMenu: true,
-        },
-        MMLorHTML: {
-             prefer: {
-                 MSIE:    "MML",
-                 Firefox: "MML",
-                 Opera:   "HTML",
-                 other:   "HTML"
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
              }
-        }
-    });
-/*]]>*///-->
+});
 </script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -117,19 +98,19 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">History of statistical learning</a></li>
-<li><a href="#sec-2">Data set using in ISL</a>
+<li><a href="#orgheadline1">History of statistical learning</a></li>
+<li><a href="#orgheadline5">Data set using in ISL</a>
 <ul>
 <li>
 <ul>
-<li><a href="#sec-2-0-1">Wage</a></li>
-<li><a href="#sec-2-0-2">Boston</a></li>
-<li><a href="#sec-2-0-3">Smarket</a></li>
+<li><a href="#orgheadline2">Wage</a></li>
+<li><a href="#orgheadline3">Boston</a></li>
+<li><a href="#orgheadline4">Smarket</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#sec-3">Bias Variance trade-off</a></li>
+<li><a href="#orgheadline6">Bias Variance trade-off</a></li>
 </ul>
 </div>
 </div>
@@ -137,16 +118,13 @@ for the JavaScript code in this tag.
 <a href="../index.html">Home</a>
 </p>
 
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1">History of statistical learning</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1">History of statistical learning</h2>
+<div class="outline-text-2" id="text-orgheadline1">
 <ul class="org-ul">
-<li>linear -&gt; non-linear
-</li>
-<li>olm -&gt; glm
-</li>
-<li>tree -&gt; gam -&gt; boosting/bagging
-</li>
+<li>linear -&gt; non-linear</li>
+<li>olm -&gt; glm</li>
+<li>tree -&gt; gam -&gt; boosting/bagging</li>
 </ul>
 
 
@@ -157,85 +135,85 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2">Data set using in ISL</h2>
-<div class="outline-text-2" id="text-2">
-</div><div id="outline-container-sec-2-0-1" class="outline-4">
-<h4 id="sec-2-0-1">Wage</h4>
-<div class="outline-text-4" id="text-2-0-1">
-<table id="wage_data" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5">Data set using in ISL</h2>
+<div class="outline-text-2" id="text-orgheadline5">
+</div><div id="outline-container-orgheadline2" class="outline-4">
+<h4 id="orgheadline2">Wage</h4>
+<div class="outline-text-4" id="text-orgheadline2">
+<table id="orgtable1" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <tbody>
 <tr>
-<td class="left">year</td>
-<td class="left">Year that wage information was recorded</td>
+<td class="org-left">year</td>
+<td class="org-left">Year that wage information was recorded</td>
 </tr>
 
 <tr>
-<td class="left">age</td>
-<td class="left">Age of worker</td>
+<td class="org-left">age</td>
+<td class="org-left">Age of worker</td>
 </tr>
 
 <tr>
-<td class="left">sex</td>
-<td class="left">Gender</td>
+<td class="org-left">sex</td>
+<td class="org-left">Gender</td>
 </tr>
 
 <tr>
-<td class="left">maritl</td>
-<td class="left">A factor with levels '1. Never Married' '2. Married' '3. Widowed' '4. Divorced' and '5. Separated' indicating marital status</td>
+<td class="org-left">maritl</td>
+<td class="org-left">A factor with levels '1. Never Married' '2. Married' '3. Widowed' '4. Divorced' and '5. Separated' indicating marital status</td>
 </tr>
 
 <tr>
-<td class="left">race</td>
-<td class="left">A factor with levels '1. White' '2. Black' '3. Asian' and '4. Other' indicating race</td>
+<td class="org-left">race</td>
+<td class="org-left">A factor with levels '1. White' '2. Black' '3. Asian' and '4. Other' indicating race</td>
 </tr>
 
 <tr>
-<td class="left">education</td>
-<td class="left">A factor with levels '1. &lt; HS Grad' '2. HS Grad' '3. Some College' '4. College Grad' and '5. Advanced Degree' indicating education level</td>
+<td class="org-left">education</td>
+<td class="org-left">A factor with levels '1. &lt; HS Grad' '2. HS Grad' '3. Some College' '4. College Grad' and '5. Advanced Degree' indicating education level</td>
 </tr>
 
 <tr>
-<td class="left">region</td>
-<td class="left">Region of the country (mid-atlantic only)</td>
+<td class="org-left">region</td>
+<td class="org-left">Region of the country (mid-atlantic only)</td>
 </tr>
 
 <tr>
-<td class="left">jobclass</td>
-<td class="left">A factor with levels '1. Industrial' and '2. Information' indicating type of job</td>
+<td class="org-left">jobclass</td>
+<td class="org-left">A factor with levels '1. Industrial' and '2. Information' indicating type of job</td>
 </tr>
 
 <tr>
-<td class="left">health</td>
-<td class="left">A factor with levels '1. &lt;=Good' and '2. &gt;=Very Good' indicating health level of worker</td>
+<td class="org-left">health</td>
+<td class="org-left">A factor with levels '1. &lt;=Good' and '2. &gt;=Very Good' indicating health level of worker</td>
 </tr>
 
 <tr>
-<td class="left">health_ins</td>
-<td class="left">A factor with levels '1. Yes' and '2. No' indicating whether worker has health insurance</td>
+<td class="org-left">health_ins</td>
+<td class="org-left">A factor with levels '1. Yes' and '2. No' indicating whether worker has health insurance</td>
 </tr>
 
 <tr>
-<td class="left">logwage</td>
-<td class="left">Log of workers wage</td>
+<td class="org-left">logwage</td>
+<td class="org-left">Log of workers wage</td>
 </tr>
 
 <tr>
-<td class="left">wage</td>
-<td class="left">Workers raw wage</td>
+<td class="org-left">wage</td>
+<td class="org-left">Workers raw wage</td>
 </tr>
 </tbody>
 </table>
 <div class="org-src-container">
 
-<pre class="src src-R">library(ISLR)
+<pre class="src src-R"><span style="font-weight: bold; text-decoration: underline;">library</span>(ISLR)
 str(Wage)
 </pre>
 </div>
@@ -258,93 +236,93 @@ str(Wage)
 </div>
 </div>
 
-<div id="outline-container-sec-2-0-2" class="outline-4">
-<h4 id="sec-2-0-2">Boston</h4>
-<div class="outline-text-4" id="text-2-0-2">
-<table id="boston_data" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<div id="outline-container-orgheadline3" class="outline-4">
+<h4 id="orgheadline3">Boston</h4>
+<div class="outline-text-4" id="text-orgheadline3">
+<table id="orgtable2" border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <tbody>
 <tr>
-<td class="left">crim</td>
-<td class="left">per capita crime rate by town.</td>
+<td class="org-left">crim</td>
+<td class="org-left">per capita crime rate by town.</td>
 </tr>
 
 <tr>
-<td class="left">zn</td>
-<td class="left">proportion of residential land zoned for lots over 25,000 sq.ft.</td>
+<td class="org-left">zn</td>
+<td class="org-left">proportion of residential land zoned for lots over 25,000 sq.ft.</td>
 </tr>
 
 <tr>
-<td class="left">indus</td>
-<td class="left">proportion of non-retail business acres per town.</td>
+<td class="org-left">indus</td>
+<td class="org-left">proportion of non-retail business acres per town.</td>
 </tr>
 
 <tr>
-<td class="left">chas</td>
-<td class="left">Charles River dummy variable (= 1 if tract bounds river; 0 otherwise).</td>
+<td class="org-left">chas</td>
+<td class="org-left">Charles River dummy variable (= 1 if tract bounds river; 0 otherwise).</td>
 </tr>
 
 <tr>
-<td class="left">nox</td>
-<td class="left">nitrogen oxides concentration (parts per 10 million).</td>
+<td class="org-left">nox</td>
+<td class="org-left">nitrogen oxides concentration (parts per 10 million).</td>
 </tr>
 
 <tr>
-<td class="left">rm</td>
-<td class="left">average number of rooms per dwelling(e.g, house).</td>
+<td class="org-left">rm</td>
+<td class="org-left">average number of rooms per dwelling(e.g, house).</td>
 </tr>
 
 <tr>
-<td class="left">age</td>
-<td class="left">proportion of owner-occupied units built prior to 1940.</td>
+<td class="org-left">age</td>
+<td class="org-left">proportion of owner-occupied units built prior to 1940.</td>
 </tr>
 
 <tr>
-<td class="left">dis</td>
-<td class="left">weighted mean of distances to five Boston employment centres.</td>
+<td class="org-left">dis</td>
+<td class="org-left">weighted mean of distances to five Boston employment centres.</td>
 </tr>
 
 <tr>
-<td class="left">rad</td>
-<td class="left">index of accessibility to radial highways.</td>
+<td class="org-left">rad</td>
+<td class="org-left">index of accessibility to radial highways.</td>
 </tr>
 
 <tr>
-<td class="left">tax</td>
-<td class="left">full-value property-tax rate per $10,000.</td>
+<td class="org-left">tax</td>
+<td class="org-left">full-value property-tax rate per $10,000.</td>
 </tr>
 
 <tr>
-<td class="left">ptratio</td>
-<td class="left">pupil-teacher ratio by town.</td>
+<td class="org-left">ptratio</td>
+<td class="org-left">pupil-teacher ratio by town.</td>
 </tr>
 
 <tr>
-<td class="left">black</td>
-<td class="left">1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town.</td>
+<td class="org-left">black</td>
+<td class="org-left">1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town.</td>
 </tr>
 
 <tr>
-<td class="left">lstat</td>
-<td class="left">lower status of the population (percent), percent of households with low locioeconomic status(低社会经济阶层家挺百分比)</td>
+<td class="org-left">lstat</td>
+<td class="org-left">lower status of the population (percent), percent of households with low locioeconomic status(低社会经济阶层家挺百分比)</td>
 </tr>
 
 <tr>
-<td class="left">medv</td>
-<td class="left">median value of owner-occupied homes in $1000s, median house value</td>
+<td class="org-left">medv</td>
+<td class="org-left">median value of owner-occupied homes in $1000s, median house value</td>
 </tr>
 </tbody>
 </table>
 
 <div class="org-src-container">
 
-<pre class="src src-R">library(MASS)
+<pre class="src src-R"><span style="font-weight: bold; text-decoration: underline;">library</span>(MASS)
 str(Boston)
 </pre>
 </div>
@@ -368,9 +346,9 @@ str(Boston)
 </pre>
 </div>
 </div>
-<div id="outline-container-sec-2-0-3" class="outline-4">
-<h4 id="sec-2-0-3">Smarket</h4>
-<div class="outline-text-4" id="text-2-0-3">
+<div id="outline-container-orgheadline4" class="outline-4">
+<h4 id="orgheadline4">Smarket</h4>
+<div class="outline-text-4" id="text-orgheadline4">
 <p>
 Raw values of the S&amp;P 500 were obtained from Yahoo Finance and
 then converted to percentages and lagged.
@@ -380,61 +358,61 @@ then converted to percentages and lagged.
 
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <tbody>
 <tr>
-<td class="left">Year</td>
-<td class="left">The year that the observation was recorded</td>
+<td class="org-left">Year</td>
+<td class="org-left">The year that the observation was recorded</td>
 </tr>
 
 <tr>
-<td class="left">Lag1</td>
-<td class="left">Percentage return for previous day</td>
+<td class="org-left">Lag1</td>
+<td class="org-left">Percentage return for previous day</td>
 </tr>
 
 <tr>
-<td class="left">Lag2</td>
-<td class="left">Percentage return for 2 days previous</td>
+<td class="org-left">Lag2</td>
+<td class="org-left">Percentage return for 2 days previous</td>
 </tr>
 
 <tr>
-<td class="left">Lag3</td>
-<td class="left">Percentage return for 3 days previous</td>
+<td class="org-left">Lag3</td>
+<td class="org-left">Percentage return for 3 days previous</td>
 </tr>
 
 <tr>
-<td class="left">Lag4</td>
-<td class="left">Percentage return for 4 days previous</td>
+<td class="org-left">Lag4</td>
+<td class="org-left">Percentage return for 4 days previous</td>
 </tr>
 
 <tr>
-<td class="left">Lag5</td>
-<td class="left">Percentage return for 5 days previous</td>
+<td class="org-left">Lag5</td>
+<td class="org-left">Percentage return for 5 days previous</td>
 </tr>
 
 <tr>
-<td class="left">Volume</td>
-<td class="left">Volume of shares traded (number of daily shares traded in billions), <span class="underline">on previous day</span></td>
+<td class="org-left">Volume</td>
+<td class="org-left">Volume of shares traded (number of daily shares traded in billions), <span class="underline">on previous day</span></td>
 </tr>
 
 <tr>
-<td class="left">Today</td>
-<td class="left">Percentage return for today</td>
+<td class="org-left">Today</td>
+<td class="org-left">Percentage return for today</td>
 </tr>
 
 <tr>
-<td class="left">Direction</td>
-<td class="left">A factor with levels Down and Up indicating whether the market had a positive or negative return on a given day</td>
+<td class="org-left">Direction</td>
+<td class="org-left">A factor with levels Down and Up indicating whether the market had a positive or negative return on a given day</td>
 </tr>
 </tbody>
 </table>
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="Smarket_structure">library(ISLR)
+<pre class="src src-R" id="orgsrcblock1"><span style="font-weight: bold; text-decoration: underline;">library</span>(ISLR)
 str(Smarket)
 </pre>
 </div>
@@ -455,19 +433,16 @@ str(Smarket)
 </div>
 </div>
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3">Bias Variance trade-off</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-orgheadline6" class="outline-2">
+<h2 id="orgheadline6">Bias Variance trade-off</h2>
+<div class="outline-text-2" id="text-orgheadline6">
 <p>
 Assuming:
 </p>
 <ul class="org-ul">
-<li>\(E[\epsilon] = 0\) and \(\epsilon\) is independent of \(\mathbf{x}\)
-</li>
-<li>\(y = f(\mathbf{x}) + \epsilon\)
-</li>
-<li>\(\hat{y} = \hat{f}(\mathbf{x})\)
-</li>
+<li>\(E[\epsilon] = 0\) and \(\epsilon\) is independent of \(\mathbf{x}\)</li>
+<li>\(y = f(\mathbf{x}) + \epsilon\)</li>
+<li>\(\hat{y} = \hat{f}(\mathbf{x})\)</li>
 </ul>
 
 
@@ -492,7 +467,7 @@ E[(\hat{y}_i - y_i)^2] & = E[(\hat{f}(\mathbf{x}_i) - f(\mathbf{x}_i) - \epsilon
 </div>
 </div>
 <div id="postamble" class="status">
-<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.2.10 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-07-29 23:29:19</p></div>
+<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.5 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-07-29 23:51:45</p></div>
 </div>
 </body>
 </html>

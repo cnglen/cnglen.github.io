@@ -3,9 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>Linear regression</title>
-<!-- 2016-07-29 Fri 23:29 -->
+<!-- 2016-07-29 Fri 23:51 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>Linear regression</title>
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Jacky Wang" />
 <link rel="stylesheet" title="Standard" href="/style/worg.css" type="text/css" />
@@ -57,48 +58,28 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
+<script type="text/x-mathjax-config">
     MathJax.Hub.Config({
-        // Only one of the two following lines, depending on user settings
-        // First allows browser-native MathML display, second forces HTML/CSS
-        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
-            jax: ["input/TeX", "output/HTML-CSS"],
-        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
-                     "TeX/noUndefined.js"],
-        tex2jax: {
-            inlineMath: [ ["\\(","\\)"] ],
-            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
-            skipTags: ["script","noscript","style","textarea","pre","code"],
-            ignoreClass: "tex2jax_ignore",
-            processEscapes: false,
-            processEnvironments: true,
-            preview: "TeX"
-        },
-        showProcessingMessages: true,
         displayAlign: "center",
-        displayIndent: "2em",
+        displayIndent: "0em",
 
-        "HTML-CSS": {
-             scale: 100,
-             availableFonts: ["STIX","TeX"],
-             preferredFont: "TeX",
-             webFont: "TeX",
-             imageFont: "TeX",
-             showMathMenu: true,
-        },
-        MMLorHTML: {
-             prefer: {
-                 MSIE:    "MML",
-                 Firefox: "MML",
-                 Opera:   "HTML",
-                 other:   "HTML"
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
              }
-        }
-    });
-/*]]>*///-->
+});
 </script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -117,41 +98,41 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">Theory</a>
+<li><a href="#orgheadline11">Theory</a>
 <ul>
-<li><a href="#sec-1-1">Introduction</a></li>
-<li><a href="#sec-1-2">Math symbols</a></li>
-<li><a href="#sec-1-3">Using a single number for estimation: \(\hat{y} = \theta_0\)</a></li>
-<li><a href="#sec-1-4">Using one predictor for estimation: \(\hat{y} = \theta_0 + \theta_1 x_1\)</a>
+<li><a href="#orgheadline1">Introduction</a></li>
+<li><a href="#orgheadline2">Math symbols</a></li>
+<li><a href="#orgheadline3">Using a single number for estimation: \(\hat{y} = \theta_0\)</a></li>
+<li><a href="#orgheadline4">Using one predictor for estimation: \(\hat{y} = \theta_0 + \theta_1 x_1\)</a>
 <ul>
-<li><a href="#sec-1-4-1">Property of residual</a></li>
-<li><a href="#sec-1-4-2">Uncertainty of model</a></li>
+<li><a href="#orgheadline5">Property of residual</a></li>
+<li><a href="#orgheadline6">Uncertainty of model</a></li>
 </ul>
 </li>
-<li><a href="#sec-1-5">General regression: \(\hat{y} = \theta_0 + \theta_1 x_1 + ... + \theta_p x_p\)</a>
+<li><a href="#orgheadline7">General regression: \(\hat{y} = \theta_0 + \theta_1 x_1 + ... + \theta_p x_p\)</a>
 <ul>
-<li><a href="#sec-1-5-1">Maximum likelihood estimation</a></li>
-<li><a href="#sec-1-5-2">Generalized linear model(glm) for <i>gaussian</i> case</a></li>
-<li><a href="#sec-1-5-3">Assumations</a></li>
+<li><a href="#orgheadline8">Maximum likelihood estimation</a></li>
+<li><a href="#orgheadline9">Generalized linear model(glm) for <i>gaussian</i> case</a></li>
+<li><a href="#orgheadline10">Assumations</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#sec-2">Model related concept</a>
+<li><a href="#orgheadline14">Model related concept</a>
 <ul>
-<li><a href="#sec-2-1">Model assessment parameters, which are shown in <i>summary(lm())</i></a></li>
-<li><a href="#sec-2-2">Other</a></li>
+<li><a href="#orgheadline12">Model assessment parameters, which are shown in <i>summary(lm())</i></a></li>
+<li><a href="#orgheadline13">Other</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">Lab: linear regression</a>
+<li><a href="#orgheadline22">Lab: linear regression</a>
 <ul>
-<li><a href="#sec-3-1">Explore data</a></li>
-<li><a href="#sec-3-2">Simple linear regression</a></li>
-<li><a href="#sec-3-3">Multiple linear regression</a></li>
-<li><a href="#sec-3-4">Performance on training data:</a></li>
-<li><a href="#sec-3-5">Interacton terms: [removing additive assumation]</a></li>
-<li><a href="#sec-3-6">Non-linear transformations of the predictors</a></li>
-<li><a href="#sec-3-7">Qualitative Predictors (Categracial Variable)</a></li>
+<li><a href="#orgheadline15">Explore data</a></li>
+<li><a href="#orgheadline16">Simple linear regression</a></li>
+<li><a href="#orgheadline17">Multiple linear regression</a></li>
+<li><a href="#orgheadline18">Performance on training data:</a></li>
+<li><a href="#orgheadline19">Interacton terms: [removing additive assumation]</a></li>
+<li><a href="#orgheadline20">Non-linear transformations of the predictors</a></li>
+<li><a href="#orgheadline21">Qualitative Predictors (Categracial Variable)</a></li>
 </ul>
 </li>
 </ul>
@@ -162,12 +143,12 @@ for the JavaScript code in this tag.
 </p>
 
 
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1">Theory</h2>
-<div class="outline-text-2" id="text-1">
-</div><div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1">Introduction</h3>
-<div class="outline-text-3" id="text-1-1">
+<div id="outline-container-orgheadline11" class="outline-2">
+<h2 id="orgheadline11">Theory</h2>
+<div class="outline-text-2" id="text-orgheadline11">
+</div><div id="outline-container-orgheadline1" class="outline-3">
+<h3 id="orgheadline1">Introduction</h3>
+<div class="outline-text-3" id="text-orgheadline1">
 
 <div class="figure">
 <p><img src="../images/linear_regression_theory.png" alt="linear_regression_theory.png" />
@@ -178,82 +159,82 @@ for the JavaScript code in this tag.
 
 
 
-<div id="outline-container-sec-1-2" class="outline-3">
-<h3 id="sec-1-2">Math symbols</h3>
-<div class="outline-text-3" id="text-1-2">
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2">Math symbols</h3>
+<div class="outline-text-3" id="text-orgheadline2">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 <caption class="t-above"><span class="table-number">Table 1:</span> Notation of Math symbols</caption>
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="left">Notation</th>
-<th scope="col" class="left">Meaning</th>
+<th scope="col" class="org-left">Notation</th>
+<th scope="col" class="org-left">Meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="left">\(\mathbf{x} = \begin{bmatrix} 1 \\ x_1 \\ x_2 \\ \vdots \\ x_p \end{bmatrix} = \begin{bmatrix} x_0 \\ x_1 \\ x_2 \\ \vdots \\ x_p \end{bmatrix} \in\mathbb{R}^{(p+1)\times 1}\)</td>
-<td class="left">input variables, features, predictors</td>
+<td class="org-left">\(\mathbf{x} = \begin{bmatrix} 1 \\ x_1 \\ x_2 \\ \vdots \\ x_p \end{bmatrix} = \begin{bmatrix} x_0 \\ x_1 \\ x_2 \\ \vdots \\ x_p \end{bmatrix} \in\mathbb{R}^{(p+1)\times 1}\)</td>
+<td class="org-left">input variables, features, predictors</td>
 </tr>
 
 <tr>
-<td class="left">\(y=f(\mathbf{x}) + \epsilon\)</td>
-<td class="left">output/target variable</td>
+<td class="org-left">\(y=f(\mathbf{x}) + \epsilon\)</td>
+<td class="org-left">output/target variable</td>
 </tr>
 
 <tr>
-<td class="left">\(\hat{y} = \hat{f}(\mathbf{x})= h(\mathbf{x}) = h_{\pmb{\theta}}(\mathbf{x})\)</td>
-<td class="left">hypothesis function of \(\mathbf{x}\) with parameter \(\pmb{\theta}\)</td>
+<td class="org-left">\(\hat{y} = \hat{f}(\mathbf{x})= h(\mathbf{x}) = h_{\pmb{\theta}}(\mathbf{x})\)</td>
+<td class="org-left">hypothesis function of \(\mathbf{x}\) with parameter \(\pmb{\theta}\)</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
-<td class="left">\(\mathbf{x}^{(i)} = \begin{bmatrix} x_0^{(i)} \\ x_1^{(i)} \\ \vdots  \\ x_p^{(i)} \end{bmatrix}\)</td>
-<td class="left">\(i^{th}\) observation of \(\mathbf{x}\) where \(1 \leq i \leq n\)</td>
+<td class="org-left">\(\mathbf{x}^{(i)} = \begin{bmatrix} x_0^{(i)} \\ x_1^{(i)} \\ \vdots  \\ x_p^{(i)} \end{bmatrix}\)</td>
+<td class="org-left">\(i^{th}\) observation of \(\mathbf{x}\) where \(1 \leq i \leq n\)</td>
 </tr>
 
 <tr>
-<td class="left">\(y^{(i)}\)</td>
-<td class="left">\(i^{th}\) observation of \(y\) where \(1 \leq i \leq n\)</td>
+<td class="org-left">\(y^{(i)}\)</td>
+<td class="org-left">\(i^{th}\) observation of \(y\) where \(1 \leq i \leq n\)</td>
 </tr>
 
 <tr>
-<td class="left">\(\mathbf{y}= \begin{bmatrix}   y^{(1)} \\   y^{(2)} \\   \vdots \\   y^{(n)}   \end{bmatrix}\in \mathbb{R}^{n \times 1}\)</td>
-<td class="left">\(n\) observations of \(y\)</td>
+<td class="org-left">\(\mathbf{y}= \begin{bmatrix}   y^{(1)} \\   y^{(2)} \\   \vdots \\   y^{(n)}   \end{bmatrix}\in \mathbb{R}^{n \times 1}\)</td>
+<td class="org-left">\(n\) observations of \(y\)</td>
 </tr>
 
 <tr>
-<td class="left">\(\mathbf{X}= \begin{bmatrix}\big(\mathbf{x}^{(1)}\big)^{T} \\ \big(\mathbf{x}^{(2)}\big)^{T} \\ \vdots \\ \big(\mathbf{x}^{(n)}\big)^{T} \end{bmatrix} \in \mathbb{R}^{n \times (p+1)}\)</td>
-<td class="left">\(n\) observations of \(\mathbf{x}\)</td>
+<td class="org-left">\(\mathbf{X}= \begin{bmatrix}\big(\mathbf{x}^{(1)}\big)^{T} \\ \big(\mathbf{x}^{(2)}\big)^{T} \\ \vdots \\ \big(\mathbf{x}^{(n)}\big)^{T} \end{bmatrix} \in \mathbb{R}^{n \times (p+1)}\)</td>
+<td class="org-left">\(n\) observations of \(\mathbf{x}\)</td>
 </tr>
 
 <tr>
-<td class="left">\(n\)</td>
-<td class="left"># of traing examples</td>
+<td class="org-left">\(n\)</td>
+<td class="org-left"># of traing examples</td>
 </tr>
 
 <tr>
-<td class="left">\(p\)</td>
-<td class="left"># of traing <i>p</i>-redictors, features (excluding addtional 1 vector)</td>
+<td class="org-left">\(p\)</td>
+<td class="org-left"># of traing <i>p</i>-redictors, features (excluding addtional 1 vector)</td>
 </tr>
 
 <tr>
-<td class="left">\(\pmb{\theta} = \begin{bmatrix} \theta_0 \\ \theta_1 \\ \vdots \\ \theta_n \end{bmatrix}\)</td>
-<td class="left">parameter of hypothesis funtion(model)</td>
+<td class="org-left">\(\pmb{\theta} = \begin{bmatrix} \theta_0 \\ \theta_1 \\ \vdots \\ \theta_n \end{bmatrix}\)</td>
+<td class="org-left">parameter of hypothesis funtion(model)</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 
-<div id="outline-container-sec-1-3" class="outline-3">
-<h3 id="sec-1-3">Using a single number for estimation: \(\hat{y} = \theta_0\)</h3>
-<div class="outline-text-3" id="text-1-3">
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3">Using a single number for estimation: \(\hat{y} = \theta_0\)</h3>
+<div class="outline-text-3" id="text-orgheadline3">
 <p>
 Given \(\mathbf{y}=[y^{(1)}, y^{(2)}, ..., y^{(n)}]^{T}\), Find
 </p>
@@ -267,41 +248,35 @@ Given \(\mathbf{y}=[y^{(1)}, y^{(2)}, ..., y^{(n)}]^{T}\), Find
 <ul class="org-ul">
 <li>Rewrite RSS as \(RSS=A \hat{\theta}_0^{2} + B \hat{\theta}_0 + C\), note that
 \(A=n>0\), thus using the basic knowledge from high school, we get
-\(\theta_0=-\frac{B}{2A}\).
-</li>
+\(\theta_0=-\frac{B}{2A}\).</li>
 
-<li>Or we can:
+<li><p>
+Or we can:
+</p>
 \begin{equation}
 \frac{\partial RSS}{\partial \theta_0} = \sum_{i=1}^{n} 2(y_i - \theta_0) (-1)=0
-\end{equation}
-</li>
+\end{equation}</li>
 <li>Thus, \(\theta_0=mean(\mathbf{y})\), which is used in:
 <ul class="org-ul">
-<li>calculating <i>TSS</i>
-</li>
-<li><i>kNN regression</i> (For a observation's neighbors)
-</li>
-<li>and <i>regression tree</i> (For each leaf/terminal node)
-</li>
-</ul>
-</li>
+<li>calculating <i>TSS</i></li>
+<li><i>kNN regression</i> (For a observation's neighbors)</li>
+<li>and <i>regression tree</i> (For each leaf/terminal node)</li>
+</ul></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-1-4" class="outline-3">
-<h3 id="sec-1-4">Using one predictor for estimation: \(\hat{y} = \theta_0 + \theta_1 x_1\)</h3>
-<div class="outline-text-3" id="text-1-4">
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4">Using one predictor for estimation: \(\hat{y} = \theta_0 + \theta_1 x_1\)</h3>
+<div class="outline-text-3" id="text-orgheadline4">
 <p>
 Given:
 </p>
 <ul class="org-ul">
 <li>\(\mathbf{X}=\begin{bmatrix} 1, x_1^{(1)} \\ 1, x_1^{(2)} \\ \vdots
     \\ 1, x_1^{(n)}\end{bmatrix} = \begin{bmatrix} x_0^{(1)}, x_1^{(1)} \\ x_0^{(2)},
-    x_1^{(2)} \\ \vdots \\ x_0^{(n)}, x_1^{(n)}\end{bmatrix}\)
-</li>
-<li>\(\mathbf{y}=[y^{(1)}, y^{(2)}, ..., y^{(n)}]^{T}\)
-</li>
+    x_1^{(2)} \\ \vdots \\ x_0^{(n)}, x_1^{(n)}\end{bmatrix}\)</li>
+<li>\(\mathbf{y}=[y^{(1)}, y^{(2)}, ..., y^{(n)}]^{T}\)</li>
 </ul>
 <p>
 Find
@@ -326,102 +301,81 @@ We'll get
 </p>
 <ul class="org-ul">
 <li>\(\theta_1 = cor(\mathbf{x}_1,\mathbf{y}) \frac{sd(\mathbf{y})}{sd(\mathbf{x}_1)}
-              = \frac{\frac{1}{n}\sum_{i=1}^n (x_1^{(i)} - \bar{x}_1) (y^{(i)} - \bar{y})}{\sqrt{\frac{1}{n}\sum_{i=1}^n (x_1^{(i)} - \bar{x}_1)^2} \sqrt{\frac{1}{n}\sum_{i=1}^n (y^{(i)} - \bar{y}_1)^2}} \frac{\sqrt{\frac{1}{n}\sum_{i=1}^n (y^{(i)} - \bar{y})^2}}{\sqrt{\frac{1}{n}\sum_{i=1}^n (x_1^{(i)} - \bar{x}_1)^2}}\)
-</li>
+              = \frac{\frac{1}{n}\sum_{i=1}^n (x_1^{(i)} - \bar{x}_1) (y^{(i)} - \bar{y})}{\sqrt{\frac{1}{n}\sum_{i=1}^n (x_1^{(i)} - \bar{x}_1)^2} \sqrt{\frac{1}{n}\sum_{i=1}^n (y^{(i)} - \bar{y}_1)^2}} \frac{\sqrt{\frac{1}{n}\sum_{i=1}^n (y^{(i)} - \bar{y})^2}}{\sqrt{\frac{1}{n}\sum_{i=1}^n (x_1^{(i)} - \bar{x}_1)^2}}\)</li>
 <li>\(\theta_0 = mean(\mathbf{y}) - \theta_1 mean(\mathbf{x}_1)
-              = \bar{y} - \theta_1 \bar{x}_1\)
-</li>
+              = \bar{y} - \theta_1 \bar{x}_1\)</li>
 </ul>
 </div>
 
-<div id="outline-container-sec-1-4-1" class="outline-4">
-<h4 id="sec-1-4-1">Property of residual</h4>
-<div class="outline-text-4" id="text-1-4-1">
+<div id="outline-container-orgheadline5" class="outline-4">
+<h4 id="orgheadline5">Property of residual</h4>
+<div class="outline-text-4" id="text-orgheadline5">
 <p>
 Degree of freedom \(n-p-1=n-2\) when \(p=1\)
 </p>
 <ul class="org-ul">
-<li>From <a href="#equation_RSS_theta_0">1</a>: \(\sum_{i=1}^{n} x_0^{(i)} (y^{(i)} - \hat{y}^{(i)}) = \sum_{i=1}^{n} (y^{(i)} - \hat{y}^{(i)}) = 0\)
-</li>
-<li>From <i>equation_RSS_theta_1</i>: \(\sum_{i=1}^{n} x_1^{(i)} (y^{(i)} - \hat{y}^{(i)}) = 0\)
-</li>
+<li>From <a href="#orglatexenvironment1">1</a>: \(\sum_{i=1}^{n} x_0^{(i)} (y^{(i)} - \hat{y}^{(i)}) = \sum_{i=1}^{n} (y^{(i)} - \hat{y}^{(i)}) = 0\)</li>
+<li>From <a href="#orglatexenvironment2">1</a>: \(\sum_{i=1}^{n} x_1^{(i)} (y^{(i)} - \hat{y}^{(i)}) = 0\)</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-1-4-2" class="outline-4">
-<h4 id="sec-1-4-2">Uncertainty of model</h4>
-<div class="outline-text-4" id="text-1-4-2">
+<div id="outline-container-orgheadline6" class="outline-4">
+<h4 id="orgheadline6">Uncertainty of model</h4>
+<div class="outline-text-4" id="text-orgheadline6">
 <p>
 Note:
 </p>
 <ul class="org-ul">
-<li>\(\mathbf{X}\) is known
-</li>
-<li>\(y = f(\mathbf{x}) + \epsilon\) where \(\epsilon\) is a random variable, thus \(y\) is also a <i>random variable</i>
-</li>
-<li>\(\theta_0, \theta_1\) is a funciton of \(\mathbf{y}=(y^{(1)}, y^{(2)}, ..., y^{(n)})\), so also a <i>random variable</i>
-</li>
+<li>\(\mathbf{X}\) is known</li>
+<li>\(y = f(\mathbf{x}) + \epsilon\) where \(\epsilon\) is a random variable, thus \(y\) is also a <i>random variable</i></li>
+<li>\(\theta_0, \theta_1\) is a funciton of \(\mathbf{y}=(y^{(1)}, y^{(2)}, ..., y^{(n)})\), so also a <i>random variable</i></li>
 </ul>
 
 <p>
 We have:
 </p>
 <ul class="org-ul">
-<li>\(\hat{\sigma}^2 = \frac{RSS}{n-p-1}=\frac{RSS}{n-2}\)
-</li>
+<li>\(\hat{\sigma}^2 = \frac{RSS}{n-p-1}=\frac{RSS}{n-2}\)</li>
 <li>\(\sigma^2_{\theta_0} = \sigma^2 \big(\frac{1}{n} + \frac{\bar{x}_1^2}{\sum_{i=1}^n (x_1^{(i)} - \bar{x}_1)^2} \big)
-     \approx \hat{\sigma}^2 \big(\frac{1}{n} + \frac{\bar{x}_1^2}{\sum_{i=1}^n (x_1^{(i)} - \bar{x}_1)^2} \big)\)
-</li>
+     \approx \hat{\sigma}^2 \big(\frac{1}{n} + \frac{\bar{x}_1^2}{\sum_{i=1}^n (x_1^{(i)} - \bar{x}_1)^2} \big)\)</li>
 <li>\(\sigma^2_{\theta_1} = \sigma^2 \frac{1}{\sum_{i=1}^n (x_1^{(i)} - \bar{x}_1)^2}
-     \approx \hat{\sigma}^2 \frac{1}{\sum_{i=1}^n (x_1^{(i)} - \bar{x}_1)^2}\)
-</li>
-<li>\(SE_{prediction} = \hat{\sigma} \sqrt{1+\frac{1}{n} + \frac{(x_1^{'} - \bar{x}_1)^2} {\sum_{i=1}^n (x_1^{(i)} - \bar{x}_1)^2}}\) at \(x_1 = x_1^{'}\)
-</li>
+     \approx \hat{\sigma}^2 \frac{1}{\sum_{i=1}^n (x_1^{(i)} - \bar{x}_1)^2}\)</li>
+<li>\(SE_{prediction} = \hat{\sigma} \sqrt{1+\frac{1}{n} + \frac{(x_1^{'} - \bar{x}_1)^2} {\sum_{i=1}^n (x_1^{(i)} - \bar{x}_1)^2}}\) at \(x_1 = x_1^{'}\)</li>
 <li>\(SE_{line} = \hat{\sigma} \sqrt{\frac{1}{n} + \frac{(x_1^{'} - \bar{x}_1)^2} {\sum_{i=1}^n (x_1^{(i)} - \bar{x}_1)^2}}
-                = \hat{\sigma} \sqrt{\text{leverage statistic}(x^{'}_1)}\) at \(x_1 = x_1^{'}\)
-</li>
+                = \hat{\sigma} \sqrt{\text{leverage statistic}(x^{'}_1)}\) at \(x_1 = x_1^{'}\)</li>
 </ul>
 
 <p>
 To understand:
 </p>
 <ul class="org-ul">
-<li>If \(\bar{x}_1 = 0\), \(\sigma^2_{\theta_0} = \frac{\sigma^2}{n}\)
-</li>
+<li>If \(\bar{x}_1 = 0\), \(\sigma^2_{\theta_0} = \frac{\sigma^2}{n}\)</li>
 <li>As \(n \to \infty\):
 <ul class="org-ul">
-<li>\(\sigma^2_{\theta_0} = \sigma^2_{\theta_1} = SE_{line} = 0\), uncertainty surrounding the average  \(y\) at \(x_1^{'}\), related to uncertainty of \(\theta_0, \theta_1\)
-</li>
-<li>\(SE_{prediction} = \sigma\),  uncertainty surrounding a particular \(y\) at \(x_1^{'}\), which includes irreducible error
-</li>
-</ul>
-</li>
+<li>\(\sigma^2_{\theta_0} = \sigma^2_{\theta_1} = SE_{line} = 0\), uncertainty surrounding the average  \(y\) at \(x_1^{'}\), related to uncertainty of \(\theta_0, \theta_1\)</li>
+<li>\(SE_{prediction} = \sigma\),  uncertainty surrounding a particular \(y\) at \(x_1^{'}\), which includes irreducible error</li>
+</ul></li>
 </ul>
 </div>
 </div>
 </div>
 
 
-<div id="outline-container-sec-1-5" class="outline-3">
-<h3 id="sec-1-5">General regression: \(\hat{y} = \theta_0 + \theta_1 x_1 + ... + \theta_p x_p\)</h3>
-<div class="outline-text-3" id="text-1-5">
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7">General regression: \(\hat{y} = \theta_0 + \theta_1 x_1 + ... + \theta_p x_p\)</h3>
+<div class="outline-text-3" id="text-orgheadline7">
 <ul class="org-ul">
 <li>Given Experience(<b>E</b>):
 <ul class="org-ul">
-<li>\(n\) observations \(\mathbf{X} \in \mathcal{R}^{n \times p}\)
-</li>
-<li>\(\mathbf{y} \in \mathcal{R}^{n \times 1}\)
-</li>
-</ul>
-</li>
+<li>\(n\) observations \(\mathbf{X} \in \mathcal{R}^{n \times p}\)</li>
+<li>\(\mathbf{y} \in \mathcal{R}^{n \times 1}\)</li>
+</ul></li>
 
 <li>The task(<b>T</b>) is: predicting \(y\) using model \(h(\mathbf{x}) =
-    h_{\pmb{\theta}}(\mathbf{x})\),
-</li>
+    h_{\pmb{\theta}}(\mathbf{x})\),</li>
 
-<li>Performance(<b>P</b>): Which minimizes loss(error) fuction \(J(\pmb{\theta})\)
-</li>
+<li>Performance(<b>P</b>): Which minimizes loss(error) fuction \(J(\pmb{\theta})\)</li>
 </ul>
 
 
@@ -429,10 +383,8 @@ To understand:
 For linear regression:
 </p>
 <ul class="org-ul">
-<li>\(J(\pmb{\theta}) = \sum_{i=1}^{n} \big(h_{\pmb{\theta}}(\mathbf{x}^{(i)}) - y^{(i)}\big)^2=RSS(\pmb{\theta})\)
-</li>
-<li>\(h_{\pmb{\theta}}(\mathbf{x}) = \langle \pmb{\theta}, \mathbf{x} \rangle = \mathbf{x}^{T} \pmb{\theta} = \theta_0 + \theta_1 x_1 + ... + \theta_p x_p\)
-</li>
+<li>\(J(\pmb{\theta}) = \sum_{i=1}^{n} \big(h_{\pmb{\theta}}(\mathbf{x}^{(i)}) - y^{(i)}\big)^2=RSS(\pmb{\theta})\)</li>
+<li>\(h_{\pmb{\theta}}(\mathbf{x}) = \langle \pmb{\theta}, \mathbf{x} \rangle = \mathbf{x}^{T} \pmb{\theta} = \theta_0 + \theta_1 x_1 + ... + \theta_p x_p\)</li>
 </ul>
 
 
@@ -441,19 +393,16 @@ We can get \(\pmb{\theta}\) through: \(\frac{\partial J(\pmb{\theta})}{\partial 
 </p>
 </div>
 
-<div id="outline-container-sec-1-5-1" class="outline-4">
-<h4 id="sec-1-5-1">Maximum likelihood estimation</h4>
-<div class="outline-text-4" id="text-1-5-1">
+<div id="outline-container-orgheadline8" class="outline-4">
+<h4 id="orgheadline8">Maximum likelihood estimation</h4>
+<div class="outline-text-4" id="text-orgheadline8">
 <p>
 Assuming:
 </p>
 <ul class="org-ul">
-<li>\(y = \theta_0 + \theta_1 x_1 + ... + \theta_p x_p + \epsilon\)
-</li>
-<li>\(\epsilon \sim N(0, \sigma^2)\), i.i.d.
-</li>
-<li>\(\mathbf{X}\) is known
-</li>
+<li>\(y = \theta_0 + \theta_1 x_1 + ... + \theta_p x_p + \epsilon\)</li>
+<li>\(\epsilon \sim N(0, \sigma^2)\), i.i.d.</li>
+<li>\(\mathbf{X}\) is known</li>
 </ul>
 
 
@@ -466,12 +415,11 @@ Then likelihood funciton:
 
 <p>
 Log likelihood function:
-$log(P(\mathbf{y_i}| \pmb{\theta},\mathbf{X}))
-= &sum;<sub>i=1</sub><sup>n</sup> \big( log (\frac{1}{\sqrt{2\pi} &sigma;}) - \frac{(y_i - (\theta_0 + \theta_1 x_1 + ... + \theta_p x_p))^2}{2\sigma^2} \big) <br  />
-  = n log (\frac{1}{\sqrt{2\pi} &sigma;}) + &sum;<sub>i=1</sub><sup>n</sup> \big( - \frac{(y_i - (\theta_0 + \theta_1 x_1 + ... + \theta_p x_p))^2}{2\sigma^2} \big) <br  />
-  = n log (\frac{1}{\sqrt{2\pi} &sigma;}) - \frac{1}{2\sigma^2} &sum;<sub>i=1</sub><sup>n</sup> (y_i - (&theta;_0 + &theta;_1 x_1 + &#x2026; + &theta;_p x_p))^2&lt;br  /&gt;
-
-= n log (\frac{1}{\sqrt{2\pi} &sigma;}) - \frac{1}{2\sigma^2} \text{RSS}(\pmb{\theta})$
+\(\log(P(\mathbf{y_i}| \pmb{\theta},\mathbf{X}))
+  = \sum_{i=1}^{n} \big( \log (\frac{1}{\sqrt{2\pi} \sigma}) - \frac{(y_i - (\theta_0 + \theta_1 x_1 + ... + \theta_p x_p))^2}{2\sigma^2} \big) \\
+  = n \log (\frac{1}{\sqrt{2\pi} \sigma}) + \sum_{i=1}^{n} \big( - \frac{(y_i - (\theta_0 + \theta_1 x_1 + ... + \theta_p x_p))^2}{2\sigma^2} \big) \\
+  = n \log (\frac{1}{\sqrt{2\pi} \sigma}) - \frac{1}{2\sigma^2} \sum_{i=1}^{n} (y_i - (\theta_0 + \theta_1 x_1 + ... + \theta_p x_p))^2\\
+  = n \log (\frac{1}{\sqrt{2\pi} \sigma}) - \frac{1}{2\sigma^2} \text{RSS}(\pmb{\theta})\)
 </p>
 
 <p>
@@ -480,78 +428,73 @@ Thus maximum likelihood estimatoin of \(\pmb{\theta}\) is equivalent to LS.
 </div>
 </div>
 
-<div id="outline-container-sec-1-5-2" class="outline-4">
-<h4 id="sec-1-5-2">Generalized linear model(glm) for <i>gaussian</i> case</h4>
-<div class="outline-text-4" id="text-1-5-2">
+<div id="outline-container-orgheadline9" class="outline-4">
+<h4 id="orgheadline9">Generalized linear model(glm) for <i>gaussian</i> case</h4>
+<div class="outline-text-4" id="text-orgheadline9">
 <ul class="org-ul">
-<li>A <span class="underline">random component</span>: normal, bernolli, possion, etc.
-</li>
-<li>A <span class="underline">systematic component</span>: a linear predictor \(\pmb{\theta}^T \mathbf{x^{(i)}}\)
-</li>
-<li><span class="underline">Link function</span> connects \(E(y^{(i)}) \xrightarrow{g()} \pmb{\theta}^T \mathbf{x^{(i)}}\), i.e, \(g\big(E(y^{(i)})\big) = \pmb{\theta}^T \mathbf{x^{(i)}}\)
-</li>
+<li>A <span class="underline">random component</span>: normal, bernolli, possion, etc.</li>
+<li>A <span class="underline">systematic component</span>: a linear predictor \(\pmb{\theta}^T \mathbf{x^{(i)}}\)</li>
+<li><span class="underline">Link function</span> connects \(E(y^{(i)}) \xrightarrow{g()} \pmb{\theta}^T \mathbf{x^{(i)}}\), i.e, \(g\big(E(y^{(i)})\big) = \pmb{\theta}^T \mathbf{x^{(i)}}\)</li>
 </ul>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="left">Distribution of \(y^{(i)}\)</th>
-<th scope="col" class="left">E(y<sup>(i)</sup>)</th>
-<th scope="col" class="left">Var(y<sup>(i)</sup>)</th>
-<th scope="col" class="left">linear combination of x</th>
-<th scope="col" class="left">Link Function \(g()\)</th>
+<th scope="col" class="org-left">Distribution of \(y^{(i)}\)</th>
+<th scope="col" class="org-left">E(y<sup>(i)</sup>)</th>
+<th scope="col" class="org-left">Var(y<sup>(i)</sup>)</th>
+<th scope="col" class="org-left">linear combination of x</th>
+<th scope="col" class="org-left">Link Function \(g()\)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="left">\(N(\mu_i, \sigma^2)\)</td>
-<td class="left">\(\mu_i\)</td>
-<td class="left">\(\sigma^2\)</td>
-<td class="left">\(\pmb{\theta}^T \mathbf{x^{(i)}}\)</td>
-<td class="left">\(g(\mu_i) = \mu_i\)</td>
+<td class="org-left">\(N(\mu_i, \sigma^2)\)</td>
+<td class="org-left">\(\mu_i\)</td>
+<td class="org-left">\(\sigma^2\)</td>
+<td class="org-left">\(\pmb{\theta}^T \mathbf{x^{(i)}}\)</td>
+<td class="org-left">\(g(\mu_i) = \mu_i\)</td>
 </tr>
 
 <tr>
-<td class="left">Bernolli(\(p_i\))</td>
-<td class="left">\(p_i\)</td>
-<td class="left">\(p_i(1-p_i)\)</td>
-<td class="left">the same to above</td>
-<td class="left">\(g(p_i) = log( \frac{p_i}{1-p_i} )\)</td>
+<td class="org-left">Bernolli(\(p_i\))</td>
+<td class="org-left">\(p_i\)</td>
+<td class="org-left">\(p_i(1-p_i)\)</td>
+<td class="org-left">the same to above</td>
+<td class="org-left">\(g(p_i) = log( \frac{p_i}{1-p_i} )\)</td>
 </tr>
 
 <tr>
-<td class="left">Possion(\(\lambda_i\))</td>
-<td class="left">\(\lambda_i\)</td>
-<td class="left">\(\lambda_i\)</td>
-<td class="left">the same to above</td>
-<td class="left">\(g(\lambda_i) =log(\lambda_i)\)</td>
+<td class="org-left">Possion(\(\lambda_i\))</td>
+<td class="org-left">\(\lambda_i\)</td>
+<td class="org-left">\(\lambda_i\)</td>
+<td class="org-left">the same to above</td>
+<td class="org-left">\(g(\lambda_i) =log(\lambda_i)\)</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 
-<div id="outline-container-sec-1-5-3" class="outline-4">
-<h4 id="sec-1-5-3">Assumations</h4>
-<div class="outline-text-4" id="text-1-5-3">
+<div id="outline-container-orgheadline10" class="outline-4">
+<h4 id="orgheadline10">Assumations</h4>
+<div class="outline-text-4" id="text-orgheadline10">
 <dl class="org-dl">
-<dt> Additive </dt><dd>the effect of change in \(x_j\) on \(y\) is independent of the other predictors
-</dd>
-<dt> Linear </dt><dd>change in \(Y\) is constant due to a one-unite change in \(x_j\)
-</dd>
+<dt>Additive</dt><dd>the effect of change in \(x_j\) on \(y\) is independent of the other predictors</dd>
+<dt>Linear</dt><dd>change in \(Y\) is constant due to a one-unite change in \(x_j\)</dd>
 </dl>
 </div>
 </div>
@@ -559,95 +502,76 @@ Thus maximum likelihood estimatoin of \(\pmb{\theta}\) is equivalent to LS.
 </div>
 
 
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2">Model related concept</h2>
-<div class="outline-text-2" id="text-2">
-</div><div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1">Model assessment parameters, which are shown in <i>summary(lm())</i></h3>
-<div class="outline-text-3" id="text-2-1">
+<div id="outline-container-orgheadline14" class="outline-2">
+<h2 id="orgheadline14">Model related concept</h2>
+<div class="outline-text-2" id="text-orgheadline14">
+</div><div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12">Model assessment parameters, which are shown in <i>summary(lm())</i></h3>
+<div class="outline-text-3" id="text-orgheadline12">
 <ul class="org-ul">
 <li>\(R^2 = 1 - \frac{RSS}{TSS}\) where \(RSS = \sum_{i} (y^{(i)} - \hat{y}^{(i)})^2\) and \(TSS = \sum_{i} (y^{(i)} - \bar{y})^2\)
 <ul class="org-ul">
-<li>\(R^2 = 1 \text{ if } RSS=0\)
-</li>
-<li>\(R^2 = 0 \text{ if } RSS=TSS\), i.e, using \(\bar{y}\) as the estimate for each observation.
-</li>
-<li>\(R^2 = \rho^2\) where \(\rho=cor(\mathbf{x}_1, \mathbf{y})\) if there are only one predictor, i.e, \(\mathbf{X}\in \mathcal{R}^{n \times 1}\).
-</li>
-</ul>
-</li>
-<li>\(RSE = \sqrt{\frac{\sum_{i=1}^{n}(y^{(i)} - \hat{y}^{(i)})^2}{n-p-1}}=\sigma\), sd of \(\epsilon\), \(RSE^2\) is the power of noise
-</li>
-<li>E\(\epsilon = 0 = \sum_{i=1}^{n} (y^{(i)} - \hat{y} ^{(i)})\)
-</li>
+<li>\(R^2 = 1 \text{ if } RSS=0\)</li>
+<li>\(R^2 = 0 \text{ if } RSS=TSS\), i.e, using \(\bar{y}\) as the estimate for each observation.</li>
+<li>\(R^2 = \rho^2\) where \(\rho=cor(\mathbf{x}_1, \mathbf{y})\) if there are only one predictor, i.e, \(\mathbf{X}\in \mathcal{R}^{n \times 1}\).</li>
+</ul></li>
+<li>\(RSE = \sqrt{\frac{\sum_{i=1}^{n}(y^{(i)} - \hat{y}^{(i)})^2}{n-p-1}}=\sigma\), sd of \(\epsilon\), \(RSE^2\) is the power of noise</li>
+<li>E\(\epsilon = 0 = \sum_{i=1}^{n} (y^{(i)} - \hat{y} ^{(i)})\)</li>
 <li>If F-statistic &gt;&gt; 1, reject \(H_0\)
 <ul class="org-ul">
-<li>all regression coefficents are 0, \(H_0: \theta_0 = \theta_1 = ... \theta_p = 0\)
-</li>
-<li>\(H_a\): at least one \(\theta_j\) is non zero
-</li>
-</ul>
-</li>
-<li>summary to a single number \(R^2\): will throw out lots of information.
-</li>
+<li>all regression coefficents are 0, \(H_0: \theta_0 = \theta_1 = ... \theta_p = 0\)</li>
+<li>\(H_a\): at least one \(\theta_j\) is non zero</li>
+</ul></li>
+<li>summary to a single number \(R^2\): will throw out lots of information.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-2-2" class="outline-3">
-<h3 id="sec-2-2">Other</h3>
-<div class="outline-text-3" id="text-2-2">
+<div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13">Other</h3>
+<div class="outline-text-3" id="text-orgheadline13">
 <ul class="org-ul">
 <li>Confidence interval (Line) VS prediction interval
 <ul class="org-ul">
-<li>\(SE_{line}\), the average \(y\) at \(\mathbf{x}\), which only considers the error in the estimate of \(f(\mathbf{x})\)
-</li>
-<li>\(SE_{prediction}\), a particular \(y\) at \(\mathbf{x}\), which considers the <span class="underline">irreducible error</span> and the error in the estimate of \(f(\mathbf{x})\)
-</li>
-</ul>
-</li>
+<li>\(SE_{line}\), the average \(y\) at \(\mathbf{x}\), which only considers the error in the estimate of \(f(\mathbf{x})\)</li>
+<li>\(SE_{prediction}\), a particular \(y\) at \(\mathbf{x}\), which considers the <span class="underline">irreducible error</span> and the error in the estimate of \(f(\mathbf{x})\)</li>
+</ul></li>
 <li>variance inflation factor(VIF): \(VIF(\theta_j) = \frac{1}{1-R^2_{x_j|x_{-j}}} =
    f(R^2_{x_j|x_{-j}})\) VS 5. The larger VIF for \(x_j\), the <b>more
 collinearity \(x_j\) with other predictors \(x_{-j}\)</b>
 <ul class="org-ul">
-<li>\(R^2 \in [0, 1]\)
-</li>
-<li>\(VIF \in [1, +\infty]\)
-</li>
+<li>\(R^2 \in [0, 1]\)</li>
+<li>\(VIF \in [1, +\infty]\)</li>
 <li>multicollinearity results in a great deal of uncertainty in the
 coefficents estimate(think of the contour plots, why the name of
 <span class="underline">variance inflation</span>), cause the SE of coefficents to grow, which
 has a wider CI, so we may fail to reject H_0: \(\beta_j=0\), the
 probability of correctly detecting a non-zero coefficents is
-reduced by collinearity.
-</li>
-</ul>
-</li>
-<li>Leverage: \(h^{(i)} = \frac{1}{n} + \frac{||\mathbf{x}^{(i)} -\bar{\mathbf{x}}^{(i)}||^2}{\sum_{i^{'}=1}^{n} || \mathbf{x}^{(i)} -\bar{\mathbf{x}}^{(i)}||^2 }\)
-</li>
-<li>Outlier: high residual
-</li>
+reduced by collinearity.</li>
+</ul></li>
+<li>Leverage: \(h^{(i)} = \frac{1}{n} + \frac{||\mathbf{x}^{(i)} -\bar{\mathbf{x}}^{(i)}||^2}{\sum_{i^{'}=1}^{n} || \mathbf{x}^{(i)} -\bar{\mathbf{x}}^{(i)}||^2 }\)</li>
+<li>Outlier: high residual</li>
 </ul>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3">Lab: linear regression</h2>
-<div class="outline-text-2" id="text-3">
-</div><div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1">Explore data</h3>
-<div class="outline-text-3" id="text-3-1">
+<div id="outline-container-orgheadline22" class="outline-2">
+<h2 id="orgheadline22">Lab: linear regression</h2>
+<div class="outline-text-2" id="text-orgheadline22">
+</div><div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15">Explore data</h3>
+<div class="outline-text-3" id="text-orgheadline15">
 <p>
 Use <i>ggpairs()</i> to plot the scatter matrix. It's show that <i>lstat</i>
 (-0.738) and <i>rm</i> (0.695) has the largest cor() with <i>medv</i>.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">library(ISLR)
-library(ggplot2)
-library(GGally)
-library(MASS)
+<pre class="src src-R"><span style="font-weight: bold; text-decoration: underline;">library</span>(ISLR)
+<span style="font-weight: bold; text-decoration: underline;">library</span>(ggplot2)
+<span style="font-weight: bold; text-decoration: underline;">library</span>(GGally)
+<span style="font-weight: bold; text-decoration: underline;">library</span>(MASS)
 ggpairs(Boston)
 </pre>
 </div>
@@ -663,23 +587,23 @@ ggpairs(Boston)
 
 
 
-<div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2">Simple linear regression</h3>
-<div class="outline-text-3" id="text-3-2">
+<div id="outline-container-orgheadline16" class="outline-3">
+<h3 id="orgheadline16">Simple linear regression</h3>
+<div class="outline-text-3" id="text-orgheadline16">
 <p>
 Regressing <i>medv</i> (房价中位数) onto <i>lstat</i> (低社会经济阶层家庭百分比) using simple linear regression.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">### * Load library
-library(MASS)        # large collections of datasets and functions
-library(ISLR)        # functions and datasets assoicated with ISL book
+<pre class="src src-R"><span style="font-weight: bold; font-style: italic;">### </span><span style="font-weight: bold; font-style: italic;">* Load library</span>
+<span style="font-weight: bold; text-decoration: underline;">library</span>(MASS)        <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">large collections of datasets and functions</span>
+<span style="font-weight: bold; text-decoration: underline;">library</span>(ISLR)        <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">functions and datasets assoicated with ISL book</span>
 
-### * Explore data
+<span style="font-weight: bold; font-style: italic;">### </span><span style="font-weight: bold; font-style: italic;">* Explore data</span>
 str(Boston)
 
-### * Fit
-simple_linear_regression_model &lt;- lm(medv ~ lstat, data = Boston)
+<span style="font-weight: bold; font-style: italic;">### </span><span style="font-weight: bold; font-style: italic;">* Fit</span>
+simple_linear_regression_model <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ lstat, data = Boston)
 </pre>
 </div>
 
@@ -706,24 +630,20 @@ simple_linear_regression_model &lt;- lm(medv ~ lstat, data = Boston)
 Model assessment result using \(RSE, R^2\), <i>F</i>-statistic:
 </p>
 <ul class="org-ul">
-<li>\(RSE = 6.216\)
-</li>
-<li>\(R^2 = 54.32%\)
-</li>
-<li><i>F</i>-statistic = 601.1 &gt;&gt; 1, so we are able to reject \(H_0: \theta_0 = \theta_1 = 0\)
-</li>
+<li>\(RSE = 6.216\)</li>
+<li>\(R^2 = 54.32%\)</li>
+<li><i>F</i>-statistic = 601.1 &gt;&gt; 1, so we are able to reject \(H_0: \theta_0 = \theta_1 = 0\)</li>
 <li><i>p</i> value for both <i>intercept</i> \(\theta_0\) and <i>lstat</i> \(\theta_1\)
 are very small, so we are able to reject \(H_0: \theta_0=0\) and
 \(H_0: \theta_1=0\). Later we will use CI(Confidence interval) to get
-the same result.
-</li>
+the same result.</li>
 </ul>
 <div class="org-src-container">
 
-<pre class="src src-R">### ** RSE, R^2, F-statistic
-## RSE: residual standard error, estimate of sigma_epsilon
-## R^2: [0, 1],  1 - RSS/TSS,  0 ~ denotes the same performance of mean(y), 1 denotes perfect
-## F-statistic: H_0: beta_1 = beta_2 = beta_p = 0, if &gt; 1, reject H_0
+<pre class="src src-R"><span style="font-weight: bold; font-style: italic;">### </span><span style="font-weight: bold; font-style: italic;">** RSE, R^2, F-statistic</span>
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">RSE: residual standard error, estimate of sigma_epsilon</span>
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">R^2: [0, 1],  1 - RSS/TSS,  0 ~ denotes the same performance of mean(y), 1 denotes perfect</span>
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">F-statistic: H_0: beta_1 = beta_2 = beta_p = 0, if &gt; 1, reject H_0</span>
 summary(simple_linear_regression_model)
 </pre>
 </div>
@@ -755,17 +675,15 @@ F-statistic: 601.6 on 1 and 504 DF,  p-value: &lt; 2.2e-16
 Get the coefficients using <i>coef()</i> and their confidence interval using <i>confint()</i>:
 </p>
 <ul class="org-ul">
-<li>\([33.448457 35.6592247]\) doesn't include 0, thus reject \(H_0: \theta_0=0\)
-</li>
-<li>\([-1.026148 -0.8739505]\) doesn't include 0, thus reject \(H_0: \theta_1=lstat=0\)
-</li>
+<li>\([33.448457 35.6592247]\) doesn't include 0, thus reject \(H_0: \theta_0=0\)</li>
+<li>\([-1.026148 -0.8739505]\) doesn't include 0, thus reject \(H_0: \theta_1=lstat=0\)</li>
 </ul>
 <div class="org-src-container">
 
 <pre class="src src-R">coef(simple_linear_regression_model)
 
-## Confidence interval of beta, more understandabel than p-value
-confint(simple_linear_regression_model) # beta_0 + c( -1, 1) * qt(.975, dof) * se(beta_0)
+<span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">Confidence interval of beta, more understandabel than p-value</span>
+confint(simple_linear_regression_model) <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">beta_0 + c( -1, 1) * qt(.975, dof) * se(beta_0)</span>
 </pre>
 </div>
 
@@ -783,10 +701,10 @@ Predict and get the confidence interval and predict interval.?
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">### * Predict
+<pre class="src src-R"><span style="font-weight: bold; font-style: italic;">### </span><span style="font-weight: bold; font-style: italic;">* Predict</span>
 predict(simple_linear_regression_model, data.frame(lstat = c(5, 10, 15)))
-predict(simple_linear_regression_model, data.frame(lstat = c(5, 10, 15)), interval="prediction") # particular y
-predict(simple_linear_regression_model, data.frame(lstat = c(5, 10, 15)), interval="confidence") # line, average y
+predict(simple_linear_regression_model, data.frame(lstat = c(5, 10, 15)), interval=<span style="font-style: italic;">"prediction"</span>) <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">particular y</span>
+predict(simple_linear_regression_model, data.frame(lstat = c(5, 10, 15)), interval=<span style="font-style: italic;">"confidence"</span>) <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">line, average y</span>
 </pre>
 </div>
 
@@ -809,14 +727,15 @@ Plot the training dataset and fitted line:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="olm_training_data">plot(Boston$lstat, Boston$medv, main = "simple linear regression(Training data)")
-abline(simple_linear_regression_model, col = "red")
+<pre class="src src-R" id="orgsrcblock1">plot(Boston$lstat, Boston$medv, main = <span style="font-style: italic;">"simple linear regression(Training data)"</span>)
+abline(simple_linear_regression_model, col = <span style="font-style: italic;">"red"</span>)
 </pre>
 </div>
 
 
 <div class="figure">
-<p><img src="../images/olm_traing_data.svg" alt="olm_traing_data.svg" />
+<p><object type="image/svg+xml" data="../images/olm_traing_data.svg" >
+Sorry, your browser does not support SVG.</object>
 </p>
 </div>
 
@@ -824,25 +743,23 @@ abline(simple_linear_regression_model, col = "red")
 Using plot(lm_model) to get the four diagnostic plots. (normal QQ plot?)
 </p>
 <ul class="org-ul">
-<li>residuals: \(y^{(i)} - \hat{y}^{(i)}\)
-</li>
-<li>studentized residuals: \(\frac{y^{(i)} - \hat{y}^{(i)}}{RSE (1-h_{ii})}\)
-</li>
+<li>residuals: \(y^{(i)} - \hat{y}^{(i)}\)</li>
+<li>studentized residuals: \(\frac{y^{(i)} - \hat{y}^{(i)}}{RSE (1-h_{ii})}\)</li>
 <li>leverage statistics: \(h^{(i)} = \frac{1}{n} + \frac{ ||\mathbf{x}^{(i)}
      -\bar{\mathbf{x}}^{(i)}||^2 }{\sum_{i^{'}=1}^{n} || \mathbf{x}^{(i)}
-     -\bar{\mathbf{x}}^{(i)}||^2 }\) (to check for p&gt;1)
-</li>
+     -\bar{\mathbf{x}}^{(i)}||^2 }\) (to check for p&gt;1)</li>
 </ul>
 <div class="org-src-container">
 
-<pre class="src src-R" id="olm_plot">par(mfrow = c(2, 2))
+<pre class="src src-R" id="orgsrcblock2">par(mfrow = c(2, 2))
 plot(simple_linear_regression_model)
 </pre>
 </div>
 
 
 <div class="figure">
-<p><img src="../images/olm_plot.svg" alt="olm_plot.svg" />
+<p><object type="image/svg+xml" data="../images/olm_plot.svg" >
+Sorry, your browser does not support SVG.</object>
 </p>
 </div>
 
@@ -852,35 +769,36 @@ We can also plot the diagnostic plot mannually.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="olm_residual_leverage">par(mfrow = c(2, 2))
-plot(predict(simple_linear_regression_model), residuals(simple_linear_regression_model), main = "residual plot")
-plot(predict(simple_linear_regression_model), rstudent(simple_linear_regression_model), main = "studentized residuals")
-plot(hatvalues(simple_linear_regression_model), main = "leverage statistics")
+<pre class="src src-R" id="orgsrcblock3">par(mfrow = c(2, 2))
+plot(predict(simple_linear_regression_model), residuals(simple_linear_regression_model), main = <span style="font-style: italic;">"residual plot"</span>)
+plot(predict(simple_linear_regression_model), rstudent(simple_linear_regression_model), main = <span style="font-style: italic;">"studentized residuals"</span>)
+plot(hatvalues(simple_linear_regression_model), main = <span style="font-style: italic;">"leverage statistics"</span>)
 plot(hatvalues(simple_linear_regression_model), rstudent(simple_linear_regression_model),
-     xlab = "leverage statistics",
-     ylab = "studentlized residuals",
-     main = "levearge statistics VS studentlized residuals")
+     xlab = <span style="font-style: italic;">"leverage statistics"</span>,
+     ylab = <span style="font-style: italic;">"studentlized residuals"</span>,
+     main = <span style="font-style: italic;">"levearge statistics VS studentlized residuals"</span>)
 </pre>
 </div>
 
 
 <div class="figure">
-<p><img src="../images/olm_residual_leverage.svg" alt="olm_residual_leverage.svg" />
+<p><object type="image/svg+xml" data="../images/olm_residual_leverage.svg" >
+Sorry, your browser does not support SVG.</object>
 </p>
 </div>
 </div>
 </div>
 
 
-<div id="outline-container-sec-3-3" class="outline-3">
-<h3 id="sec-3-3">Multiple linear regression</h3>
-<div class="outline-text-3" id="text-3-3">
+<div id="outline-container-orgheadline17" class="outline-3">
+<h3 id="orgheadline17">Multiple linear regression</h3>
+<div class="outline-text-3" id="text-orgheadline17">
 <p>
 Since \(lstat, rm\) has largest \(\rho\) related to \(medv\), we regress \(medv\) to them:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">lm_two_feature &lt;- lm(medv ~ lstat +  rm,  data = Boston)
+<pre class="src src-R">lm_two_feature <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ lstat +  rm,  data = Boston)
 summary(lm_two_feature)
 </pre>
 </div>
@@ -912,8 +830,8 @@ How about regress using all predictors?
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">lm_all_feature &lt;- lm(medv ~ .,  data = Boston) # . denotes other variable except medv?
-summary(lm_all_feature)        # Find the feature with largest p value
+<pre class="src src-R">lm_all_feature <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ .,  data = Boston) <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">. denotes other variable except medv?</span>
+summary(lm_all_feature)        <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">Find the feature with largest p value</span>
 </pre>
 </div>
 
@@ -927,12 +845,12 @@ summary(lm_all_feature)        # Find the feature with largest p value
 
 <div class="org-src-container">
 
-<pre class="src src-R">## Remove features that has large p value,  i.e, 0.95 confidence intervel has 0
-confint(lm_all_feature)                 # See age and indus
-lm_all_but_age &lt;- lm(medv ~ . - age, data = Boston)
+<pre class="src src-R"><span style="font-weight: bold; font-style: italic;">## </span><span style="font-weight: bold; font-style: italic;">Remove features that has large p value,  i.e, 0.95 confidence intervel has 0</span>
+confint(lm_all_feature)                 <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">See age and indus</span>
+lm_all_but_age <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ . - age, data = Boston)
 summary(lm_all_but_age)
 
-lm_all_but_age_indus &lt;- lm(medv ~ . - age - indus, data = Boston)
+lm_all_but_age_indus <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ . - age - indus, data = Boston)
 summary(lm_all_but_age_indus)
 </pre>
 </div>
@@ -1015,79 +933,77 @@ F-statistic: 128.2 on 11 and 494 DF,  p-value: &lt; 2.2e-16
 </div>
 
 
-<div id="outline-container-sec-3-4" class="outline-3">
-<h3 id="sec-3-4">Performance on training data:</h3>
-<div class="outline-text-3" id="text-3-4">
+<div id="outline-container-orgheadline18" class="outline-3">
+<h3 id="orgheadline18">Performance on training data:</h3>
+<div class="outline-text-3" id="text-orgheadline18">
 <ul class="org-ul">
 <li><b>\(R^2\) increases as the number of predictors used in regression,
-even the predictor is the noise.</b> ( \(p\) 元、\(n\) 个方程, \(p\) 增达到\(n\),方程有解, \(RSS=0, R^2=1\)), lead to overfit.
-</li>
-<li>\(RSE, R_{adjusted}^2\) penalize if \(p\) is too large
-</li>
+even the predictor is the noise.</b> ( \(p\) 元、\(n\) 个方程, \(p\) 增达到\(n\),方程有解, \(RSS=0, R^2=1\)), lead to overfit.</li>
+<li>\(RSE, R_{adjusted}^2\) penalize if \(p\) is too large</li>
 </ul>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="right" />
+<col  class="org-right" />
 
-<col  class="right" />
+<col  class="org-right" />
 
-<col  class="right" />
+<col  class="org-right" />
 
-<col  class="right" />
+<col  class="org-right" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="left">method</th>
-<th scope="col" class="right">\(R^2\)</th>
-<th scope="col" class="right">\(R^2_{adjusted}\)</th>
-<th scope="col" class="right">RSE</th>
-<th scope="col" class="right">F-statistic</th>
+<th scope="col" class="org-left">method</th>
+<th scope="col" class="org-right">\(R^2\)</th>
+<th scope="col" class="org-right">\(R^2_{adjusted}\)</th>
+<th scope="col" class="org-right">RSE</th>
+<th scope="col" class="org-right">F-statistic</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="left">1 predictor</td>
-<td class="right">0.5441</td>
-<td class="right">0.5432</td>
-<td class="right">6.216</td>
-<td class="right">601.6</td>
+<td class="org-left">1 predictor</td>
+<td class="org-right">0.5441</td>
+<td class="org-right">0.5432</td>
+<td class="org-right">6.216</td>
+<td class="org-right">601.6</td>
 </tr>
 
 <tr>
-<td class="left">2 perdictors</td>
-<td class="right">0.6386</td>
-<td class="right">0.6371</td>
-<td class="right">5.540</td>
-<td class="right">444.3</td>
+<td class="org-left">2 perdictors</td>
+<td class="org-right">0.6386</td>
+<td class="org-right">0.6371</td>
+<td class="org-right">5.540</td>
+<td class="org-right">444.3</td>
 </tr>
 
 <tr>
-<td class="left">all predictors</td>
-<td class="right">0.74064266410940938</td>
-<td class="right">0.7343</td>
-<td class="right">4.745</td>
-<td class="right">117.3</td>
+<td class="org-left">all predictors</td>
+<td class="org-right">0.74064266410940938</td>
+<td class="org-right">0.7343</td>
+<td class="org-right">4.745</td>
+<td class="org-right">117.3</td>
 </tr>
 
 <tr>
-<td class="left">all but age</td>
-<td class="right">0.74064121655051440</td>
-<td class="right">0.7343</td>
-<td class="right">4.740</td>
-<td class="right">117.3</td>
+<td class="org-left">all but age</td>
+<td class="org-right">0.74064121655051440</td>
+<td class="org-right">0.7343</td>
+<td class="org-right">4.740</td>
+<td class="org-right">117.3</td>
 </tr>
 
 <tr>
-<td class="left">all but age, indus</td>
-<td class="right">0.74058228025695738</td>
-<td class="right">0.7348</td>
-<td class="right">4.736</td>
-<td class="right">128.2</td>
+<td class="org-left">all but age, indus</td>
+<td class="org-right">0.74058228025695738</td>
+<td class="org-right">0.7348</td>
+<td class="org-right">4.736</td>
+<td class="org-right">128.2</td>
 </tr>
 </tbody>
 </table>
@@ -1097,12 +1013,12 @@ even the predictor is the noise.</b> ( \(p\) 元、\(n\) 个方程, \(p\) 增达
 
 
 
-<div id="outline-container-sec-3-5" class="outline-3">
-<h3 id="sec-3-5">Interacton terms: [removing additive assumation]</h3>
-<div class="outline-text-3" id="text-3-5">
+<div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19">Interacton terms: [removing additive assumation]</h3>
+<div class="outline-text-3" id="text-orgheadline19">
 <div class="org-src-container">
 
-<pre class="src src-R">summary(lm(medv ~ lstat * age, data = Boston)) # i.e,  lstat + age + lstat:age
+<pre class="src src-R">summary(lm(medv ~ lstat * age, data = Boston)) <span style="font-weight: bold; font-style: italic;"># </span><span style="font-weight: bold; font-style: italic;">i.e,  lstat + age + lstat:age</span>
 </pre>
 </div>
 
@@ -1132,9 +1048,9 @@ F-statistic:  209 on 3 and 502 DF,  p-value: &lt;2e-16
 
 
 
-<div id="outline-container-sec-3-6" class="outline-3">
-<h3 id="sec-3-6">Non-linear transformations of the predictors</h3>
-<div class="outline-text-3" id="text-3-6">
+<div id="outline-container-orgheadline20" class="outline-3">
+<h3 id="orgheadline20">Non-linear transformations of the predictors</h3>
+<div class="outline-text-3" id="text-orgheadline20">
 <p>
 It's shown that \(medv, lstat\) in not linear relationship in
 <a href="file:///home/touch/studyspace/data_science/cnglen_github_io/images/ISL_boston_pairs.png">scatter matrix plot</a>. Thus, we try to regression onto \(lstat,
@@ -1143,7 +1059,7 @@ It's shown that \(medv, lstat\) in not linear relationship in
 
 <div class="org-src-container">
 
-<pre class="src src-R">lm_quad_lstat &lt;- lm(medv ~ lstat + I(lstat^2), data = Boston)
+<pre class="src src-R">lm_quad_lstat <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ lstat + I(lstat^2), data = Boston)
 summary(lm_quad_lstat)
 </pre>
 </div>
@@ -1173,10 +1089,8 @@ F-statistic:  449 on 2 and 503 DF,  p-value: &lt;2e-16
 Small value of \(p\) value of \(F\), thus
 </p>
 <ul class="org-ul">
-<li>Reject \(H_0:\) model-1 and model-2 are equal
-</li>
-<li>Accept \(H_a:\) model-2 is better than model-1
-</li>
+<li>Reject \(H_0:\) model-1 and model-2 are equal</li>
+<li>Accept \(H_a:\) model-2 is better than model-1</li>
 </ul>
 <div class="org-src-container">
 
@@ -1206,7 +1120,8 @@ plot(lm_quad_lstat)
 
 
 <div class="figure">
-<p><img src="../images/olm_quad_lsat.svg" alt="olm_quad_lsat.svg" />
+<p><object type="image/svg+xml" data="../images/olm_quad_lsat.svg" >
+Sorry, your browser does not support SVG.</object>
 </p>
 </div>
 
@@ -1215,17 +1130,14 @@ How about \(lstat^3, lstat^4\), &#x2026;? It's shown that order greater
 than 5 have big \(p\) values, so we are NOT able to reject:
 </p>
 <ul class="org-ul">
-<li>\(H_0: \theta_{lstat^6} = 0\)
-</li>
-<li>\(H_0: \theta_{lstat^7} = 0\)
-</li>
-<li>\(H_0: \theta_{lstat^8} = 0\)
-</li>
+<li>\(H_0: \theta_{lstat^6} = 0\)</li>
+<li>\(H_0: \theta_{lstat^7} = 0\)</li>
+<li>\(H_0: \theta_{lstat^8} = 0\)</li>
 </ul>
 
 <div class="org-src-container">
 
-<pre class="src src-R">lm_poly_lstat_8 &lt;- lm(medv ~ poly(lstat, 8), data = Boston)
+<pre class="src src-R">lm_poly_lstat_8 <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ poly(lstat, 8), data = Boston)
 summary(lm_poly_lstat_8)
 </pre>
 </div>
@@ -1259,7 +1171,7 @@ F-statistic:  134 on 8 and 497 DF,  p-value: &lt;2e-16
 
 <div class="org-src-container">
 
-<pre class="src src-R">lm_poly_lstat_5 &lt;- lm(medv ~ poly(lstat, 5), data = Boston)
+<pre class="src src-R">lm_poly_lstat_5 <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ poly(lstat, 5), data = Boston)
 summary(lm_poly_lstat_5)
 </pre>
 </div>
@@ -1293,13 +1205,13 @@ The fitted curve using \(5th\) and \(8th\) power are almost the same.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">library(ggplot2)
+<pre class="src src-R"><span style="font-weight: bold; text-decoration: underline;">library</span>(ggplot2)
 ggplot(data=data.frame(lstat = Boston$lstat,
-		       medv_8 = predict(lm_poly_lstat_8, data = Boston),
-		       medv_5=predict(lm_poly_lstat_5, data = Boston) ),
-       aes(x = lstat, y = medv_5)) + geom_point(aes(color = "lstat_5")) +
-	   geom_point(aes(y = medv_8, color = "lstat_8")) +
-	       scale_color_manual("maximum power level", values = c("lstat_5" = "blue", "lstat_8" = "red" ))
+                       medv_8 = predict(lm_poly_lstat_8, data = Boston),
+                       medv_5=predict(lm_poly_lstat_5, data = Boston) ),
+       aes(x = lstat, y = medv_5)) + geom_point(aes(color = <span style="font-style: italic;">"lstat_5"</span>)) +
+           geom_point(aes(y = medv_8, color = <span style="font-style: italic;">"lstat_8"</span>)) +
+               scale_color_manual(<span style="font-style: italic;">"maximum power level"</span>, values = c(<span style="font-style: italic;">"lstat_5"</span> = <span style="font-style: italic;">"blue"</span>, <span style="font-style: italic;">"lstat_8"</span> = <span style="font-style: italic;">"red"</span> ))
 </pre>
 </div>
 
@@ -1314,7 +1226,7 @@ We can also use other non-linear transformation, such as <i>log</i>.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">lm_logrm &lt;- lm(medv ~ log(rm), data = Boston)
+<pre class="src src-R">lm_logrm <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(medv ~ log(rm), data = Boston)
 </pre>
 </div>
 </div>
@@ -1322,18 +1234,18 @@ We can also use other non-linear transformation, such as <i>log</i>.
 
 
 
-<div id="outline-container-sec-3-7" class="outline-3">
-<h3 id="sec-3-7">Qualitative Predictors (Categracial Variable)</h3>
-<div class="outline-text-3" id="text-3-7">
+<div id="outline-container-orgheadline21" class="outline-3">
+<h3 id="orgheadline21">Qualitative Predictors (Categracial Variable)</h3>
+<div class="outline-text-3" id="text-orgheadline21">
 <p>
 Categorical variable are coded into <i>dummy</i> variables:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">library(ISLR)
+<pre class="src src-R"><span style="font-weight: bold; text-decoration: underline;">library</span>(ISLR)
 str(Carseats)
 
-lm_model &lt;- lm(Sales ~ . + Income:Advertising + Price:Age, data = Carseats)
+lm_model <span style="font-weight: bold; text-decoration: underline;">&lt;-</span> lm(Sales ~ . + Income:Advertising + Price:Age, data = Carseats)
 summary(lm_model)
 contrasts(Carseats$ShelveLoc)
 </pre>
@@ -1392,7 +1304,7 @@ Medium    0      1
 </div>
 </div>
 <div id="postamble" class="status">
-<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.2.10 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-07-29 23:29:19</p></div>
+<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.5 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-07-29 23:51:45</p></div>
 </div>
 </body>
 </html>
