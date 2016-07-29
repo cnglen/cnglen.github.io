@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-07-28 Thu 22:47 -->
+<!-- 2016-07-29 Fri 09:28 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>Non-Personalized Recommender</title>
@@ -102,7 +102,7 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#orgheadline2">Aggregated opinion (通过平均的方法，获得的统计信息，比如点评分、TOP- <i>n</i> 热销)</a></li>
 <li><a href="#orgheadline3">Product association: People who X also Y</a></li>
-<li><a href="#orgheadline4">Preference Model: what do users like?</a></li>
+<li><a href="#orgheadline4">Preference Model \(\to\) what do users like?</a></li>
 <li><a href="#orgheadline5">Prediction VS Recommendation (UI, 如何展示给用户)</a></li>
 <li><a href="#orgheadline6">Quiz (week2)</a></li>
 </ul>
@@ -118,8 +118,12 @@ for the JavaScript code in this tag.
 <h2 id="orgheadline1">Non-Personalized Recommenders</h2>
 <div class="outline-text-2" id="text-orgheadline1">
 <ul class="org-ul">
-<li>概括来讲，用统计平均(what users <i>say</i> and <i>do</i>)来推荐, 故推荐出来的适合大众的要求，小众群体被忽略。</li>
-<li>可以人为地通过对不同群体分组求平均，即通过<b>个性化</b>来解决。</li>
+<li>概括来讲，用统计信息(what users <i>say</i> and <i>do</i>)来推荐, 故推荐出来的适合大众的要求，小众群体被忽略。
+<ul class="org-ul">
+<li>Aggreated opinion: 根据多数人的意见推荐，未考虑场景</li>
+<li>Associatoin rule: 考虑场景</li>
+</ul></li>
+<li>后续扩展: 可以人为地通过对不同群体分组求平均，即通过<b>个性化</b>来解决</li>
 </ul>
 </div>
 
@@ -130,11 +134,14 @@ for the JavaScript code in this tag.
 <li>Effective in right application</li>
 <li>Really User needs? Correct average such as weight average</li>
 <li><span class="underline">Lack Context, without product association</span></li>
-<li>Self selection biased, increased diversity of raters</li>
+<li>mediocre and excellent products NOT distiguished
+<ul class="org-ul">
+<li>Self selection biased</li>
+<li>increased diversity of raters</li>
+</ul></li>
 </ul>
 </div>
 </div>
-
 <div id="outline-container-orgheadline3" class="outline-3">
 <h3 id="orgheadline3">Product association: People who X also Y</h3>
 <div class="outline-text-3" id="text-orgheadline3">
@@ -147,15 +154,16 @@ for the JavaScript code in this tag.
 <li>Penalize P(Y) by \(P(Y|X) = \frac{P(XY)}{P(X)P(Y)}\)</li>
 </ul></li>
 <li>Chanllenges in a clustered diverse population</li>
+<li>\(\frac{ P(X \cdot Y)/P(X)}{P(!X \cdot Y)/P(!X)}\)</li>
 </ul>
 </div>
 </div>
 
 <div id="outline-container-orgheadline4" class="outline-3">
-<h3 id="orgheadline4">Preference Model: what do users like?</h3>
+<h3 id="orgheadline4">Preference Model \(\to\) what do users like?</h3>
 <div class="outline-text-3" id="text-orgheadline4">
 <ul class="org-ul">
-<li>Explict (what users <i>say</i>, rating)
+<li>Explict (what users <i>say</i> ~ rating), <b>sparsity</b>
 <ul class="org-ul">
 <li>rating:
 <ul class="org-ul">
@@ -166,7 +174,7 @@ for the JavaScript code in this tag.
 <li>review:</li>
 <li>vote: up/down, +1</li>
 </ul></li>
-<li>Implict (what users <i>do</i>, actions), greater volumn
+<li>Implict (what users <i>do</i> ~ actions), <b>greater volumn</b>
 <ul class="org-ul">
 <li>how long did user read/listen/watch?</li>
 <li>binary actions
@@ -176,9 +184,17 @@ for the JavaScript code in this tag.
 <li>follow</li>
 </ul></li>
 </ul></li>
+<li>There are : <b>noisy</b> measurements
+<ul class="org-ul">
+<li>purchase: they might still hate it</li>
+<li>don't click: <span class="underline">didn't see</span> or expect bad</li>
+<li>temporal effects</li>
+<li>user selection biased, increased by user diveristy</li>
+</ul></li>
 </ul>
 </div>
 </div>
+
 <div id="outline-container-orgheadline5" class="outline-3">
 <h3 id="orgheadline5">Prediction VS Recommendation (UI, 如何展示给用户)</h3>
 <div class="outline-text-3" id="text-orgheadline5">
@@ -355,7 +371,7 @@ Source: local data frame [19 x 2]
 </div>
 </div>
 <div id="postamble" class="status">
-<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.4 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-07-28 22:46:52</p></div>
+<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.5 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-07-29 09:28:50</p></div>
 </div>
 </body>
 </html>
