@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2016-08-21 Sun 18:26 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>Survey of Recommendation System</title>
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Jacky Wang" />
+<link rel="stylesheet" title="Standard" href="/style/worg.css" type="text/css" />
+<link rel="alternate stylesheet" title="Zenburn" href="/style/worg-zenburn.css" type="text/css" />
+<link rel="alternate stylesheet" title="Classic" href="/style/worg-classic.css" type="text/css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="preamble" class="status">
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded',function() {
+      document.getElementById("table-of-contents").onclick = function() {
+          var elem = document.getElementById("text-table-of-contents");
+          elem.style.display = elem.style.display == "block" ? "none" : "block";
+      }
+  });
+</script>
+</div>
+<div id="content">
+<h1 class="title">Survey of Recommendation System</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline5">Content based RS</a>
+<ul>
+<li><a href="#orgheadline1">How to build?</a></li>
+<li><a href="#orgheadline2">item vector</a></li>
+<li><a href="#orgheadline3">user vector</a></li>
+<li><a href="#orgheadline4">Strength and chanllenge</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline10">Neightborhood CF</a>
+<ul>
+<li><a href="#orgheadline6">User-user CF</a></li>
+<li><a href="#orgheadline7">Item-item CF</a></li>
+<li><a href="#orgheadline8">How to implement?</a></li>
+<li><a href="#orgheadline9">Strength and drawback</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline11">Matrix factorization Models</a></li>
+<li><a href="#orgheadline14">Evaluation of RS</a>
+<ul>
+<li><a href="#orgheadline12">experimental settings</a></li>
+<li><a href="#orgheadline13">properties</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+<a href="../index.html">Home</a>
+</p>
+
+
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5">Content based RS</h2>
+<div class="outline-text-2" id="text-orgheadline5">
+</div><div id="outline-container-orgheadline1" class="outline-3">
+<h3 id="orgheadline1">How to build?</h3>
+<div class="outline-text-3" id="text-orgheadline1">
+<ul class="org-ul">
+<li>compute vectors to describe <b>item</b></li>
+<li>building profiles of <b>user</b> preference</li>
+<li>predicting <b>user interest in items</b></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2">item vector</h3>
+<div class="outline-text-3" id="text-orgheadline2">
+<ul class="org-ul">
+<li>simple 0/1 (keyword occurs?)</li>
+<li>occurence count</li>
+<li>TF-IDF</li>
+<li>often normalized</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3">user vector</h3>
+<div class="outline-text-3" id="text-orgheadline3">
+<ul class="org-ul">
+<li>user could build/edit own profile</li>
+<li>infer profile from actions (implict)</li>
+<li>infer profile from ratings (explict)</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4">Strength and chanllenge</h3>
+<div class="outline-text-3" id="text-orgheadline4">
+<p>
+strength:
+</p>
+<ul class="org-ul">
+<li>understandable</li>
+<li>easy computation</li>
+<li>new item</li>
+</ul>
+
+<p>
+drawback:
+</p>
+<ul class="org-ul">
+<li>figuring out the right weights and factors: limited content analysis</li>
+<li>highly simplified model</li>
+<li>new user</li>
+<li>lack of serendipity</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgheadline10" class="outline-2">
+<h2 id="orgheadline10">Neightborhood CF</h2>
+<div class="outline-text-2" id="text-orgheadline10">
+</div><div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6">User-user CF</h3>
+<div class="outline-text-3" id="text-orgheadline6">
+<ul class="org-ul">
+<li>\(\hat{r}_{ui} = \bar{r}_u + \frac{\sum_{v\in N_{i}(u)} w_{uv} (r_{vi} - \bar{r}_v)} {\sum_{v\in N_{i}(u)} |w_{uv}|}\)</li>
+<li>user bias</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7">Item-item CF</h3>
+<div class="outline-text-3" id="text-orgheadline7">
+<ul class="org-ul">
+<li>\(\hat{r}_{ui} = \bar{r}_i + \frac{\sum_{j\in N_{u}(i)} w_{ij} (r_{uj} - \bar{r}_j)} {\sum_{v\in N_{u}(i)} |w_{ij}|}\)</li>
+<li>item bias</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8">How to implement?</h3>
+<div class="outline-text-3" id="text-orgheadline8">
+<ul class="org-ul">
+<li>normalization of ratings (mean centering, z-score)</li>
+<li>computation of similarity (w<sub>uv</sub>, w<sub>ij</sub>)
+<ul class="org-ul">
+<li>cosine/pearson correlation</li>
+<li>significance of a weight
+<ul class="org-ul">
+<li>w<sub>uv</sub> is penalized by a factor proportional to the # of commonly rated items</li>
+</ul></li>
+<li>variacne of ratings</li>
+</ul></li>
+<li>selection of neighbors
+<ul class="org-ul">
+<li>Top-N</li>
+<li>threshold</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9">Strength and drawback</h3>
+<div class="outline-text-3" id="text-orgheadline9">
+<ul class="org-ul">
+<li>limited coverage</li>
+<li>sensitivity to sparse data</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline11" class="outline-2">
+<h2 id="orgheadline11">Matrix factorization Models</h2>
+<div class="outline-text-2" id="text-orgheadline11">
+<ul class="org-ul">
+<li>SVD</li>
+<li>SVD++: implict feedback considered</li>
+<li>TimeSVD++: timporal dynamics considered</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline14" class="outline-2">
+<h2 id="orgheadline14">Evaluation of RS</h2>
+<div class="outline-text-2" id="text-orgheadline14">
+</div><div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12">experimental settings</h3>
+<div class="outline-text-3" id="text-orgheadline12">
+<ul class="org-ul">
+<li>offline</li>
+<li>user study</li>
+<li>online</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13">properties</h3>
+<div class="outline-text-3" id="text-orgheadline13">
+<ul class="org-ul">
+<li>user preference (用户满意度)
+<ul class="org-ul">
+<li>user study
+<ul class="org-ul">
+<li>user sample, importane of users</li>
+<li>binary vs non-binary answers</li>
+<li>subjective, need more users</li>
+</ul></li>
+</ul></li>
+<li>prediction accuracy (offline)
+<ul class="org-ul">
+<li>RMSE/MAE (regression)</li>
+<li>Precison/Recall/TPR/FPR @TopN (classification)</li>
+<li>NDCG(ranking)</li>
+</ul></li>
+<li>Coverage (覆盖率)
+<ul class="org-ul">
+<li>user space
+<ul class="org-ul">
+<li>proportion of users for which RS can recommend</li>
+<li>coverage and accuracy trade-off</li>
+</ul></li>
+<li>item space
+<ul class="org-ul">
+<li>longtail items</li>
+<li>percentage of all items that can ever be recommendated</li>
+<li>entropy</li>
+</ul></li>
+</ul></li>
+<li>novelty(新颖性)
+<ul class="org-ul">
+<li>people not known</li>
+</ul></li>
+<li>serendipity(惊喜度)
+<ul class="org-ul">
+<li>suprising</li>
+<li>successful</li>
+<li>Get people to sonsuming less popular items</li>
+</ul></li>
+<li>diversity(多样性)
+<ul class="org-ul">
+<li>Don't turn away customers who are not currently intereted in a narrow portion of catalog</li>
+<li>opposite of similarity @ Top N</li>
+</ul></li>
+<li>robustness
+<ul class="org-ul">
+<li>fake information</li>
+<li>attack</li>
+</ul></li>
+<li>scalability (growth of data)</li>
+<li>adaptivity (time)</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.5 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-08-21 18:26:44</p></div>
+</div>
+</body>
+</html>
