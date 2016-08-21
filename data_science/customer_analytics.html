@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2016-08-21 Sun 18:14 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>Customer Analytics</title>
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Jacky Wang" />
+<link rel="stylesheet" title="Standard" href="/style/worg.css" type="text/css" />
+<link rel="alternate stylesheet" title="Zenburn" href="/style/worg-zenburn.css" type="text/css" />
+<link rel="alternate stylesheet" title="Classic" href="/style/worg-classic.css" type="text/css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded',function() {
+      document.getElementById("table-of-contents").onclick = function() {
+          var elem = document.getElementById("text-table-of-contents");
+          elem.style.display = elem.style.display == "block" ? "none" : "block";
+      }
+  });
+</script>
+</div>
+<div id="content">
+<h1 class="title">Customer Analytics</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline1">Business Analytics</a></li>
+<li><a href="#orgheadline2">Descriptive Analytics</a>
+<ul>
+<li><a href="#orgheadline3">Type of descriptive analytics</a></li>
+<li><a href="#orgheadline4">Causal research: one variable producing an effect in another variabel</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline8">Predictive Analytics</a>
+<ul>
+<li><a href="#orgheadline5">RFM/RFMC</a></li>
+<li><a href="#orgheadline6">probability models VS data mining</a></li>
+<li><a href="#orgheadline7">churn/CLV</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline9">Prescriptive Analytics: 从分析得到<b>商业理解</b>, 给出<b>处方</b></a>
+<ul>
+<li><a href="#orgheadline10">problem</a></li>
+<li><a href="#orgheadline11">Marginal Reveneue &amp; Marginal Cost</a></li>
+<li><a href="#orgheadline12">industry competion</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline13">Takeaways</a>
+<ul>
+<li><a href="#orgheadline14">how to calculate the profit</a></li>
+<li><a href="#orgheadline15">customer(buyers) and industry(sellers) environment</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline16">Todo</a></li>
+</ul>
+</div>
+</div>
+<p>
+<a href="../index.html">Home</a>
+</p>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1">Business Analytics</h2>
+<div class="outline-text-2" id="text-orgheadline1">
+<ul class="org-ul">
+<li><b>data</b>: <span class="underline">better data better decision</span></li>
+<li>data <b>exploration</b> (descriptive analytics): <span class="underline">find interesting insights of the <i>past</i> to avoid flying blind</span></li>
+<li>predictive <b>models</b> (predictive analytics): <span class="underline">what will happen in the <i>future</i></span>
+<ul class="org-ul">
+<li>churn model</li>
+<li>customer lifetime value</li>
+</ul></li>
+<li><b>optimization</b> of actions (prescriptive analytics)
+<ul class="org-ul">
+<li>price/discount</li>
+<li>advertising</li>
+<li>email</li>
+</ul></li>
+<li><b>business decision</b></li>
+</ul>
+
+
+<div class="figure">
+<p><img src="../images/business_analytics.png" alt="business_analytics.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2">Descriptive Analytics</h2>
+<div class="outline-text-2" id="text-orgheadline2">
+<ul class="org-ul">
+<li>link <b>market</b> to the <b>firm</b> throught <b>information</b></li>
+<li><b>information needed for *actionable decisions</b></li>
+<li><i>collecting</i> and <i>interpreting</i> data that can aid decision makers</li>
+</ul>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3">Type of descriptive analytics</h3>
+<div class="outline-text-3" id="text-orgheadline3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">exploratory research</th>
+<th scope="col" class="org-left">descriptive research</th>
+<th scope="col" class="org-left">causal research</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">problem</td>
+<td class="org-left">ambiguous problem</td>
+<td class="org-left">aware of problem</td>
+<td class="org-left">problem clearly defined</td>
+</tr>
+
+<tr>
+<td class="org-left">example</td>
+<td class="org-left">why sales decline?</td>
+<td class="org-left">what kinds of people buy our products?</td>
+<td class="org-left">Will CR increase with a change of our homepage?</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4">Causal research: one variable producing an effect in another variabel</h3>
+<div class="outline-text-3" id="text-orgheadline4">
+<ul class="org-ul">
+<li><b>correlation</b>: Evidence of association between X and Y</li>
+<li><b>temporal antecedence</b>: X must  occur before Y</li>
+<li><b>no third factor</b> driving both: control of other possible factors: AB Testing</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline8" class="outline-2">
+<h2 id="orgheadline8">Predictive Analytics</h2>
+<div class="outline-text-2" id="text-orgheadline8">
+</div><div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5">RFM/RFMC</h3>
+</div>
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6">probability models VS data mining</h3>
+</div>
+
+
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7">churn/CLV</h3>
+<div class="outline-text-3" id="text-orgheadline7">
+<ul class="org-ul">
+<li>alive: 活跃用户</li>
+<li>dormant: 沉睡用户</li>
+<li>lapsed: 流失用户</li>
+<li>pareto/NBD: negative binomial distribution</li>
+<li>BG/NBD</li>
+<li>BG/BB</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgheadline9" class="outline-2">
+<h2 id="orgheadline9">Prescriptive Analytics: 从分析得到<b>商业理解</b>, 给出<b>处方</b></h2>
+<div class="outline-text-2" id="text-orgheadline9">
+<ul class="org-ul">
+<li>descriptive: collect data to understand patterns in the <b>past</b></li>
+<li>predictive: build model to predict the <b>future</b></li>
+<li>prescriptive: provide a <b>prescription</b> on what actions to take to achive some objective goal</li>
+</ul>
+</div>
+
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10">problem</h3>
+<div class="outline-text-3" id="text-orgheadline10">
+<ul class="org-ul">
+<li>goal to optimize</li>
+<li>model which link goal and action</li>
+<li>action to be taken</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11">Marginal Reveneue &amp; Marginal Cost</h3>
+<div class="outline-text-3" id="text-orgheadline11">
+<ul class="org-ul">
+<li>demand curve</li>
+<li>supply curve</li>
+<li>willingness to pay (WTP)</li>
+<li>bundle</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12">industry competion</h3>
+<div class="outline-text-3" id="text-orgheadline12">
+<ul class="org-ul">
+<li>game theory</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline13" class="outline-2">
+<h2 id="orgheadline13">Takeaways</h2>
+<div class="outline-text-2" id="text-orgheadline13">
+<ul class="org-ul">
+<li>technology meets management science</li>
+<li>it's never the golden age of data, and better data leads to better science</li>
+<li>it's real monetization</li>
+</ul>
+</div>
+
+<div id="outline-container-orgheadline14" class="outline-3">
+<h3 id="orgheadline14">how to calculate the profit</h3>
+<div class="outline-text-3" id="text-orgheadline14">
+<ul class="org-ul">
+<li>finacial: revenue - cost</li>
+<li>market: making profit from one customer at a time</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15">customer(buyers) and industry(sellers) environment</h3>
+</div>
+</div>
+
+<div id="outline-container-orgheadline16" class="outline-2">
+<h2 id="orgheadline16">Todo</h2>
+<div class="outline-text-2" id="text-orgheadline16">
+<ul class="org-ul">
+<li>technology + <b>business</b>: <i>microeconomics</i></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<div id="license"><p>© Copyright 2015, cnglen at gmail.com</p><p>Created using <a href="http://orgmode.org/">Org mode</a> 8.3.5 of <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 in <a href="http://www.debian.org/">Debian</a> </p><p>Update 2016-08-21 18:14:49</p></div>
+</div>
+</body>
+</html>
